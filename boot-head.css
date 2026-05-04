@@ -179,3 +179,7 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
   [data-soe=quote-tab] {tap-highlight-color: transparent; -webkit-tap-highlight-color: transparent;}
   button[data-soe=quote-tab] {min-height: 48px; min-width: 48px;}
 }
+
+/* Inert panels: kill all interaction work for hidden form */
+[data-soe=quote-tab-panel][inert]{pointer-events:none;}
+[data-soe=quote-tab-panel][inert] *{pointer-events:none !important;}

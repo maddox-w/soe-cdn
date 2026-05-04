@@ -41,9 +41,24 @@
       else x.removeAttribute('data-soe-state');
     });
     document.querySelectorAll('[data-soe=quote-tab-panel]').forEach(function(p){
-      if (p.getAttribute('data-soe-tab') === key) p.setAttribute('data-soe-state', 'active');
-      else p.removeAttribute('data-soe-state');
+      if (p.getAttribute('data-soe-tab') === key) {
+        p.setAttribute('data-soe-state', 'active');
+        p.removeAttribute('inert');
+      } else {
+        p.removeAttribute('data-soe-state');
+        p.setAttribute('inert', '');
+      }
     });
+  }
+  function setInitialInert(){
+    document.querySelectorAll('[data-soe=quote-tab-panel]').forEach(function(p){
+      if (p.getAttribute('data-soe-state') !== 'active') p.setAttribute('inert', '');
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setInitialInert);
+  } else {
+    setInitialInert();
   }
   document.addEventListener('click', function(e){
     var t = e.target;
