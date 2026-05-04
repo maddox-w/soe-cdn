@@ -1155,7 +1155,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     var navLinks = document.querySelectorAll(`[data-soe=nav-link]`);
     if (navLinks.length === 0) return;
 
-    /* Pass 1: hide unwanted, rename Products->Equipment */
+    /* Pass 1: hide unwanted, rename Products->Equipment (preserve caret/child nodes) */
     Array.prototype.forEach.call(navLinks, function(a){
       var t = (a.textContent || ``).trim();
       if (t === `Dealer Portal` || t === `Buy Parts` || t === `Operator Manuals`){
@@ -1164,7 +1164,13 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
         w.style.display = `none`;
       }
       if (t === `Products`){
-        a.textContent = `Equipment`;
+        /* Replace text node only so we don't strip the inner [data-soe=nav-caret] span */
+        for (var i = 0; i < a.childNodes.length; i++){
+          var cn = a.childNodes[i];
+          if (cn.nodeType === 3 && (cn.nodeValue || ``).trim() === `Products`){
+            cn.nodeValue = `Equipment`;
+          }
+        }
       }
     });
 
@@ -1194,6 +1200,13 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
         wrap.setAttribute(`data-soe`, `nav-link-wrap`);
         parent.insertBefore(wrap, a);
         wrap.appendChild(a);
+      }
+
+      /* Ensure caret exists on items that have a dropdown */
+      if (!a.querySelector(`[data-soe=nav-caret]`)){
+        var caret = document.createElement(`span`);
+        caret.setAttribute(`data-soe`, `nav-caret`);
+        a.appendChild(caret);
       }
 
       var dd = document.createElement(`div`);
