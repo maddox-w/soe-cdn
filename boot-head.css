@@ -184,13 +184,34 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe=quote-tab-panel][inert]{pointer-events:none;}
 [data-soe=quote-tab-panel][inert] *{pointer-events:none !important;}
 
-/* v2hh-anti-fouc: hide nav-links until v2hh rebuilds the menu, with a 1.4s safety fade */
+/* v2hh-anti-fouc: hide nav-links until v2hh rebuilds the menu (instant visibility flip — no fade, no blink between page navigations) */
 @media (min-width:721px){
-  [data-soe=nav-links]{opacity:0;transition:opacity .15s ease-out;animation:soeNavFouc 0s 1.4s forwards;}
-  [data-soe=nav-links][data-soe-init=ready]{opacity:1;animation:none;}
+  [data-soe=nav-links]{visibility:hidden;animation:soeNavFoucSafety 0s 1.4s forwards;}
+  [data-soe=nav-links][data-soe-init=ready]{visibility:visible;animation:none;}
+  /* Kill the border-color transition so the active underline doesn't fade in on every page load */
+  [data-soe=nav-link]{transition:color .15s !important;}
 }
-@keyframes soeNavFouc{to{opacity:1;}}
+@keyframes soeNavFoucSafety{to{visibility:visible;}}
 
 /* v2hh hero ken-burns fix: hold transform during the .9s clip-path swipe so the leaving slide doesn't snap from scale(1.06) to scale(1) mid-transition */
 [data-soe=hero-bg]{transition:transform 0s linear .9s !important;}
 [data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg]{transition:transform 9s linear 0s !important;}
+
+/* v2hh anti-FOUC for above-the-fold text: foundation reveal-on-scroll was being added to hero/intro AT DOMContentLoaded, causing a fade-out then fade-in flash. Kill the reveal entirely for above-the-fold elements — they're already in view at page load, no scroll trigger needed. */
+[data-soe=hero-brand-tag][data-soe-anim=reveal],
+[data-soe=hero-h1][data-soe-anim=reveal],
+[data-soe=hero-lede][data-soe-anim=reveal],
+[data-soe=hero-ctas][data-soe-anim=reveal],
+[data-soe=p-hero-h1][data-soe-anim=reveal],
+[data-soe=p-hero-lede][data-soe-anim=reveal],
+[data-soe=p-hero-ctas][data-soe-anim=reveal],
+[data-soe=intro-lockup][data-soe-anim=reveal],
+[data-soe=intro-tagline][data-soe-anim=reveal],
+[data-soe=intro-underline][data-soe-anim=reveal],
+[data-soe=page-head][data-soe-anim=reveal],
+[data-soe=crumbs][data-soe-anim=reveal]{
+  opacity:1 !important;
+  transform:none !important;
+  transition:none !important;
+  animation:none !important;
+}
