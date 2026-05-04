@@ -190,3 +190,7 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
   [data-soe=nav-links][data-soe-init=ready]{opacity:1;animation:none;}
 }
 @keyframes soeNavFouc{to{opacity:1;}}
+
+/* v2hh hero ken-burns fix: hold transform during the .9s clip-path swipe so the leaving slide doesn't snap from scale(1.06) to scale(1) mid-transition */
+[data-soe=hero-bg]{transition:transform 0s linear .9s !important;}
+[data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg]{transition:transform 9s linear 0s !important;}
