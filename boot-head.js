@@ -67,6 +67,20 @@
     requestAnimationFrame(function(){applyTabState(key);});
   }, {capture: true, passive: false});
 
+  function preRenderPanels(){
+    document.querySelectorAll('[data-soe=quote-tab-panel]').forEach(function(p){
+      var prev = p.style.cssText;
+      p.style.cssText = 'display:block !important;visibility:hidden !important;position:absolute !important;left:-99999px !important;top:0 !important;';
+      void p.offsetHeight;
+      p.style.cssText = prev;
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', preRenderPanels);
+  } else {
+    preRenderPanels();
+  }
+
   function presetHero(){
     var slides = document.querySelectorAll('[data-soe=hero-slide]');
     if (slides.length === 0) return;
