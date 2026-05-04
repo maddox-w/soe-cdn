@@ -6,6 +6,38 @@
   s.textContent = css;
   (document.head || document.documentElement).appendChild(s);
 
+  function fixQuoteTabs(){
+    document.querySelectorAll('[data-soe=quote-tab]').forEach(function(t){
+      t.classList.remove('w-button');
+      t.removeAttribute('href');
+      t.style.cursor = 'pointer';
+      t.style.touchAction = 'manipulation';
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fixQuoteTabs);
+  } else {
+    fixQuoteTabs();
+  }
+
+  document.addEventListener('click', function(e){
+    var t = e.target;
+    if (!t || !t.closest) return;
+    var tab = t.closest('[data-soe=quote-tab]');
+    if (!tab) return;
+    e.preventDefault();
+    e.stopPropagation();
+    var key = tab.getAttribute('data-soe-tab');
+    document.querySelectorAll('[data-soe=quote-tab]').forEach(function(x){
+      if (x.getAttribute('data-soe-tab') === key) x.setAttribute('data-soe-state', 'active');
+      else x.removeAttribute('data-soe-state');
+    });
+    document.querySelectorAll('[data-soe=quote-tab-panel]').forEach(function(p){
+      if (p.getAttribute('data-soe-tab') === key) p.setAttribute('data-soe-state', 'active');
+      else p.removeAttribute('data-soe-state');
+    });
+  }, true);
+
   function presetHero(){
     var slides = document.querySelectorAll('[data-soe=hero-slide]');
     if (slides.length === 0) return;
