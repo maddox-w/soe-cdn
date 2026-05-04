@@ -171,3 +171,11 @@ html,body{overflow-x:hidden !important;max-width:100vw !important;}[data-soe=quo
   [data-soe=quote-tab-panel][data-soe-state=active] [data-soe=quote-tab-panel-inner]{animation:none !important;transition:none !important;transform:none !important;}
   [data-soe=quote-tab],[data-soe=quote-card]{transition:none !important;will-change:auto !important;}
 }
+
+/* === Mobile: pre-render both panels stacked, toggle via visibility (avoids Turnstile init lag) === */
+@media (max-width:720px){
+  [data-soe=quote-card]{position:relative;}
+  [data-soe=quote-tab-panel]{display:block !important;grid-template-rows:none !important;position:absolute;top:0;left:0;right:0;visibility:hidden;opacity:1 !important;pointer-events:none;animation:none !important;transition:none !important;transform:none !important;}
+  [data-soe=quote-tab-panel][data-soe-state=active]{position:relative;visibility:visible;pointer-events:auto;}
+  [data-soe=quote-tab-panel-inner]{overflow:visible !important;animation:none !important;transition:none !important;transform:none !important;}
+}
