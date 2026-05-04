@@ -83,8 +83,9 @@
 
   function init(){
     initDrawer();
-    initRotator();
-    initTypewriter();
+    /* initRotator + initTypewriter intentionally disabled — v2a (rotator with clip-path swipe + prev-state)
+       and v2o (typewriter that clones the element to take ownership) handle these. Running both causes
+       two tickers / two interval handlers on the same element ("spazzing", duplicate frames). */
     initReveals();
   }
   if(document.readyState === `loading`){document.addEventListener(`DOMContentLoaded`,init);}
