@@ -7,11 +7,26 @@
   (document.head || document.documentElement).appendChild(s);
 
   function fixQuoteTabs(){
+    document.querySelectorAll('form[data-turnstile-sitekey]').forEach(function(f){
+      f.removeAttribute('data-turnstile-sitekey');
+    });
     document.querySelectorAll('[data-soe=quote-tab]').forEach(function(t){
-      t.classList.remove('w-button');
-      t.removeAttribute('href');
-      t.style.cursor = 'pointer';
-      t.style.touchAction = 'manipulation';
+      if (t.tagName === 'BUTTON') return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.setAttribute('data-soe', 'quote-tab');
+      ['data-soe-tab','data-soe-state','data-soe-form'].forEach(function(a){
+        if (t.hasAttribute(a)) btn.setAttribute(a, t.getAttribute(a));
+      });
+      btn.innerHTML = t.innerHTML;
+      btn.style.cursor = 'pointer';
+      btn.style.touchAction = 'manipulation';
+      btn.style.background = 'transparent';
+      btn.style.border = '0';
+      t.parentNode.replaceChild(btn, t);
+    });
+    document.querySelectorAll('[data-soe=quote-field]').forEach(function(f){
+      if (f.querySelector('select[name=timeline]')) f.style.display = 'none';
     });
   }
   if (document.readyState === 'loading') {
