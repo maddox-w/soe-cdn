@@ -193,6 +193,27 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 }
 @keyframes soeNavFoucSafety{to{visibility:visible;}}
 
+/* Equipment mega-menu brand headers: same as items but bolded (was JetBrains Mono uppercase) */
+[data-soe=nav-mega-col-h]{
+  font-family:Inter,sans-serif !important;
+  font-size:13px !important;
+  font-weight:700 !important;
+  letter-spacing:0 !important;
+  text-transform:none !important;
+  color:#fff !important;
+  padding:0 0 10px !important;
+  margin-bottom:6px !important;
+  border-bottom:1px solid rgba(255,255,255,.14);
+  display:block;
+  text-decoration:none;
+  line-height:1.45;
+}
+[data-soe=nav-mega-col-h]:hover{color:#7DB13C !important;}
+
+/* Mulch Mule page: hide green eyebrow above "See it in action" + green category labels inside video boxes */
+[data-soe=videos-head] [data-soe=eyebrow]{display:none !important;}
+[data-soe=video-cat]{display:none !important;}
+
 /* v2hh hero ken-burns fix: hold transform until past the .9s clip-path swipe (cubic-bezier ease-out)
    AND past the 950ms prev-state cleanup. Use 1.05s so the snap is fully covered by the incoming slide. */
 [data-soe=hero-bg]{transition:transform 0s linear 1.05s !important;}

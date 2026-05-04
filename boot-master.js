@@ -1151,14 +1151,14 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   ];
   simpleMenus[`Become a Dealer`] = [
     [`Mulch Mule`,`#`],
-    [`Metec`,`#`],
-    [`New Application`,`#`]
+    [`Metec`,`#`]
   ];
-  simpleMenus[`About Us`] = [
+  simpleMenus[`Other`] = [
     [`Our Story`,`#`],
     [`Equipment Consultants`,`#`],
     [`Service Network`,`#`],
-    [`Contact`,`#`]
+    [`Contact`,`#`],
+    [`New Application`,`#`]
   ];
 
   /* ---------- Header nav restructure ---------- */
@@ -1174,12 +1174,13 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
           ? a.parentNode : a;
         w.style.display = `none`;
       }
-      if (t === `Products`){
+      var renames = {"Products":"Equipment", "About Us":"Other"};
+      if (renames[t]){
         /* Replace text node only so we don't strip the inner [data-soe=nav-caret] span */
         for (var i = 0; i < a.childNodes.length; i++){
           var cn = a.childNodes[i];
-          if (cn.nodeType === 3 && (cn.nodeValue || ``).trim() === `Products`){
-            cn.nodeValue = `Equipment`;
+          if (cn.nodeType === 3 && (cn.nodeValue || ``).trim() === t){
+            cn.nodeValue = renames[t];
           }
         }
       }
@@ -1191,7 +1192,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       "Brands": "simple",
       "Build & Quote": "simple",
       "Become a Dealer": "simple",
-      "About Us": "simple"
+      "Other": "simple"
     };
 
     Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=nav-link]`), function(a){
@@ -1292,14 +1293,14 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       ]},
       {head:`Become a Dealer`, items:[
         [`Mulch Mule`,`#`],
-        [`Metec`,`#`],
-        [`New Application`,`#`]
+        [`Metec`,`#`]
       ]},
-      {head:`About Us`, items:[
+      {head:`Other`, items:[
         [`Our Story`,`#`],
         [`Equipment Consultants`,`#`],
         [`Service Network`,`#`],
-        [`Contact`,`#`]
+        [`Contact`,`#`],
+        [`New Application`,`#`]
       ]}
     ];
 
@@ -1360,6 +1361,9 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       if (t === `Products`){
         a.textContent = `Equipment`;
       }
+      if (t === `About Us`){
+        a.textContent = `Other`;
+      }
     });
 
     /* Append sub-menu under matching top items if they have a dropdown */
@@ -1371,7 +1375,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       "Brands": simpleMenus["Brands"],
       "Build & Quote": simpleMenus["Build & Quote"],
       "Become a Dealer": simpleMenus["Become a Dealer"],
-      "About Us": simpleMenus["About Us"]
+      "Other": simpleMenus["Other"]
     };
 
     Array.prototype.forEach.call(ul.querySelectorAll(`li`), function(li){
