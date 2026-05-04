@@ -1005,3 +1005,384 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   ready(function(){setTimeout(swap,300);});
 })();
 
+/* === boot-fixes-v2hh ===
+   Header nav restructure to 5-item dropdown layout + footer rebuild +
+   green "View Brand" button on homepage brand cards.
+   - Renames "Products" -> "Equipment", drops "Dealer Portal" + "Buy Parts"
+   - Adds dropdowns: Equipment (mega 4-col brand x products), Brands, Build & Quote, Become a Dealer, About Us
+   - Rebuilds footer columns to mirror new nav, adds "New Application" under Become a Dealer
+   - Restyles brand-card-link as a thin green CTA button
+*/
+(function(){
+  function ready(fn){if(document.readyState !== `loading`)fn();else document.addEventListener(`DOMContentLoaded`,fn);}
+
+  /* ---------- CSS injected at runtime ---------- */
+  var css = [
+    `[data-soe=brand-card-link]{`,
+      `background:#367C2B !important;`,
+      `color:#fff !important;`,
+      `padding:11px 22px !important;`,
+      `font-family:Inter,sans-serif !important;`,
+      `font-size:11px !important;`,
+      `font-weight:600 !important;`,
+      `letter-spacing:.14em !important;`,
+      `text-transform:uppercase !important;`,
+      `display:inline-flex !important;`,
+      `align-items:center !important;`,
+      `justify-content:center !important;`,
+      `gap:0 !important;`,
+      `transition:background .15s !important;`,
+      `line-height:1 !important;`,
+    `}`,
+    `[data-soe=brand-card-h]:hover [data-soe=brand-card-link]{background:#2A5F22 !important;}`,
+    `[data-soe=brand-card-link] [data-soe=arr]{display:none !important;}`,
+    `@media (max-width:720px){`,
+      `[data-soe=brand-card-link]{width:100%;padding:13px 22px !important;}`,
+    `}`,
+
+    /* Mega-menu (Equipment) */
+    `[data-soe=nav-dropdown][data-soe-menu=mega]{`,
+      `min-width:780px;`,
+      `flex-direction:row !important;`,
+      `gap:24px;`,
+      `padding:28px 32px 24px;`,
+    `}`,
+    `[data-soe=nav-dropdown][data-soe-menu=mega] [data-soe=nav-mega-col]{`,
+      `display:flex;flex-direction:column;flex:1;min-width:160px;`,
+    `}`,
+    `[data-soe=nav-mega-col-h]{`,
+      `color:#7DB13C;`,
+      `font-family:"JetBrains Mono",ui-monospace,monospace;`,
+      `font-size:11px;`,
+      `letter-spacing:.18em;`,
+      `text-transform:uppercase;`,
+      `font-weight:700;`,
+      `padding:0 0 12px;`,
+      `margin-bottom:8px;`,
+      `border-bottom:1px solid rgba(255,255,255,.14);`,
+      `display:block;`,
+      `text-decoration:none;`,
+    `}`,
+    `[data-soe=nav-mega-col-h]:hover{color:#fff;}`,
+    `[data-soe=nav-dropdown] [data-soe=nav-dropdown-item][data-soe-kind=mega]{`,
+      `padding:7px 0 !important;`,
+      `border-bottom:0 !important;`,
+      `font-size:13px;`,
+      `font-weight:400;`,
+      `color:#D4D8D2;`,
+    `}`,
+    `[data-soe=nav-dropdown] [data-soe=nav-dropdown-item][data-soe-kind=mega]:hover{`,
+      `background:transparent !important;`,
+      `color:#7DB13C !important;`,
+    `}`,
+    /* Right-edge alignment fallback for wide menus */
+    `[data-soe=nav-dropdown][data-soe-align=right]{left:auto !important;right:0 !important;}`,
+    /* Make sure simple dropdowns still look ok with new content density */
+    `[data-soe=nav-dropdown]{min-width:200px;}`,
+    `[data-soe=nav-dropdown-item]:last-child{border-bottom:0;}`,
+
+    /* Drawer parity for mobile - new menu structure */
+    `[data-soe=nav-drawer] [data-soe=drawer-sub]{padding-left:18px;display:flex;flex-direction:column;gap:0;border-top:1px solid rgba(255,255,255,.06);}`,
+    `[data-soe=nav-drawer] [data-soe=drawer-sub] a{padding:12px 0 !important;font-size:12px !important;letter-spacing:.10em !important;color:#A5ADA4 !important;text-transform:none !important;font-weight:500 !important;border-bottom:0 !important;}`,
+    `[data-soe=nav-drawer] [data-soe=drawer-sub] a:hover{color:#7DB13C !important;}`
+  ].join(``);
+
+  var styleEl = document.createElement(`style`);
+  styleEl.setAttribute(`data-soe-design`, `v2hh-nav-footer-button`);
+  styleEl.textContent = css;
+  document.head.appendChild(styleEl);
+
+  /* ---------- Menu data ---------- */
+  var equipMenu = [
+    {brand:`Mulch Mule`, href:`/mulch-mule`, items:[
+      [`Mulch Mule MM1`,`/mulch-mule`],
+      [`Mulch Mule MM2`,`/mulch-mule`],
+      [`Wireless Remote Kit`,`/mulch-mule`],
+      [`Billy Goat Kit`,`/mulch-mule`],
+      [`Extension Conveyor`,`/mulch-mule`],
+      [`Contractor Package`,`/mulch-mule`]
+    ]},
+    {brand:`Brinemasters`, href:`/brands`, items:[
+      [`BM-14X Brine Maker`,`/brands`],
+      [`BM-6 Brine Maker`,`/brands`],
+      [`BM-3 Brine Maker`,`/brands`],
+      [`Truck Fill Stations`,`/brands`],
+      [`Salinity Control`,`/brands`]
+    ]},
+    {brand:`Energreen`, href:`/brands`, items:[
+      [`RoboMAX`,`/brands`],
+      [`RoboMIDI`,`/brands`],
+      [`RoboEVO`,`/brands`],
+      [`ILF Alpha`,`/brands`],
+      [`ILF Athena`,`/brands`]
+    ]},
+    {brand:`Metec`, href:`/brands`, items:[
+      [`Snow Blowers`,`/brands`],
+      [`Angle Plows`,`/brands`],
+      [`V-Plows`,`/brands`],
+      [`Sweepers`,`/brands`],
+      [`Spreaders`,`/brands`]
+    ]}
+  ];
+
+  var simpleMenus = {};
+  simpleMenus[`Brands`] = [
+    [`Mulch Mule`,`/mulch-mule`],
+    [`Brinemasters`,`/brands`],
+    [`Energreen`,`/brands`],
+    [`Metec`,`/brands`],
+    [`View All Brands`,`/brands`]
+  ];
+  simpleMenus[`Build & Quote`] = [
+    [`Compact Tractor Attachments`,`/request-quote`]
+  ];
+  simpleMenus[`Become a Dealer`] = [
+    [`Mulch Mule`,`#`],
+    [`Metec`,`#`],
+    [`New Application`,`#`]
+  ];
+  simpleMenus[`About Us`] = [
+    [`Our Story`,`#`],
+    [`Equipment Consultants`,`#`],
+    [`Service Network`,`#`],
+    [`Contact`,`#`],
+    [`Privacy`,`#`],
+    [`Terms`,`#`]
+  ];
+
+  /* ---------- Header nav restructure ---------- */
+  function rebuildNav(){
+    var navLinks = document.querySelectorAll(`[data-soe=nav-link]`);
+    if (navLinks.length === 0) return;
+
+    /* Pass 1: hide unwanted, rename Products->Equipment */
+    Array.prototype.forEach.call(navLinks, function(a){
+      var t = (a.textContent || ``).trim();
+      if (t === `Dealer Portal` || t === `Buy Parts` || t === `Operator Manuals`){
+        var w = a.parentNode && a.parentNode.matches && a.parentNode.matches(`[data-soe=nav-link-wrap]`)
+          ? a.parentNode : a;
+        w.style.display = `none`;
+      }
+      if (t === `Products`){
+        a.textContent = `Equipment`;
+      }
+    });
+
+    /* Pass 2: ensure each visible item is wrapped + has the right dropdown */
+    var nameToTarget = {
+      "Equipment": "mega",
+      "Brands": "simple",
+      "Build & Quote": "simple",
+      "Become a Dealer": "simple",
+      "About Us": "simple"
+    };
+
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=nav-link]`), function(a){
+      var t = (a.textContent || ``).trim();
+      if (!nameToTarget[t]) return;
+
+      var parent = a.parentNode;
+      if (!parent) return;
+
+      var wrap;
+      if (parent.matches && parent.matches(`[data-soe=nav-link-wrap]`)){
+        wrap = parent;
+        var oldDd = wrap.querySelector(`[data-soe=nav-dropdown]`);
+        if (oldDd) oldDd.parentNode.removeChild(oldDd);
+      } else {
+        wrap = document.createElement(`span`);
+        wrap.setAttribute(`data-soe`, `nav-link-wrap`);
+        parent.insertBefore(wrap, a);
+        wrap.appendChild(a);
+      }
+
+      var dd = document.createElement(`div`);
+      dd.setAttribute(`data-soe`, `nav-dropdown`);
+
+      if (t === `Equipment`){
+        dd.setAttribute(`data-soe-menu`, `mega`);
+        equipMenu.forEach(function(col){
+          var c = document.createElement(`div`);
+          c.setAttribute(`data-soe`, `nav-mega-col`);
+          var h = document.createElement(`a`);
+          h.setAttribute(`data-soe`, `nav-mega-col-h`);
+          h.href = col.href;
+          h.textContent = col.brand;
+          c.appendChild(h);
+          col.items.forEach(function(it){
+            var aa = document.createElement(`a`);
+            aa.setAttribute(`data-soe`, `nav-dropdown-item`);
+            aa.setAttribute(`data-soe-kind`, `mega`);
+            aa.href = it[1];
+            aa.textContent = it[0];
+            c.appendChild(aa);
+          });
+          dd.appendChild(c);
+        });
+      } else {
+        var menu = simpleMenus[t];
+        if (menu){
+          menu.forEach(function(it){
+            var aa = document.createElement(`a`);
+            aa.setAttribute(`data-soe`, `nav-dropdown-item`);
+            aa.href = it[1];
+            aa.textContent = it[0];
+            dd.appendChild(aa);
+          });
+        }
+      }
+      wrap.appendChild(dd);
+
+      /* Right-align mega menu if it would overflow viewport */
+      if (t === `Equipment`){
+        setTimeout(function(){
+          try {
+            var rect = wrap.getBoundingClientRect();
+            var vw = window.innerWidth || document.documentElement.clientWidth;
+            if (rect.left + 780 > vw - 24){
+              dd.setAttribute(`data-soe-align`, `right`);
+            }
+          } catch(e){}
+        }, 50);
+      }
+    });
+  }
+
+  /* ---------- Footer restructure ---------- */
+  function rebuildFooter(){
+    var footer = document.querySelector(`[data-soe=footer]`);
+    if (!footer) return;
+    var top = footer.querySelector(`[data-soe=footer-top]`);
+    if (!top) return;
+
+    var newCols = [
+      {head:`Equipment`, items:[
+        [`Mulch Mule`,`/mulch-mule`],
+        [`Brinemasters`,`/brands`],
+        [`Energreen`,`/brands`],
+        [`Metec`,`/brands`],
+        [`View All Brands`,`/brands`]
+      ]},
+      {head:`Build & Quote`, items:[
+        [`Compact Tractor Attachments`,`/request-quote`]
+      ]},
+      {head:`Become a Dealer`, items:[
+        [`Mulch Mule`,`#`],
+        [`Metec`,`#`],
+        [`New Application`,`#`]
+      ]},
+      {head:`About Us`, items:[
+        [`Our Story`,`#`],
+        [`Equipment Consultants`,`#`],
+        [`Service Network`,`#`],
+        [`Contact`,`#`],
+        [`Privacy`,`#`],
+        [`Terms`,`#`]
+      ]}
+    ];
+
+    /* Hide all existing non-brand footer-cols */
+    Array.prototype.forEach.call(top.querySelectorAll(`[data-soe=footer-col]`), function(c){
+      c.style.display = `none`;
+      c.setAttribute(`data-soe-replaced`, `1`);
+    });
+
+    /* Insert new cols at the end of footer-top */
+    newCols.forEach(function(spec, idx){
+      var col = document.createElement(`div`);
+      col.setAttribute(`data-soe`, `footer-col`);
+      col.setAttribute(`data-soe-pos`, String(idx + 2));
+      col.setAttribute(`data-soe-built`, `v2hh`);
+      var h = document.createElement(`div`);
+      h.setAttribute(`data-soe`, `footer-col-h`);
+      h.textContent = spec.head;
+      col.appendChild(h);
+      var ul = document.createElement(`ul`);
+      spec.items.forEach(function(it){
+        var li = document.createElement(`li`);
+        var a = document.createElement(`a`);
+        a.href = it[1];
+        a.textContent = it[0];
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+      col.appendChild(ul);
+      top.appendChild(col);
+    });
+
+    /* 5-col grid: brand info + 4 link columns */
+    top.style.gridTemplateColumns = `1.4fr 1fr .9fr 1fr 1.1fr`;
+  }
+
+  /* ---------- Mobile drawer parity ---------- */
+  function rebuildDrawer(){
+    var drawer = document.querySelector(`[data-soe=nav-drawer]`);
+    if (!drawer) return;
+    var ul = drawer.querySelector(`ul`);
+    if (!ul) return;
+
+    /* Remove old links so we have a clean slate */
+    Array.prototype.forEach.call(ul.querySelectorAll(`li`), function(li){
+      var a = li.querySelector(`a`);
+      var t = a ? (a.textContent || ``).trim() : ``;
+      if (t === `Dealer Portal` || t === `Buy Parts` || t === `Operator Manuals`){
+        li.style.display = `none`;
+      }
+      if (t === `Products`){
+        a.textContent = `Equipment`;
+      }
+    });
+
+    /* Append sub-menu under matching top items if they have a dropdown */
+    var topItems = {
+      "Equipment": equipMenu.reduce(function(acc, col){
+        col.items.forEach(function(i){ acc.push(i); });
+        return acc;
+      }, []),
+      "Brands": simpleMenus["Brands"],
+      "Build & Quote": simpleMenus["Build & Quote"],
+      "Become a Dealer": simpleMenus["Become a Dealer"],
+      "About Us": simpleMenus["About Us"]
+    };
+
+    Array.prototype.forEach.call(ul.querySelectorAll(`li`), function(li){
+      var a = li.querySelector(`a`);
+      if (!a) return;
+      var t = (a.textContent || ``).trim();
+      if (!topItems[t]) return;
+      if (li.querySelector(`[data-soe=drawer-sub]`)) return;
+      var sub = document.createElement(`div`);
+      sub.setAttribute(`data-soe`, `drawer-sub`);
+      topItems[t].forEach(function(it){
+        var s = document.createElement(`a`);
+        s.href = it[1];
+        s.textContent = it[0];
+        sub.appendChild(s);
+      });
+      li.appendChild(sub);
+    });
+  }
+
+  /* ---------- Brand card link text normalization ---------- */
+  function normalizeBrandCardLinks(){
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=brand-card-link]`), function(span){
+      /* Replace "View brand" with "View Brand" for consistency, drop arrow */
+      var arr = span.querySelector(`[data-soe=arr]`);
+      if (arr) arr.style.display = `none`;
+      /* Strip arrow text content if it's text not element */
+      var txt = (span.textContent || ``).replace(/[\s ]+$/,``);
+      if (/^view brand$/i.test(txt)){
+        span.textContent = `View Brand`;
+      }
+    });
+  }
+
+  ready(function(){
+    setTimeout(function(){
+      try { rebuildNav(); } catch(e){}
+      try { rebuildFooter(); } catch(e){}
+      try { rebuildDrawer(); } catch(e){}
+      try { normalizeBrandCardLinks(); } catch(e){}
+    }, 280);
+  });
+})();
