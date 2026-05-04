@@ -179,3 +179,12 @@ html,body{overflow-x:hidden !important;max-width:100vw !important;}[data-soe=quo
   [data-soe=quote-tab-panel][data-soe-state=active]{position:relative;visibility:visible;pointer-events:auto;}
   [data-soe=quote-tab-panel-inner]{overflow:visible !important;animation:none !important;transition:none !important;transform:none !important;}
 }
+
+/* === Mobile RQ extra perf: contain layout, stable card height, kill tap delay === */
+@media (max-width:720px){
+  [data-soe=quote-page]{contain:layout style;}
+  [data-soe=quote-card]{contain:layout style;min-height:1100px;}
+  [data-soe=quote-tab]{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+  [data-soe=quote-tab-panel]{contain:layout style;}
+  [data-soe=quote-tab-panel] form{contain:layout style;}
+}
