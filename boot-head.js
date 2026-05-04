@@ -6,6 +6,18 @@
   s.textContent = css;
   (document.head || document.documentElement).appendChild(s);
 
+  function presetHero(){
+    var slides = document.querySelectorAll('[data-soe=hero-slide]');
+    if (slides.length === 0) return;
+    slides[0].setAttribute('data-soe-state', 'active');
+    for (var i = 1; i < slides.length; i++) slides[i].removeAttribute('data-soe-state');
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', presetHero);
+  } else {
+    presetHero();
+  }
+
   function bind(){
     document.addEventListener('click', function(e){
       var t = e.target;
