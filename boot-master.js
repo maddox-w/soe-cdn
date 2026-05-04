@@ -1004,6 +1004,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   ready(function(){setTimeout(swap,300);});
 })();
 
+
 /* === boot-fixes-v2hh ===
    Header nav restructure to 5-item dropdown layout + footer rebuild +
    green "View Brand" button on homepage brand cards.
@@ -1156,9 +1157,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     [`Our Story`,`#`],
     [`Equipment Consultants`,`#`],
     [`Service Network`,`#`],
-    [`Contact`,`#`],
-    [`Privacy`,`#`],
-    [`Terms`,`#`]
+    [`Contact`,`#`]
   ];
 
   /* ---------- Header nav restructure ---------- */
@@ -1299,9 +1298,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
         [`Our Story`,`#`],
         [`Equipment Consultants`,`#`],
         [`Service Network`,`#`],
-        [`Contact`,`#`],
-        [`Privacy`,`#`],
-        [`Terms`,`#`]
+        [`Contact`,`#`]
       ]}
     ];
 
@@ -1336,6 +1333,13 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
 
     /* 5-col grid: brand info + 4 link columns */
     top.style.gridTemplateColumns = `1.4fr 1fr .9fr 1fr 1.1fr`;
+
+    /* Wire up footer-bot Privacy / Terms / Sitemap to their dedicated pages */
+    var legalMap = {"Privacy":"/privacy", "Terms":"/terms", "Sitemap":"/sitemap"};
+    Array.prototype.forEach.call(footer.querySelectorAll(`[data-soe=footer-legal] a`), function(a){
+      var t = (a.textContent || ``).trim();
+      if (legalMap[t]) a.href = legalMap[t];
+    });
   }
 
   /* ---------- Mobile drawer parity ---------- */
@@ -1413,12 +1417,8 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     } catch(e){}
   }
 
-  /* Run synchronously NOW so the rebuild happens before first paint —
-     boot-master.js is at end of body, so all relevant DOM is already parsed. */
-  runAll();
-
-  /* No-op fallback in case anything dynamic still needs rebinding */
-  if (false && document.readyState === `loading`){
+  /* Run as early as possible — script tag sits at end of body, so the nav DOM is already parsed */
+  if (document.readyState === `loading`){
     document.addEventListener(`DOMContentLoaded`, runAll);
   } else {
     runAll();
