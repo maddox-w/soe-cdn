@@ -314,11 +314,9 @@
   function init(){
     initAnimReveal();
   }
-  if(document.readyState === `loading`){
-    document.addEventListener(`DOMContentLoaded`,init);
-  }else{
-    init();
-  }
+  /* Run synchronously so the data-soe-anim=reveal attribute is on elements before first paint —
+     paired with the boot-head.css overrides that keep above-the-fold elements at opacity:1 */
+  init();
 })();
 
 /* === boot-fixes-v2d === */
@@ -805,7 +803,8 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     }
   }
 
-  ready(function(){setTimeout(applyFixes,150);});
+  /* Run synchronously NOW so text rewrites (Watch Demo->Watch Video, intro-tagline, etc) happen before first paint */
+  applyFixes();
 })();
 
 /* === boot-fixes-v2t === */
@@ -1414,8 +1413,12 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     } catch(e){}
   }
 
-  /* Run as early as possible — script tag sits at end of body, so the nav DOM is already parsed */
-  if (document.readyState === `loading`){
+  /* Run synchronously NOW so the rebuild happens before first paint —
+     boot-master.js is at end of body, so all relevant DOM is already parsed. */
+  runAll();
+
+  /* No-op fallback in case anything dynamic still needs rebinding */
+  if (false && document.readyState === `loading`){
     document.addEventListener(`DOMContentLoaded`, runAll);
   } else {
     runAll();
