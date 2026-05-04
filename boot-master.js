@@ -1064,22 +1064,34 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       `text-decoration:none;`,
     `}`,
     `[data-soe=nav-mega-col-h]:hover{color:#fff;}`,
+    /* Unified dropdown-item style: same font/weight/color across simple AND mega dropdowns */
+    `[data-soe=nav-dropdown] [data-soe=nav-dropdown-item]{`,
+      `font-family:Inter,sans-serif !important;`,
+      `font-size:13px !important;`,
+      `font-weight:400 !important;`,
+      `color:#D4D8D2 !important;`,
+      `padding:8px 18px !important;`,
+      `border-bottom:0 !important;`,
+      `letter-spacing:0 !important;`,
+      `text-transform:none !important;`,
+      `line-height:1.45 !important;`,
+    `}`,
+    `[data-soe=nav-dropdown] [data-soe=nav-dropdown-item]:hover{`,
+      `background:rgba(255,255,255,.04) !important;`,
+      `color:#7DB13C !important;`,
+    `}`,
+    /* Mega items: column-aligned (no horizontal padding) */
     `[data-soe=nav-dropdown] [data-soe=nav-dropdown-item][data-soe-kind=mega]{`,
       `padding:7px 0 !important;`,
-      `border-bottom:0 !important;`,
-      `font-size:13px;`,
-      `font-weight:400;`,
-      `color:#D4D8D2;`,
     `}`,
     `[data-soe=nav-dropdown] [data-soe=nav-dropdown-item][data-soe-kind=mega]:hover{`,
       `background:transparent !important;`,
-      `color:#7DB13C !important;`,
     `}`,
+    /* Simple dropdown frame: a little internal vertical padding */
+    `[data-soe=nav-dropdown]:not([data-soe-menu=mega]){padding:10px 0;}`,
     /* Right-edge alignment fallback for wide menus */
     `[data-soe=nav-dropdown][data-soe-align=right]{left:auto !important;right:0 !important;}`,
-    /* Make sure simple dropdowns still look ok with new content density */
-    `[data-soe=nav-dropdown]{min-width:200px;}`,
-    `[data-soe=nav-dropdown-item]:last-child{border-bottom:0;}`,
+    `[data-soe=nav-dropdown]{min-width:220px;}`,
 
     /* Drawer parity for mobile - new menu structure */
     `[data-soe=nav-drawer] [data-soe=drawer-sub]{padding-left:18px;display:flex;flex-direction:column;gap:0;border-top:1px solid rgba(255,255,255,.06);}`,
@@ -1390,12 +1402,22 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     });
   }
 
-  ready(function(){
-    setTimeout(function(){
-      try { rebuildNav(); } catch(e){}
-      try { rebuildFooter(); } catch(e){}
-      try { rebuildDrawer(); } catch(e){}
-      try { normalizeBrandCardLinks(); } catch(e){}
-    }, 280);
-  });
+  function runAll(){
+    try { rebuildNav(); } catch(e){}
+    try { rebuildFooter(); } catch(e){}
+    try { rebuildDrawer(); } catch(e){}
+    try { normalizeBrandCardLinks(); } catch(e){}
+    /* Reveal the nav once it's been rebuilt — boot-head.css holds it at opacity:0 until this attribute lands */
+    try {
+      var nl = document.querySelector(`[data-soe=nav-links]`);
+      if (nl) nl.setAttribute(`data-soe-init`, `ready`);
+    } catch(e){}
+  }
+
+  /* Run as early as possible — script tag sits at end of body, so the nav DOM is already parsed */
+  if (document.readyState === `loading`){
+    document.addEventListener(`DOMContentLoaded`, runAll);
+  } else {
+    runAll();
+  }
 })();
