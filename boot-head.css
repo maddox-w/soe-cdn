@@ -166,3 +166,16 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
   button[data-soe=quote-tab]{padding:14px 8px !important;font-size:12px !important;}
   button[data-soe=quote-tab] span{display:none !important;}
 }
+
+/* === Mobile optimization: kill hover, reduce paint pressure === */
+@media (hover: none) and (pointer: coarse) {
+  [data-soe=brand-card-h]:hover, [data-soe=brand-card]:hover, [data-soe=feature]:hover, [data-soe=video-card]:hover {transform: none !important; box-shadow: none !important;}
+  [data-soe=btn]:hover {transform: none !important;}
+  [data-soe=quote-submit]:hover {background: #367C2B !important;}
+  [data-soe-anim=reveal] {will-change: auto !important;}
+}
+@media (max-width: 720px) {
+  [data-soe=quote-tab-panel]:not([data-soe-state=active]) {content-visibility: hidden; contain-intrinsic-size: 1px 1000px;}
+  [data-soe=quote-tab] {tap-highlight-color: transparent; -webkit-tap-highlight-color: transparent;}
+  button[data-soe=quote-tab] {min-height: 48px; min-width: 48px;}
+}

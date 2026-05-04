@@ -35,14 +35,7 @@
     fixQuoteTabs();
   }
 
-  document.addEventListener('click', function(e){
-    var t = e.target;
-    if (!t || !t.closest) return;
-    var tab = t.closest('[data-soe=quote-tab]');
-    if (!tab) return;
-    e.preventDefault();
-    e.stopPropagation();
-    var key = tab.getAttribute('data-soe-tab');
+  function applyTabState(key){
     document.querySelectorAll('[data-soe=quote-tab]').forEach(function(x){
       if (x.getAttribute('data-soe-tab') === key) x.setAttribute('data-soe-state', 'active');
       else x.removeAttribute('data-soe-state');
@@ -51,7 +44,28 @@
       if (p.getAttribute('data-soe-tab') === key) p.setAttribute('data-soe-state', 'active');
       else p.removeAttribute('data-soe-state');
     });
+  }
+  document.addEventListener('click', function(e){
+    var t = e.target;
+    if (!t || !t.closest) return;
+    var tab = t.closest('[data-soe=quote-tab]');
+    if (!tab) return;
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    var key = tab.getAttribute('data-soe-tab');
+    requestAnimationFrame(function(){applyTabState(key);});
   }, true);
+  document.addEventListener('touchend', function(e){
+    var t = e.target;
+    if (!t || !t.closest) return;
+    var tab = t.closest('[data-soe=quote-tab]');
+    if (!tab) return;
+    e.preventDefault();
+    e.stopPropagation();
+    var key = tab.getAttribute('data-soe-tab');
+    requestAnimationFrame(function(){applyTabState(key);});
+  }, {capture: true, passive: false});
 
   function presetHero(){
     var slides = document.querySelectorAll('[data-soe=hero-slide]');
