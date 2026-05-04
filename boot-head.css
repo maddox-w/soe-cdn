@@ -215,3 +215,27 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
   transition:none !important;
   animation:none !important;
 }
+
+/* Video card "Watch on YouTube" — green button styled like the homepage View Brand buttons */
+[data-soe=video-foot-watch]{
+  background:#367C2B !important;
+  color:#fff !important;
+  padding:11px 22px !important;
+  font-family:Inter,sans-serif !important;
+  font-size:11px !important;
+  font-weight:600 !important;
+  letter-spacing:.14em !important;
+  text-transform:uppercase !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:0 !important;
+  transition:background .15s !important;
+  line-height:1 !important;
+}
+[data-soe=video-card]:hover [data-soe=video-foot-watch]{background:#2A5F22 !important;}
+[data-soe=video-foot-watch] [data-soe=arr]{display:none !important;}
+@media (max-width:720px){
+  [data-soe=video-foot-watch]{width:100%;padding:13px 22px !important;}
+  [data-soe=video-foot]{flex-direction:column;gap:12px;align-items:flex-start;}
+}
