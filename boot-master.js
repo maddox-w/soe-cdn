@@ -1041,15 +1041,15 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       `[data-soe=brand-card-link]{width:100%;padding:13px 22px !important;}`,
     `}`,
 
-    /* Mega-menu (Equipment) */
+    /* Mega-menu (Equipment) - 5 brand columns */
     `[data-soe=nav-dropdown][data-soe-menu=mega]{`,
-      `min-width:780px;`,
+      `min-width:960px;`,
       `flex-direction:row !important;`,
-      `gap:24px;`,
+      `gap:20px;`,
       `padding:28px 32px 24px;`,
     `}`,
     `[data-soe=nav-dropdown][data-soe-menu=mega] [data-soe=nav-mega-col]{`,
-      `display:flex;flex-direction:column;flex:1;min-width:160px;`,
+      `display:flex;flex-direction:column;flex:1;min-width:140px;`,
     `}`,
     `[data-soe=nav-mega-col-h]{`,
       `color:#7DB13C;`,
@@ -1135,6 +1135,11 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       [`V-Plows`,`/brands`],
       [`Sweepers`,`/brands`],
       [`Spreaders`,`/brands`]
+    ]},
+    {brand:`Hydroexcavation`, href:`/brands`, items:[
+      [`HydroSpade Trucks`,`/brands`],
+      [`HydroSpade Trailers`,`/brands`],
+      [`View All HydroSpade`,`/brands`]
     ]}
   ];
 
@@ -1144,14 +1149,18 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     [`Brinemasters`,`/brands`],
     [`Energreen`,`/brands`],
     [`Metec`,`/brands`],
+    [`HydroSpade`,`/brands`],
     [`View All Brands`,`/brands`]
   ];
   simpleMenus[`Build & Quote`] = [
-    [`Compact Tractor Attachments`,`/request-quote`]
+    [`Compact Tractor Attachments`,`/request-quote`],
+    [`HydroSpade Trucks`,`/request-quote`],
+    [`HydroSpade Trailers`,`/request-quote`]
   ];
   simpleMenus[`Become a Dealer`] = [
     [`Mulch Mule`,`#`],
-    [`Metec`,`#`]
+    [`Metec`,`#`],
+    [`HydroSpade`,`#`]
   ];
   simpleMenus[`Other`] = [
     [`Our Story`,`#`],
@@ -1286,14 +1295,18 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
         [`Brinemasters`,`/brands`],
         [`Energreen`,`/brands`],
         [`Metec`,`/brands`],
+        [`HydroSpade`,`/brands`],
         [`View All Brands`,`/brands`]
       ]},
       {head:`Build & Quote`, items:[
-        [`Compact Tractor Attachments`,`/request-quote`]
+        [`Compact Tractor Attachments`,`/request-quote`],
+        [`HydroSpade Trucks`,`/request-quote`],
+        [`HydroSpade Trailers`,`/request-quote`]
       ]},
       {head:`Become a Dealer`, items:[
         [`Mulch Mule`,`#`],
-        [`Metec`,`#`]
+        [`Metec`,`#`],
+        [`HydroSpade`,`#`]
       ]},
       {head:`Other`, items:[
         [`Our Story`,`#`],
