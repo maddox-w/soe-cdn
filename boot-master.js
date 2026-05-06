@@ -501,7 +501,9 @@
     function stop(){if(t){clearInterval(t);t=null;}}
     var hero=document.querySelector(`[data-soe=hero]`);
     if(hero){hero.addEventListener(`mouseenter`,stop);hero.addEventListener(`mouseleave`,start);}
-    setTimeout(function(){next();start();},5000);
+    /* First cycle uses the same 7000ms as subsequent intervals so the Ken-Burns animation
+       runs to its 8s end state before being interrupted (avoids the jolt on Mulch Mule). */
+    setTimeout(function(){next();start();},7000);
   }
 
   function init(){
