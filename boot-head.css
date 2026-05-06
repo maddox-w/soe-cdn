@@ -299,6 +299,6 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 }
 
 /* HydroSpade — 5th brand: hero slide + brand card backgrounds (Webflow asset) */
-[data-soe=hero-slide]:nth-child(5) [data-soe=hero-bg]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/69fb4ac9be94d735d041c9f4_Hydro-Spade-card-banner.jpg) !important;background-position:center center !important;}
+[data-soe=hero-slide]:nth-child(5) [data-soe=hero-bg]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/69fb4ac9be94d735d041c9f4_Hydro-Spade-card-banner.jpg) !important;background-size:92% auto !important;background-position:62% center !important;background-repeat:no-repeat !important;background-color:#0E1110 !important;}
 [data-soe=brand-grid] a:nth-child(5) [data-soe=brand-card-visual]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/69fb4ac9be94d735d041c9f4_Hydro-Spade-card-banner.jpg) !important;background-position:center center !important;background-size:cover !important;background-repeat:no-repeat !important;}
 [data-soe=brands-list-grid] article:nth-child(5) [data-soe=brand-card-visual-l]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/69fb4ac9be94d735d041c9f4_Hydro-Spade-card-banner.jpg) !important;background-position:center center !important;}
