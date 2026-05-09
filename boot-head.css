@@ -306,3 +306,36 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 
 /* mobile nav-cta tweak (2026-05-08): match hamburger level + size */
 @media (max-width:720px){[data-soe=nav-cta]{align-self:center !important;height:36px !important;padding:0 16px !important;font-size:11px !important;letter-spacing:.08em !important;margin-right:8px !important;display:inline-flex !important;align-items:center !important;}}
+
+/* === Image fade-in transitions (2026-05-09): elegant page-load reveal for bg-image containers === */
+html[data-soe-imgfade=pending] [data-soe=p-hero-bg],
+html[data-soe-imgfade=pending] [data-soe=hero-bg],
+html[data-soe-imgfade=pending] [data-soe=brand-card-visual],
+html[data-soe-imgfade=pending] [data-soe=brand-card-visual-l]{opacity:0;transform:scale(1.015);transition:opacity 1s cubic-bezier(.22,.61,.36,1),transform 1.4s cubic-bezier(.22,.61,.36,1);will-change:opacity,transform;}
+html[data-soe-imgfade=pending] [data-soe=hero-brand-tag]{opacity:0;transform:translateY(8px);transition:opacity .9s cubic-bezier(.22,.61,.36,1) .15s,transform 1s cubic-bezier(.22,.61,.36,1) .15s;will-change:opacity,transform;}
+html[data-soe-imgfade=pending] [data-soe=feature-visual],
+html[data-soe-imgfade=pending] [data-soe=video-thumb]{opacity:0;transition:opacity .8s cubic-bezier(.22,.61,.36,1);will-change:opacity;}
+[data-soe=p-hero-bg][data-soe-imgload=loaded],
+[data-soe=hero-bg][data-soe-imgload=loaded],
+[data-soe=brand-card-visual][data-soe-imgload=loaded],
+[data-soe=brand-card-visual-l][data-soe-imgload=loaded]{opacity:1 !important;transform:scale(1) !important;}
+[data-soe=hero-brand-tag][data-soe-imgload=loaded]{opacity:1 !important;transform:translateY(0) !important;}
+[data-soe=feature-visual][data-soe-imgload=loaded],
+[data-soe=video-thumb][data-soe-imgload=loaded]{opacity:1 !important;}
+@media (max-width:720px){
+html[data-soe-imgfade=pending] [data-soe=p-hero-bg],
+html[data-soe-imgfade=pending] [data-soe=hero-bg],
+html[data-soe-imgfade=pending] [data-soe=brand-card-visual],
+html[data-soe-imgfade=pending] [data-soe=brand-card-visual-l]{transition-duration:.65s,.9s;}
+html[data-soe-imgfade=pending] [data-soe=feature-visual],
+html[data-soe-imgfade=pending] [data-soe=video-thumb]{transition-duration:.55s;}
+}
+@media (prefers-reduced-motion:reduce){
+html[data-soe-imgfade=pending] [data-soe=p-hero-bg],
+html[data-soe-imgfade=pending] [data-soe=hero-bg],
+html[data-soe-imgfade=pending] [data-soe=brand-card-visual],
+html[data-soe-imgfade=pending] [data-soe=brand-card-visual-l],
+html[data-soe-imgfade=pending] [data-soe=hero-brand-tag],
+html[data-soe-imgfade=pending] [data-soe=feature-visual],
+html[data-soe-imgfade=pending] [data-soe=video-thumb]{opacity:1 !important;transform:none !important;transition:none !important;}
+}
