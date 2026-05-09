@@ -308,4 +308,4 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 @media (max-width:720px){[data-soe=nav-cta]{align-self:center !important;height:36px !important;padding:0 16px !important;font-size:11px !important;letter-spacing:.08em !important;margin-right:8px !important;display:inline-flex !important;align-items:center !important;}}
 
 /* mobile top-util phone link: bold + white (2026-05-09) */
-@media (max-width:720px){[data-soe=top-util-link]:not([data-soe-kind]){color:#fff !important;font-weight:700 !important;}}
+@media (max-width:720px){[data-soe=top-util-link]:not([data-soe-kind]){color:#fff !important;font-weight:700 !important;font-size:22px !important;}}
