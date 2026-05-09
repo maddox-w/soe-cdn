@@ -6,11 +6,6 @@
   s.textContent = css;
   (document.head || document.documentElement).appendChild(s);
 
-  // Image fade-in: set immediately so pre-paint CSS rules can hide bg-image containers
-  if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.documentElement.setAttribute('data-soe-imgfade', 'pending');
-  }
-
   function fixQuoteTabs(){
     document.querySelectorAll('form[data-turnstile-sitekey]').forEach(function(f){
       f.removeAttribute('data-turnstile-sitekey');
@@ -151,38 +146,5 @@
       }
     });
   }
-  function imgFadeInit(){
-    function markLoaded(el){ el.setAttribute('data-soe-imgload', 'loaded'); }
-    function preload(el){
-      var bg = getComputedStyle(el).backgroundImage;
-      var m = bg && bg.match(/url\(["']?([^"')]+)["']?\)/);
-      if (!m) { markLoaded(el); return; }
-      var img = new Image();
-      img.onload = img.onerror = function(){ markLoaded(el); };
-      img.src = m[1];
-    }
-    var aboveFold = document.querySelectorAll('[data-soe=p-hero-bg],[data-soe=hero-bg],[data-soe=hero-brand-tag],[data-soe=brand-card-visual],[data-soe=brand-card-visual-l]');
-    aboveFold.forEach(preload);
-    var below = document.querySelectorAll('[data-soe=feature-visual],[data-soe=video-thumb]');
-    if ('IntersectionObserver' in window) {
-      var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-          if (e.isIntersecting) { preload(e.target); io.unobserve(e.target); }
-        });
-      }, { rootMargin: '200px 0px' });
-      below.forEach(function(el){ io.observe(el); });
-    } else {
-      below.forEach(preload);
-    }
-    setTimeout(function(){
-      document.querySelectorAll('[data-soe=p-hero-bg]:not([data-soe-imgload]),[data-soe=hero-bg]:not([data-soe-imgload]),[data-soe=hero-brand-tag]:not([data-soe-imgload]),[data-soe=brand-card-visual]:not([data-soe-imgload]),[data-soe=brand-card-visual-l]:not([data-soe-imgload]),[data-soe=feature-visual]:not([data-soe-imgload]),[data-soe=video-thumb]:not([data-soe-imgload])').forEach(markLoaded);
-    }, 8000);
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', imgFadeInit);
-  } else {
-    imgFadeInit();
-  }
-
   bind();
 })();
