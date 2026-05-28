@@ -392,3 +392,9 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 /* RoboECO hero imagery */
 #roboeco-hero [data-soe=ru-hero-logo]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a187bf2661b187838fa1de2_roboeco-logo.png);}
 #roboeco-hero [data-soe=ru-hero-visual]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a187bef51ee0070bc72cc15_roboeco-hero.png);}
+#robocompact-hero [data-soe=ru-hero-visual]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a187bf3266a6eda33687a68_robocompact-hero.png);}
+#roboevo-hero [data-soe=ru-hero-visual]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a187bfbaaf6a17bdcee9224_roboevo-hero.png);}
+#robomidi-hero [data-soe=ru-hero-visual]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a187bfd6bc19dd503efc784_robomidi-hero.png);}
+#robomax-hero [data-soe=ru-hero-visual]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a187c0210633147e029fffd_robomax-hero.png);}
+#robofifti-hero [data-soe=ru-hero-visual]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a1863dda37dcea6514bda5f_robofifti-card.png);}
+#roboplus-hero [data-soe=ru-hero-visual]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a1863eac63fe6a5d7a9d834_roboplus-card.png);}
