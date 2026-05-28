@@ -309,3 +309,13 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 
 /* mobile top-util phone link: bold + white (2026-05-09) */
 @media (max-width:720px){[data-soe=top-util-link]:not([data-soe-kind]){color:#fff !important;font-weight:700 !important;font-size:14px !important;}}
+
+/* v2-bg2.0 (2026-05-28): complete design-token system + amber button variant + generic tag component, per "LATEST 05282026 Brand Guidelines v2.0". Additive only — does not alter any currently-rendered element. */
+:root{--amber-dark:#C77E15;--black:#000000;--lime-bright:#7DB13C;--status-red:#B42318;--steel-900:#2A2F2C;--forest:var(--jd-green);--lime:var(--jd-green-mid);--dark-green:var(--jd-green-dark);--forest-dark:var(--jd-green-dark);--amber:var(--safety-amber);--radius:0px;}
+[data-soe=btn][data-soe-variant=amber]{background:var(--safety-amber);color:var(--black);}
+[data-soe=btn][data-soe-variant=amber]:hover{background:var(--amber-dark);}
+[data-soe=tag]{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:6px 10px;background:var(--steel-100);color:var(--ink);border:1px solid var(--steel-300);border-radius:0;line-height:1;}
+[data-soe=tag][data-soe-variant=green]{background:var(--jd-green);color:var(--paper);border-color:var(--jd-green);}
+[data-soe=tag][data-soe-variant=black]{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+[data-soe=tag][data-soe-variant=amber]{background:var(--safety-amber);color:var(--black);border-color:var(--safety-amber);}
+[data-soe=tag][data-soe-variant=outline]{background:transparent;color:var(--ink);border-color:var(--steel-300);}
