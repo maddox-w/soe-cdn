@@ -319,3 +319,6 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe=tag][data-soe-variant=black]{background:var(--ink);color:var(--paper);border-color:var(--ink);}
 [data-soe=tag][data-soe-variant=amber]{background:var(--safety-amber);color:var(--black);border-color:var(--safety-amber);}
 [data-soe=tag][data-soe-variant=outline]{background:transparent;color:var(--ink);border-color:var(--steel-300);}
+
+/* v2-bg2.0b (2026-05-28): button text 14px per guide type scale ("Nav/Button 14px"). Base only — [data-soe-size=lg] keeps 16px via higher specificity. */
+[data-soe=btn]{font-size:14px;}
