@@ -743,7 +743,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
           var items=[
             [`Mulch Mule`,`/mulch-mule`],
             [`Brinemasters`,`/brands`],
-            [`Energreen`,`/brands`],
+            [`Energreen`,`/remote-controlled-mowers`],
             [`Metec`,`/brands`]
           ];
           items.forEach(function(it){
@@ -1124,12 +1124,14 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       [`Truck Fill Stations`,`/brands`],
       [`Salinity Control`,`/brands`]
     ]},
-    {brand:`Energreen`, href:`/brands`, items:[
-      [`RoboMAX`,`/brands`],
-      [`RoboMIDI`,`/brands`],
-      [`RoboEVO`,`/brands`],
-      [`ILF Alpha`,`/brands`],
-      [`ILF Athena`,`/brands`]
+    {brand:`Energreen`, href:`/remote-controlled-mowers`, items:[
+      [`RoboCOMPACT`,`/robocompact`],
+      [`RoboECO`,`/roboeco`],
+      [`RoboEVO`,`/roboevo`],
+      [`RoboFIFTI`,`/robofifti`],
+      [`RoboMIDI`,`/robomidi`],
+      [`RoboMAX`,`/robomax`],
+      [`RoboPLUS`,`/roboplus`]
     ]},
     {brand:`Metec`, href:`/brands`, items:[
       [`Snow Blowers`,`/brands`],
@@ -1149,7 +1151,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   simpleMenus[`Brands`] = [
     [`Mulch Mule`,`/mulch-mule`],
     [`Brinemasters`,`/brands`],
-    [`Energreen`,`/brands`],
+    [`Energreen`,`/remote-controlled-mowers`],
     [`Metec`,`/brands`],
     [`HydroSpade`,`/brands`],
     [`View All Brands`,`/brands`]
@@ -1295,7 +1297,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       {head:`Equipment`, items:[
         [`Mulch Mule`,`/mulch-mule`],
         [`Brinemasters`,`/brands`],
-        [`Energreen`,`/brands`],
+        [`Energreen`,`/remote-controlled-mowers`],
         [`Metec`,`/brands`],
         [`HydroSpade`,`/brands`],
         [`View All Brands`,`/brands`]
