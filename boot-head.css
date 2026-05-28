@@ -359,6 +359,7 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe=ru-hero]{background:var(--ink);color:var(--paper);padding:64px var(--gutter) 72px;border-bottom:8px solid var(--jd-green);}
 [data-soe=ru-hero-inner]{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center;max-width:1200px;margin:0 auto;}
 [data-soe=ru-hero-logo]{width:200px;height:46px;background-size:contain;background-position:left center;background-repeat:no-repeat;margin-bottom:22px;}
+[data-soe=ru-hero] [data-soe=eyebrow]{color:var(--jd-green-mid);margin-bottom:18px;}
 [data-soe=ru-hero-h1]{font-family:var(--font-display);font-weight:800;font-size:clamp(44px,5vw,72px);line-height:1;letter-spacing:-.03em;margin:0;color:var(--paper);}
 [data-soe=ru-hero-sub]{font-family:var(--font-display);font-weight:700;font-size:clamp(17px,2vw,22px);color:var(--safety-amber);margin:8px 0 0;text-transform:uppercase;letter-spacing:.02em;}
 [data-soe=ru-hero-lede]{font-family:var(--font-sans);font-size:18px;line-height:1.55;color:var(--steel-300);max-width:520px;margin:20px 0 28px;}
@@ -371,7 +372,7 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe=ru-desc-inner] p{font-family:var(--font-sans);font-size:18px;line-height:1.7;color:var(--steel-700);margin:0;}
 [data-soe=ru-specs]{background:var(--steel-50);padding:88px var(--gutter);border-top:1px solid var(--steel-200);border-bottom:1px solid var(--steel-200);}
 [data-soe=ru-specs-head]{max-width:1100px;margin:0 auto 40px;}
-[data-soe=ru-specs-h2]{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,3vw,40px);line-height:1.05;letter-spacing:-.02em;color:var(--ink);margin:18px 0 0;}
+[data-soe=ru-specs-h2]{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,3vw,40px);line-height:1.05;letter-spacing:-.02em;color:var(--ink);margin:30px 0 0;}
 [data-soe=ru-specs-grid]{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1100px;margin:0 auto;}
 [data-soe=ru-spec-card]{background:var(--paper);border:1px solid var(--steel-200);padding:28px 28px 14px;}
 [data-soe=ru-spec-cat]{font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--jd-green);margin:0 0 14px;padding-bottom:14px;border-bottom:1px solid var(--steel-200);}
