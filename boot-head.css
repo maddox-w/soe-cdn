@@ -354,3 +354,40 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 
 /* fix (2026-05-28): Mulch Mule difference-grid feature photos rendered at natural size, pinned top-left (zoomed in) — the .mm-feat-bg-* classes set background-image but no size/position. Force cover + center. */
 [data-soe=feature-visual]{background-size:cover !important;background-position:center !important;}
+
+/* Robo unit sub-pages (2026-05-28): shared unit-detail layout (ru-*). Per-unit hero/logo images are scoped by #<unit>-hero at the end of each block. */
+[data-soe=ru-hero]{background:var(--ink);color:var(--paper);padding:64px var(--gutter) 72px;border-bottom:8px solid var(--jd-green);}
+[data-soe=ru-hero-inner]{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center;max-width:1200px;margin:0 auto;}
+[data-soe=ru-hero-logo]{width:200px;height:46px;background-size:contain;background-position:left center;background-repeat:no-repeat;margin-bottom:22px;}
+[data-soe=ru-hero-h1]{font-family:var(--font-display);font-weight:800;font-size:clamp(44px,5vw,72px);line-height:1;letter-spacing:-.03em;margin:0;color:var(--paper);}
+[data-soe=ru-hero-sub]{font-family:var(--font-display);font-weight:700;font-size:clamp(17px,2vw,22px);color:var(--safety-amber);margin:8px 0 0;text-transform:uppercase;letter-spacing:.02em;}
+[data-soe=ru-hero-lede]{font-family:var(--font-sans);font-size:18px;line-height:1.55;color:var(--steel-300);max-width:520px;margin:20px 0 28px;}
+[data-soe=ru-chips]{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:32px;}
+[data-soe=ru-chip]{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--paper);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);padding:8px 14px;}
+[data-soe=ru-hero-ctas]{display:flex;flex-wrap:wrap;gap:14px;}
+[data-soe=ru-hero-visual]{aspect-ratio:600 / 368;background-color:#0A0D0A;background-size:contain;background-position:center;background-repeat:no-repeat;}
+[data-soe=ru-desc]{background:var(--paper);padding:88px var(--gutter);}
+[data-soe=ru-desc-inner]{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:22px;}
+[data-soe=ru-desc-inner] p{font-family:var(--font-sans);font-size:18px;line-height:1.7;color:var(--steel-700);margin:0;}
+[data-soe=ru-specs]{background:var(--steel-50);padding:88px var(--gutter);border-top:1px solid var(--steel-200);border-bottom:1px solid var(--steel-200);}
+[data-soe=ru-specs-head]{max-width:1100px;margin:0 auto 40px;}
+[data-soe=ru-specs-h2]{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,3vw,40px);line-height:1.05;letter-spacing:-.02em;color:var(--ink);margin:18px 0 0;}
+[data-soe=ru-specs-grid]{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1100px;margin:0 auto;}
+[data-soe=ru-spec-card]{background:var(--paper);border:1px solid var(--steel-200);padding:28px 28px 14px;}
+[data-soe=ru-spec-cat]{font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--jd-green);margin:0 0 14px;padding-bottom:14px;border-bottom:1px solid var(--steel-200);}
+[data-soe=ru-spec-row]{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--steel-100);}
+[data-soe=ru-spec-k]{font-family:var(--font-sans);font-size:14px;color:var(--steel-700);}
+[data-soe=ru-spec-v]{font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--ink);text-align:right;}
+[data-soe=ru-form]{background:var(--ink);color:var(--paper);padding:88px var(--gutter);}
+[data-soe=ru-form-inner]{max-width:680px;margin:0 auto;}
+[data-soe=ru-form-head]{margin-bottom:30px;text-align:center;}
+[data-soe=ru-form-head] [data-soe=eyebrow]{justify-content:center;color:var(--jd-green-mid);}
+[data-soe=ru-form-h2]{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,3vw,40px);line-height:1.05;letter-spacing:-.02em;color:var(--paper);margin:14px 0 12px;}
+[data-soe=ru-form-lede]{font-family:var(--font-sans);font-size:17px;color:var(--steel-300);margin:0;}
+[data-soe=ru-input],[data-soe=ru-textarea]{width:100%;font-family:var(--font-sans);font-size:16px;color:var(--paper);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);padding:14px 16px;margin-bottom:14px;box-sizing:border-box;}
+[data-soe=ru-textarea]{min-height:120px;resize:vertical;}
+[data-soe=ru-form-el] [data-soe=btn]{width:100%;justify-content:center;margin-top:6px;}
+@media screen and (max-width:991px){[data-soe=ru-hero-inner]{grid-template-columns:1fr;gap:30px;}[data-soe=ru-specs-grid]{grid-template-columns:1fr;}[data-soe=ru-hero],[data-soe=ru-desc],[data-soe=ru-specs],[data-soe=ru-form]{padding-top:56px;padding-bottom:56px;}}
+/* RoboECO hero imagery */
+#roboeco-hero [data-soe=ru-hero-logo]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a187bf2661b187838fa1de2_roboeco-logo.png);}
+#roboeco-hero [data-soe=ru-hero-visual]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a187bef51ee0070bc72cc15_roboeco-hero.png);}
