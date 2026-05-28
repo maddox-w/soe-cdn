@@ -329,8 +329,10 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 #rc-hero [data-soe=hero-slide]:nth-child(3) [data-soe=hero-bg]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a1863d34d077d02053107bc_energreen-banner-robomax.jpg) !important;background-size:cover !important;background-position:center !important;}
 [data-soe=rc-amber-bar]{background:var(--safety-amber);height:54px;width:100%;}
 [data-soe=rc-units]{background:var(--steel-50);padding:100px var(--gutter) 120px;border-bottom:1px solid var(--steel-200);}
-[data-soe=rc-units-head]{max-width:760px;margin:0 0 56px;}
-[data-soe=rc-units-h2]{font-family:var(--font-display);font-weight:800;font-size:clamp(32px,3.6vw,48px);line-height:1.02;letter-spacing:-.02em;color:var(--ink);margin:24px 0 16px;}
+[data-soe=rc-units-head]{max-width:760px;margin:0 0 60px;}
+[data-soe=rc-units-h2]{font-family:var(--font-display);font-weight:800;font-size:clamp(32px,3.6vw,48px);line-height:1.02;letter-spacing:-.02em;color:var(--ink);margin:30px 0 22px;}
+[data-soe=rc-units-head] [data-soe=eyebrow]{margin-bottom:4px;}
+[data-soe=rc-units-lede]{margin-top:0;}
 [data-soe=rc-units-lede]{font-family:var(--font-sans);font-size:18px;line-height:1.6;color:var(--steel-700);margin:0;}
 [data-soe=rc-units-grid]{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
 [data-soe=rc-unit-card]{background:var(--paper);border:1px solid var(--steel-200);display:flex;flex-direction:column;transition:border-color .2s,transform .2s;}
@@ -349,3 +351,6 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(7) [data-soe=rc-unit-visual]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a1863eac63fe6a5d7a9d834_roboplus-card.png);}
 @media screen and (max-width:991px){[data-soe=rc-units-grid]{grid-template-columns:repeat(2,1fr);}[data-soe=rc-units]{padding:72px var(--gutter) 88px;}}
 @media screen and (max-width:479px){[data-soe=rc-units-grid]{grid-template-columns:1fr;}}
+
+/* fix (2026-05-28): Mulch Mule difference-grid feature photos rendered at natural size, pinned top-left (zoomed in) — the .mm-feat-bg-* classes set background-image but no size/position. Force cover + center. */
+[data-soe=feature-visual]{background-size:cover !important;background-position:center !important;}
