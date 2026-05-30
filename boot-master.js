@@ -1435,11 +1435,34 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     });
   }
 
+  /* ---------- Contact phone update: (812) 305-7545 -> (855) 419-9190 (site-wide chrome is page-level, not a symbol, so fix at runtime) ---------- */
+  function fixPhone(){
+    var OLD_TEL=`tel:+18123057545`, NEW_TEL=`tel:+18554199190`;
+    var OLD_DISP=`(812) 305-7545`, NEW_DISP=`(855) 419-9190`;
+    Array.prototype.forEach.call(document.querySelectorAll(`a[href="`+OLD_TEL+`"]`),function(a){ a.setAttribute(`href`,NEW_TEL); });
+    var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null),nodes=[],n;
+    while((n=w.nextNode())){ if(n.nodeValue && n.nodeValue.indexOf(OLD_DISP)!==-1) nodes.push(n); }
+    nodes.forEach(function(t){ t.nodeValue=t.nodeValue.split(OLD_DISP).join(NEW_DISP); });
+  }
+
+  /* ---------- Request-quote: add HydroSpade to the Equipment Brand select (options aren't editable via the Designer API) ---------- */
+  function addQuoteOption(){
+    Array.prototype.forEach.call(document.querySelectorAll(`select`),function(sel){
+      if(!Array.prototype.some.call(sel.options,function(o){return o.value===`mulch-mule`;})) return;
+      if(Array.prototype.some.call(sel.options,function(o){return o.value===`hydrospade`;})) return;
+      var opt=document.createElement(`option`); opt.value=`hydrospade`; opt.textContent=`HydroSpade`;
+      var other=Array.prototype.filter.call(sel.options,function(o){return o.value===`other`;})[0];
+      if(other) sel.insertBefore(opt,other); else sel.appendChild(opt);
+    });
+  }
+
   function runAll(){
     try { rebuildNav(); } catch(e){}
     try { rebuildFooter(); } catch(e){}
     try { rebuildDrawer(); } catch(e){}
     try { normalizeBrandCardLinks(); } catch(e){}
+    try { fixPhone(); } catch(e){}
+    try { addQuoteOption(); } catch(e){}
     /* Reveal the nav once it's been rebuilt — boot-head.css holds it at opacity:0 until this attribute lands */
     try {
       var nl = document.querySelector(`[data-soe=nav-links]`);
