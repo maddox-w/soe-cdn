@@ -502,12 +502,13 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe=drawer-sub]{display:flex;flex-direction:column;padding:4px 0 10px;}
 [data-soe=nav-drawer] [data-soe=drawer-sub] a{padding:9px 0 9px 16px !important;font-size:13px !important;letter-spacing:.02em !important;text-transform:none !important;color:var(--steel-300) !important;font-weight:400 !important;border:0 !important;}
 
-/* (M) Homepage banner: SOFT DRIFT (chosen option, slowed way down). The active photo
-   eases in horizontally + a touch of zoom over a long 4s while the slide cross-fades;
-   the text/buttons fade in place. Homepage only ([data-soe=hero]); the heavier Energreen
-   #rc-hero keeps the plain cross-fade (block J). scale(1.08) covers the 3% drift so no
-   edge of the photo is ever exposed. */
-[data-soe=hero] [data-soe=hero-bg]{transform:translateX(3%) scale(1.08) !important;transition:transform 4s cubic-bezier(.2,.6,.2,1) !important;}
-[data-soe=hero] [data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg]{transform:translateX(0) scale(1.08) !important;}
-[data-soe=hero] [data-soe=hero-slide][data-soe-state=prev] [data-soe=hero-bg]{transform:translateX(0) scale(1.08) !important;transition:none !important;}
-@media (prefers-reduced-motion:reduce){[data-soe=hero] [data-soe=hero-bg]{transition:none !important;transform:scale(1.08) !important;}}
+/* (M) Homepage banner: KEN BURNS (smooth, jolt-free). Each active photo zooms gently
+   scale(1)->scale(1.08) over ~7s (the full rotator dwell, via a linear transition), then
+   HOLDS at 1.08 as it becomes the outgoing (prev) slide — so there's no scale snap at the
+   hand-off (that snap was the jolt in the demo, where the zoom out-ran the slide). The
+   incoming photo starts at 1.0 and zooms while the slide cross-fades over it. Homepage
+   only ([data-soe=hero]); the heavier Energreen #rc-hero keeps the plain fade (block J). */
+[data-soe=hero] [data-soe=hero-bg]{transform:scale(1) !important;transition:transform 7s linear !important;}
+[data-soe=hero] [data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg]{transform:scale(1.08) !important;}
+[data-soe=hero] [data-soe=hero-slide][data-soe-state=prev] [data-soe=hero-bg]{transform:scale(1.08) !important;transition:none !important;}
+@media (prefers-reduced-motion:reduce){[data-soe=hero] [data-soe=hero-bg]{transition:none !important;transform:scale(1.04) !important;}}
