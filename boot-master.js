@@ -1417,11 +1417,12 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       li.appendChild(sub);
     });
 
-    /* Webflow left [data-w-cloak] on this drawer's links; the rule
-       html[data-w-dynpage] [data-w-cloak]{color:#0000 !important} renders that text
-       transparent (invisible section titles + contact). Strip it so they show. */
-    if (drawer.hasAttribute(`data-w-cloak`)) drawer.removeAttribute(`data-w-cloak`);
-    Array.prototype.forEach.call(drawer.querySelectorAll(`[data-w-cloak]`), function(el){ el.removeAttribute(`data-w-cloak`); });
+    /* The drawer's section-title links + contact text render invisible on the live page
+       (their base color rules have no !important and lose to a stylesheet override; the
+       sub-items show because they use !important). Force them visible with INLINE
+       !important, which beats any stylesheet. Titles white, contact text grey. */
+    Array.prototype.forEach.call(ul.querySelectorAll(`li > a`), function(a){ a.style.setProperty(`color`, `#ffffff`, `important`); });
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=drawer-contact] a`), function(a){ a.style.setProperty(`color`, `#a5ada4`, `important`); });
   }
 
   /* ---------- Brand card link text normalization ---------- */
