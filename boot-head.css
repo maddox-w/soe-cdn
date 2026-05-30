@@ -458,3 +458,19 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 /* (H) Energreen promo-strip — amber variant (the brand page uses orange, not green) */
 [data-soe=promo-strip][data-soe-variant=amber]{background:var(--safety-amber) !important;color:var(--black) !important;}
 [data-soe=promo-strip][data-soe-variant=amber] a{color:var(--black) !important;border-bottom-color:rgba(0,0,0,.45) !important;}
+
+/* (I) Header: enforce exactly two states and stop the logo shrinking to a tiny size.
+   Webflow shrank .soe-logo-nav-bg to 150x36 at <=767 while the horizontal nav still
+   showed (the odd middle state). Now: desktop nav + full logo above 991; hamburger +
+   readable logo at/below 991. Authoritative (loaded last, !important). */
+.soe-logo-nav-bg{width:240px !important;height:64px !important;}
+[data-soe=nav-links]{display:flex !important;}
+[data-soe=nav-hamburger]{display:none !important;}
+@media screen and (max-width:991px){
+  [data-soe=nav-links]{display:none !important;}
+  [data-soe=nav-hamburger]{display:inline-flex !important;}
+  .soe-logo-nav-bg{width:200px !important;height:52px !important;}
+}
+@media screen and (max-width:479px){
+  .soe-logo-nav-bg{width:168px !important;height:44px !important;}
+}
