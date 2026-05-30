@@ -563,3 +563,10 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
   [data-soe=intro-heritage-year]{font-size:clamp(40px,10vw,52px) !important;}
   [data-soe=intro-lead]{font-size:16px !important;line-height:1.55 !important;}
 }
+
+/* (S) Soften the hero -> intro seam (HOMEPAGE only — the Energreen rc hero is [data-soe=p-hero]).
+   The bottom strip of the hero photo fades to the intro's top color (#FFFFFF) so the section
+   boundary dissolves instead of a hard cut. Sits above the slides but only over the lower strip
+   (below the CTAs); shorter on mobile so it never reaches the buttons. */
+[data-soe=hero]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:104px;background:linear-gradient(180deg,rgba(255,255,255,0),#FFFFFF);z-index:4;pointer-events:none;}
+@media (max-width:600px){[data-soe=hero]::after{height:72px;}}
