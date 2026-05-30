@@ -502,16 +502,21 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe=drawer-sub]{display:flex;flex-direction:column;padding:4px 0 10px;}
 [data-soe=nav-drawer] [data-soe=drawer-sub] a{padding:9px 0 9px 16px !important;font-size:13px !important;letter-spacing:.02em !important;text-transform:none !important;color:var(--steel-300) !important;font-weight:400 !important;border:0 !important;}
 
-/* (M) Homepage banner: KEN BURNS (smooth, jolt-free). Each active photo zooms gently
-   scale(1)->scale(1.08) over ~7s (the full rotator dwell, via a linear transition), then
-   HOLDS at 1.08 as it becomes the outgoing (prev) slide — so there's no scale snap at the
-   hand-off (that snap was the jolt in the demo, where the zoom out-ran the slide). The
-   incoming photo starts at 1.0 and zooms while the slide cross-fades over it. Homepage
-   only ([data-soe=hero]); the heavier Energreen #rc-hero keeps the plain fade (block J). */
-[data-soe=hero] [data-soe=hero-bg]{transform:scale(1) !important;transition:transform 7s linear !important;}
-[data-soe=hero] [data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg]{transform:scale(1.08) !important;}
-[data-soe=hero] [data-soe=hero-slide][data-soe-state=prev] [data-soe=hero-bg]{transform:scale(1.08) !important;transition:none !important;}
-@media (prefers-reduced-motion:reduce){[data-soe=hero] [data-soe=hero-bg]{transition:none !important;transform:scale(1.04) !important;}}
+/* (M) Homepage banner KEN BURNS — FINAL, decisive. Many old iterations left a tangle of
+   transform/transition/animation rules on hero-bg (scale 1.06 & 1.08, a 9s transition, an
+   UNDEFINED `soeKenBurns` animation, block J's transform/animation:none). This block wins by
+   matching the top specificity (0,4,0) AND sitting last: it NEUTRALIZES transform/transition on
+   the homepage hero-bg and drives the zoom on the INDEPENDENT `scale` property (which none of the
+   transform rules touch) via a keyframe ANIMATION. Animation, not transition, so it re-fires on
+   EVERY active slide incl. the FIRST — initRotator4 sets data-soe-state=active synchronously at
+   clone time, so a transition had no start frame to ease from and the load slide never zoomed.
+   scale 1 -> 1.12 over 7s (== rotator dwell) then holds; prev holds 1.12 = no snap. Homepage only;
+   Energreen #rc-hero is untouched (still the plain fade). */
+@keyframes soeHomeKB{from{scale:1}to{scale:1.12}}
+[data-soe=hero] [data-soe=hero-bg]{transform:none !important;transition:none !important;scale:1;}
+[data-soe=hero] [data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg]{transform:none !important;transition:none !important;animation:soeHomeKB 7s linear forwards !important;}
+[data-soe=hero] [data-soe=hero-slide][data-soe-state=prev] [data-soe=hero-bg]{transform:none !important;transition:none !important;animation:none !important;scale:1.12;}
+@media (prefers-reduced-motion:reduce){[data-soe=hero] [data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg]{animation:none !important;scale:1.04;}}
 
 /* (N) Intro -> "Our Lineup" blend (concept 04, cool green-gray). The intro fades white -> #EAF0E8
    over its lower half; the brands section is matched to #EAF0E8 with its top divider removed, so
