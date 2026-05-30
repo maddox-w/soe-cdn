@@ -788,12 +788,14 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       iCta.innerHTML=`Explore the lineup <span data-soe="intro-cta-arr" aria-hidden="true">↓</span>`;
       iCta.addEventListener(`click`,function(e){e.preventDefault();var t=document.querySelector(`[data-soe=brands-section]`);if(t && t.scrollIntoView)t.scrollIntoView({behavior:`smooth`,block:`start`});});
       iCtaW.appendChild(iCta);
+      /* W1: lead paragraph + 1968 heritage sit side-by-side in intro-body (fills the width). */
+      var iBody=document.createElement(`div`); iBody.setAttribute(`data-soe`,`intro-body`);
+      iBody.appendChild(iLead); iBody.appendChild(iHer);
       var iAnchor=iTg||introS.querySelector(`[data-soe=intro-lockup]`);
       if(iAnchor && iAnchor.parentNode){
-        iAnchor.parentNode.insertBefore(iLead, iAnchor.nextSibling);
-        iLead.parentNode.insertBefore(iHer, iLead.nextSibling);
-        iHer.parentNode.insertBefore(iCtaW, iHer.nextSibling);
-      } else { introS.appendChild(iLead); introS.appendChild(iHer); introS.appendChild(iCtaW); }
+        iAnchor.parentNode.insertBefore(iBody, iAnchor.nextSibling);
+        iBody.parentNode.insertBefore(iCtaW, iBody.nextSibling);
+      } else { introS.appendChild(iBody); introS.appendChild(iCtaW); }
     }
 
     var word=document.querySelector(`[data-soe=intro-word]`);

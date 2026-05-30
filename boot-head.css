@@ -524,14 +524,18 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe=intro]{background:linear-gradient(180deg,#FFFFFF 50%,#EAF0E8 100%) !important;}
 [data-soe=brands-section]{background:#EAF0E8 !important;border-top:0 !important;}
 
-/* (P) Homepage intro enrichment (concept 03) — lead paragraph + "1968" heritage credit +
-   Explore button (the button itself reuses [data-soe=btn][data-soe-variant=primary]). Site tokens 1:1. */
-[data-soe=intro-lead]{font-family:var(--font-sans);font-size:18px;line-height:1.62;color:var(--steel-700);max-width:680px;margin:28px auto 0;}
+/* (P) Homepage intro enrichment (concept 03, W1 two-column body) — the lead paragraph and the
+   "1968" heritage credit sit SIDE-BY-SIDE in [data-soe=intro-body] so the section uses its full
+   width instead of a narrow centered column; the Explore button stays centered below. The button
+   reuses [data-soe=btn][data-soe-variant=primary]. Site tokens 1:1. */
+[data-soe=intro-body]{display:flex;gap:56px;align-items:center;max-width:1040px;margin:36px auto 0;text-align:left;}
+[data-soe=intro-lead]{font-family:var(--font-sans);font-size:18px;line-height:1.62;color:var(--steel-700);flex:1.5;margin:0;}
 [data-soe=intro-lead] strong{color:var(--ink);font-weight:700;}
-[data-soe=intro-heritage]{display:flex;align-items:center;justify-content:center;gap:22px;max-width:640px;margin:42px auto 0;text-align:left;}
-[data-soe=intro-heritage-year]{font-family:var(--font-display);font-weight:800;font-size:clamp(44px,5.5vw,56px);line-height:1;letter-spacing:-.03em;color:var(--jd-green);flex-shrink:0;}
-[data-soe=intro-heritage-text]{font-family:var(--font-sans);font-size:14.5px;line-height:1.5;color:var(--steel-700);max-width:380px;}
+[data-soe=intro-heritage]{flex:1;display:flex;align-items:center;gap:20px;}
+[data-soe=intro-heritage-year]{font-family:var(--font-display);font-weight:800;font-size:clamp(46px,5vw,62px);line-height:1;letter-spacing:-.03em;color:var(--jd-green);flex-shrink:0;}
+[data-soe=intro-heritage-text]{font-family:var(--font-sans);font-size:14px;line-height:1.5;color:var(--steel-700);}
 [data-soe=intro-heritage-text] strong{color:var(--ink);font-weight:700;}
-[data-soe=intro-cta-wrap]{margin:42px auto 0;text-align:center;}
+[data-soe=intro-cta-wrap]{margin:44px auto 0;text-align:center;}
 [data-soe=intro-cta-arr]{font-size:1.05em;line-height:1;}
+@media (max-width:860px){[data-soe=intro-body]{flex-direction:column;gap:30px;max-width:620px;text-align:center;}[data-soe=intro-heritage]{justify-content:center;}}
 @media (max-width:600px){[data-soe=intro-heritage]{flex-direction:column;gap:10px;text-align:center;}[data-soe=intro-heritage-text]{text-align:center;}}
