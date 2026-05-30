@@ -474,3 +474,18 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 @media screen and (max-width:479px){
   .soe-logo-nav-bg{width:168px !important;height:44px !important;}
 }
+
+/* (J) Banner transitions (homepage + Energreen heroes): replace the repaint-heavy
+   clip-path "wipe" with a GPU transform slide (translateX), and run the Ken-Burns
+   zoom on the ACTIVE slide only (it was animating the incoming AND outgoing slide at
+   once = double compositing). Active slides in from the right; prev slides out left;
+   idle slides park off-screen with no transition (no fly-across). */
+[data-soe=hero-stage]{overflow:hidden !important;}
+[data-soe=hero-slide]{clip-path:none !important;opacity:1 !important;transform:translateX(100%) !important;transition:transform 0s linear !important;will-change:transform;pointer-events:none;backface-visibility:hidden;}
+[data-soe=hero-slide][data-soe-state=active]{transform:translateX(0) !important;transition:transform .9s cubic-bezier(.45,0,.2,1) !important;z-index:2 !important;pointer-events:auto;}
+[data-soe=hero-slide][data-soe-state=prev]{transform:translateX(-100%) !important;transition:transform .9s cubic-bezier(.45,0,.2,1) !important;z-index:1 !important;}
+[data-soe=hero-slide][data-soe-state=prev] [data-soe=hero-bg]{animation:none !important;transform:scale(1.06) !important;}
+@media (prefers-reduced-motion:reduce){
+  [data-soe=hero-slide]{transition:none !important;}
+  [data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg]{animation:none !important;transform:none !important;}
+}
