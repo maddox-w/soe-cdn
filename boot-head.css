@@ -550,3 +550,16 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe=intro]::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(125% 98% at 50% 106%,rgba(74,149,64,.6),transparent 63%);animation:soeMist 11s ease-in-out infinite;}
 @keyframes soeMist{0%,100%{opacity:.6;transform:translateY(16px);}50%{opacity:1;transform:translateY(-16px);}}
 @media (prefers-reduced-motion:reduce){[data-soe=intro]::before{animation:none;transform:none;}}
+
+/* (R) Intro polish — mobile + the green mist, 2026-05-30:
+   - Smoother mist: a gradual 3-stop fade removes the hard green->white edge ("jump") and lets the
+     green sit a touch higher/softer (no defined band).
+   - Mobile: smaller lockup so "Smart Outdoor Equipment" / "More Profits for You." fit on ONE line —
+     which ALSO stops the typewriter from wrapping & shifting the layout — plus tighter padding & sizes. */
+[data-soe=intro]::before{background:radial-gradient(145% 125% at 50% 106%,rgba(74,149,64,.6) 0%,rgba(74,149,64,.26) 42%,transparent 86%) !important;}
+@media (max-width:600px){
+  [data-soe=intro]{padding:54px 22px 62px !important;}
+  [data-soe=intro-leadin],[data-soe=intro-line2],[data-soe=intro-word]{font-size:clamp(22px,6.3vw,40px) !important;}
+  [data-soe=intro-heritage-year]{font-size:clamp(40px,10vw,52px) !important;}
+  [data-soe=intro-lead]{font-size:16px !important;line-height:1.55 !important;}
+}
