@@ -1416,6 +1416,12 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       });
       li.appendChild(sub);
     });
+
+    /* Webflow left [data-w-cloak] on this drawer's links; the rule
+       html[data-w-dynpage] [data-w-cloak]{color:#0000 !important} renders that text
+       transparent (invisible section titles + contact). Strip it so they show. */
+    if (drawer.hasAttribute(`data-w-cloak`)) drawer.removeAttribute(`data-w-cloak`);
+    Array.prototype.forEach.call(drawer.querySelectorAll(`[data-w-cloak]`), function(el){ el.removeAttribute(`data-w-cloak`); });
   }
 
   /* ---------- Brand card link text normalization ---------- */
