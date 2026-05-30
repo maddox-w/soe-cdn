@@ -759,27 +759,15 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       }
     }
 
-    var heroSlides=document.querySelectorAll(`[data-soe=hero-slide]`);
-    if(heroSlides.length !== 0){
-      var hero=document.querySelector(`[data-soe=hero]`);
-      if(hero){
-        var clone=hero.cloneNode(true);
-        hero.parentNode.replaceChild(clone,hero);
-        heroSlides=clone.querySelectorAll(`[data-soe=hero-slide]`);
-      }
-      var i=0;
-      heroSlides.forEach(function(sl,idx){
-        if(sl.getAttribute(`data-soe-state`) === `active`)i=idx;
-      });
-      function go(n){
-        heroSlides.forEach(function(sl,idx){
-          if(idx === n)sl.setAttribute(`data-soe-state`,`active`);
-          else sl.removeAttribute(`data-soe-state`);
-        });
-        i=n;
-      }
-      go(i);
-      setInterval(function(){go((i+1) % heroSlides.length);},6500);
+    /* (removed) a SECOND hero rotator lived here (6500ms, only active/idle — no `prev`). It cloned
+       the whole hero and ran AFTER initRotator4, orphaning it — so the cross-fade's prev-hold and the
+       Ken-Burns zoom never behaved (zoom never completed; the outgoing photo reverse-zoomed). The hero
+       is now driven SOLELY by initRotator4 (7000ms, active/prev/idle). DO NOT re-add a hero rotator here. */
+
+    /* /brands page-head lede: "Four professional-grade manufacturers" -> "Five" (HydroSpade makes 5). */
+    var phl=document.querySelector(`[data-soe=page-head-lede]`);
+    if(phl && phl.textContent.indexOf(`Four professional-grade manufacturers`) === 0){
+      phl.textContent=phl.textContent.replace(/^Four /,`Five `);
     }
 
     var word=document.querySelector(`[data-soe=intro-word]`);
