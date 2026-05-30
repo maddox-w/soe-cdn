@@ -411,7 +411,7 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 /* (B) Mulch Mule hero logo: .mm-hero-logo-bg is a 1319x767 PNG forced into a 360x120
    box with no background-size, so only an empty corner showed ("logo missing").
    Contain + left-align, and force visible (defeat the fade-in opacity:0). */
-[data-soe=hero-brand-tag].mm-hero-logo-bg{background-size:contain !important;background-position:left center !important;opacity:1 !important;transform:none !important;}
+[data-soe=hero-brand-tag].mm-hero-logo-bg,[data-soe=hero-brand-tag].mm-hero-logo-bg-sm{background-size:contain !important;background-position:left center !important;opacity:1 !important;transform:none !important;}
 
 /* (C) Energreen pages: use orange (safety amber) instead of JD green for accents. */
 [data-soe=rc-unit-hp]{color:var(--safety-amber) !important;}
