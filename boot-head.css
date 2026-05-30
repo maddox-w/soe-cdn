@@ -512,3 +512,9 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe=hero] [data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg]{transform:scale(1.08) !important;}
 [data-soe=hero] [data-soe=hero-slide][data-soe-state=prev] [data-soe=hero-bg]{transform:scale(1.08) !important;transition:none !important;}
 @media (prefers-reduced-motion:reduce){[data-soe=hero] [data-soe=hero-bg]{transition:none !important;transform:scale(1.04) !important;}}
+
+/* (N) Intro -> "Our Lineup" blend (concept 04, cool green-gray). The intro fades white -> #EAF0E8
+   over its lower half; the brands section is matched to #EAF0E8 with its top divider removed, so
+   the seam between the two sections disappears. The white top stays a clean break under the hero. */
+[data-soe=intro]{background:linear-gradient(180deg,#FFFFFF 50%,#EAF0E8 100%) !important;}
+[data-soe=brands-section]{background:#EAF0E8 !important;border-top:0 !important;}
