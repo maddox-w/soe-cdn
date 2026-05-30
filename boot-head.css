@@ -570,3 +570,11 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
    (below the CTAs); shorter on mobile so it never reaches the buttons. */
 [data-soe=hero]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:104px;background:linear-gradient(180deg,rgba(255,255,255,0),#FFFFFF);z-index:4;pointer-events:none;}
 @media (max-width:600px){[data-soe=hero]::after{height:72px;}}
+
+/* (T) Mobile: the intro tagline "Work smarter, not harder." must read LARGER than the lead
+   paragraph. An older rule shrank the tagline to 14px on phones (smaller than the 16px lead — the
+   inversion the user flagged). Make it the prominent statement again. Appended last + !important so
+   it wins over the 14px rule regardless of its breakpoint. */
+@media (max-width:767px){
+  [data-soe=intro-tagline]{font-size:22px !important;line-height:1.4 !important;}
+}
