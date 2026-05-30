@@ -497,13 +497,13 @@
     }
     function next(){go((i+1)%newSlides.length);}
     var t=null;
-    function start(){if(t)clearInterval(t);t=setInterval(next,7000);}
+    function start(){if(t)clearInterval(t);t=setInterval(next,9000);}
     function stop(){if(t){clearInterval(t);t=null;}}
     var hero=document.querySelector(`[data-soe=hero]`);
     if(hero){hero.addEventListener(`mouseenter`,stop);hero.addEventListener(`mouseleave`,start);}
-    /* First cycle uses the same 7000ms as subsequent intervals so the Ken-Burns animation
-       runs to its 8s end state before being interrupted (avoids the jolt on Mulch Mule). */
-    setTimeout(function(){next();start();},7000);
+    /* Dwell = 9000ms (slowed from 7000 for a more relaxed banner). The Ken-Burns zoom (block M,
+       soeHomeKB) is matched to the same 9s so it completes right at the cross-fade (no snap). */
+    setTimeout(function(){next();start();},9000);
   }
 
   function init(){
