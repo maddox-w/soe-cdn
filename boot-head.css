@@ -449,3 +449,8 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe=footer-col-h]{font-size:12px !important;}
 [data-soe=footer-bot]{font-size:12px !important;}
 [data-soe=footer-social] a{font-size:13px !important;}
+
+/* (G) Brand logo: replace the all-white wordmark with the green-leaf version
+   (green leaf/arrow + white gear + white wordmark) on the dark nav & footer.
+   Relative URL resolves to this same soe-cdn commit. */
+.soe-logo-nav-bg,.soe-logo-footer-bg{background-image:url(soe-logo-greenleaf.png) !important;}
