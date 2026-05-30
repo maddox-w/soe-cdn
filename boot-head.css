@@ -494,3 +494,14 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
   [data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg]{transition:none !important;}
   [data-soe=hero-content]{transition:none !important;}
 }
+
+/* (K) Energreen #rc-hero: CROSS-FADE instead of the homepage slide. The rc page is
+   heavier, and a fade has no sliding/transform layers to stutter (and no flicker). The
+   homepage keeps the directional slide (block J). Photo never translates; the active
+   photo fades in over the stable previous one. Scoped to #rc-hero so the homepage is
+   untouched. */
+#rc-hero [data-soe=hero-bg]{transform:none !important;transition:none !important;animation:none !important;}
+#rc-hero [data-soe=hero-slide]{opacity:0 !important;transition:opacity 1.2s ease !important;}
+#rc-hero [data-soe=hero-slide][data-soe-state=active]{opacity:1 !important;z-index:2 !important;}
+#rc-hero [data-soe=hero-slide][data-soe-state=prev]{opacity:1 !important;z-index:1 !important;}
+@media (prefers-reduced-motion:reduce){#rc-hero [data-soe=hero-slide]{transition:none !important;}}
