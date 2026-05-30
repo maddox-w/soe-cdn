@@ -770,6 +770,32 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       phl.textContent=phl.textContent.replace(/^Four /,`Five `);
     }
 
+    /* Homepage intro enrichment (concept 03): drop the eyebrow, shorten the tagline to
+       "Work smarter, not harder.", then add a lead paragraph + a "1968" heritage credit +
+       an Explore-the-lineup button (scrolls to the lineup). Idempotent; homepage only
+       ([data-soe=intro] exists only there). Button reuses the site's btn/primary styling. */
+    var introS=document.querySelector(`[data-soe=intro]`);
+    if(introS && !introS.querySelector(`[data-soe=intro-lead]`)){
+      var iEb=introS.querySelector(`[data-soe=eyebrow]`); if(iEb)iEb.style.display=`none`;
+      var iUl=introS.querySelector(`[data-soe=intro-underline]`); if(iUl)iUl.style.display=`none`;
+      var iTg=introS.querySelector(`[data-soe=intro-tagline]`); if(iTg)iTg.textContent=`Work smarter, not harder.`;
+      var iLead=document.createElement(`p`); iLead.setAttribute(`data-soe`,`intro-lead`);
+      iLead.innerHTML=`We help contractors work <strong>safer, faster, and leaner</strong> — a carefully curated lineup of contractor-focused equipment that solves the real challenges crews face in the field every day, from tractor attachments and hydro excavation to brine makers, material handling, and slope mowers.`;
+      var iHer=document.createElement(`div`); iHer.setAttribute(`data-soe`,`intro-heritage`);
+      iHer.innerHTML=`<div data-soe="intro-heritage-year">1968</div><div data-soe="intro-heritage-text"><strong>Backed by Brown Equipment Company.</strong> In business since 1968 — trusted by contractors across the country.</div>`;
+      var iCtaW=document.createElement(`div`); iCtaW.setAttribute(`data-soe`,`intro-cta-wrap`);
+      var iCta=document.createElement(`a`); iCta.setAttribute(`data-soe`,`btn`); iCta.setAttribute(`data-soe-variant`,`primary`); iCta.setAttribute(`data-soe-size`,`lg`); iCta.href=`#`;
+      iCta.innerHTML=`Explore the lineup <span data-soe="intro-cta-arr" aria-hidden="true">↓</span>`;
+      iCta.addEventListener(`click`,function(e){e.preventDefault();var t=document.querySelector(`[data-soe=brands-section]`);if(t && t.scrollIntoView)t.scrollIntoView({behavior:`smooth`,block:`start`});});
+      iCtaW.appendChild(iCta);
+      var iAnchor=iTg||introS.querySelector(`[data-soe=intro-lockup]`);
+      if(iAnchor && iAnchor.parentNode){
+        iAnchor.parentNode.insertBefore(iLead, iAnchor.nextSibling);
+        iLead.parentNode.insertBefore(iHer, iLead.nextSibling);
+        iHer.parentNode.insertBefore(iCtaW, iHer.nextSibling);
+      } else { introS.appendChild(iLead); introS.appendChild(iHer); introS.appendChild(iCtaW); }
+    }
+
     var word=document.querySelector(`[data-soe=intro-word]`);
     if(word){
       var fresh=word.cloneNode(false);
