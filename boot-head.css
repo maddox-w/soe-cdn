@@ -539,3 +539,14 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe=intro-cta-arr]{font-size:1.05em;line-height:1;}
 @media (max-width:860px){[data-soe=intro-body]{flex-direction:column;gap:30px;max-width:620px;text-align:center;}[data-soe=intro-heritage]{justify-content:center;}}
 @media (max-width:600px){[data-soe=intro-heritage]{flex-direction:column;gap:10px;text-align:center;}[data-soe=intro-heritage-text]{text-align:center;}}
+
+/* (Q) Homepage intro: animated GREEN MIST (chosen concept M4) — a soft green glow breathes up
+   from the bottom toward the lineup, enlivening the W1 flanks + adding the green the user wanted.
+   Pure CSS via the intro's ::before (behind the content; the intro's direct children are lifted to
+   z-index 1). Raised so it reaches higher up the section (per "come up a tad more"). Pauses for
+   reduced-motion. Homepage only ([data-soe=intro] exists only there). */
+[data-soe=intro]{position:relative;overflow:hidden;}
+[data-soe=intro]>*{position:relative;z-index:1;}
+[data-soe=intro]::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(125% 98% at 50% 106%,rgba(74,149,64,.6),transparent 63%);animation:soeMist 11s ease-in-out infinite;}
+@keyframes soeMist{0%,100%{opacity:.6;transform:translateY(16px);}50%{opacity:1;transform:translateY(-16px);}}
+@media (prefers-reduced-motion:reduce){[data-soe=intro]::before{animation:none;transform:none;}}
