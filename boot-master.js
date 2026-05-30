@@ -443,7 +443,7 @@
         newSlides.forEach(function(sl){
           if(sl.getAttribute(`data-soe-state`) === `prev`)sl.removeAttribute(`data-soe-state`);
         });
-      },1700);
+      },2100);
       i=n;
     }
     function next(){go((i+1)%newSlides.length);}
@@ -492,7 +492,7 @@
       });
       setTimeout(function(){
         newSlides.forEach(function(sl){if(sl.getAttribute(`data-soe-state`) === `prev`)sl.removeAttribute(`data-soe-state`);});
-      },1700);
+      },2100);
       i=n;
     }
     function next(){go((i+1)%newSlides.length);}

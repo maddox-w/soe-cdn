@@ -475,17 +475,22 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
   .soe-logo-nav-bg{width:168px !important;height:44px !important;}
 }
 
-/* (J) Banner transitions (homepage + Energreen heroes): replace the repaint-heavy
-   clip-path "wipe" with a GPU transform slide (translateX), and run the Ken-Burns
-   zoom on the ACTIVE slide only (it was animating the incoming AND outgoing slide at
-   once = double compositing). Active slides in from the right; prev slides out left;
-   idle slides park off-screen with no transition (no fly-across). */
+/* (J) Banner transition (homepage + Energreen heroes): the PHOTO cover-slides in from
+   the right while the TEXT + BUTTONS fade in place (they no longer ride the slide);
+   the previous photo holds behind until covered, then resets off-screen. GPU transform
+   only. 1.8s slide stays within the rotator's 2100ms prev hand-off (boot-master.js). */
 [data-soe=hero-stage]{overflow:hidden !important;}
-[data-soe=hero-slide]{clip-path:none !important;opacity:1 !important;transform:translateX(100%) !important;transition:transform 0s linear !important;will-change:transform;pointer-events:none;backface-visibility:hidden;}
-[data-soe=hero-slide][data-soe-state=active]{transform:translateX(0) !important;transition:transform .9s cubic-bezier(.45,0,.2,1) !important;z-index:2 !important;pointer-events:auto;}
-[data-soe=hero-slide][data-soe-state=prev]{transform:translateX(-100%) !important;transition:transform .9s cubic-bezier(.45,0,.2,1) !important;z-index:1 !important;}
-[data-soe=hero-slide][data-soe-state=prev] [data-soe=hero-bg]{animation:none !important;transform:scale(1.06) !important;}
+[data-soe=hero-slide]{clip-path:none !important;opacity:1 !important;transform:none !important;transition:none !important;pointer-events:none;}
+[data-soe=hero-slide][data-soe-state=active]{z-index:2 !important;pointer-events:auto;}
+[data-soe=hero-slide][data-soe-state=prev]{z-index:1 !important;}
+[data-soe=hero-slide]:not([data-soe-state]){z-index:0 !important;}
+[data-soe=hero-bg]{transform:translateX(100%) !important;transition:none !important;animation:none !important;will-change:transform;backface-visibility:hidden;}
+[data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg]{transform:translateX(0) !important;transition:transform 1.8s cubic-bezier(.45,0,.2,1) !important;animation:none !important;}
+[data-soe=hero-slide][data-soe-state=prev] [data-soe=hero-bg]{transform:translateX(0) !important;transition:none !important;animation:none !important;}
+[data-soe=hero-content]{opacity:0 !important;transition:opacity 1.1s ease !important;}
+[data-soe=hero-slide][data-soe-state=active] [data-soe=hero-content]{opacity:1 !important;}
+[data-soe=hero-slide] [data-soe=hero-brand-tag],[data-soe=hero-slide] [data-soe=hero-h1],[data-soe=hero-slide] [data-soe=hero-lede],[data-soe=hero-slide] [data-soe=hero-ctas]{opacity:1 !important;transform:none !important;}
 @media (prefers-reduced-motion:reduce){
-  [data-soe=hero-slide]{transition:none !important;}
-  [data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg]{animation:none !important;transform:none !important;}
+  [data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg]{transition:none !important;}
+  [data-soe=hero-content]{transition:none !important;}
 }
