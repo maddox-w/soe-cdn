@@ -1380,8 +1380,8 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     Array.prototype.forEach.call(ul.querySelectorAll(`li`), function(li){
       var a = li.querySelector(`a`);
       var t = a ? (a.textContent || ``).trim() : ``;
-      if (t === `Dealer Portal` || t === `Buy Parts` || t === `Operator Manuals`){
-        li.style.display = `none`;
+      if (t === `Dealer Portal` || t === `Buy Parts` || t === `Operator Manuals` || t === `Brands`){
+        li.style.display = `none`; /* Brands hidden in drawer: Equipment now lists the brands (avoids a duplicate brand list) */
       }
       if (t === `Products`){
         a.textContent = `Equipment`;
@@ -1393,10 +1393,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
 
     /* Append sub-menu under matching top items if they have a dropdown */
     var topItems = {
-      "Equipment": equipMenu.reduce(function(acc, col){
-        col.items.forEach(function(i){ acc.push(i); });
-        return acc;
-      }, []),
+      "Equipment": simpleMenus["Brands"],
       "Brands": simpleMenus["Brands"],
       "Build & Quote": simpleMenus["Build & Quote"],
       "Become a Dealer": simpleMenus["Become a Dealer"],
@@ -1456,6 +1453,29 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     });
   }
 
+  /* ---------- Breadcrumbs: rebuild to the real site trail (Home / Our Brands / Brand) ---------- */
+  function rebuildCrumbs(){
+    var box=document.querySelector(`[data-soe=crumbs]`);
+    if(!box)return;
+    var p=(location.pathname.replace(/\/+$/,``)||`/`).toLowerCase();
+    var units={"/robocompact":"RoboCOMPACT","/roboeco":"RoboECO","/roboevo":"RoboEVO","/robofifti":"RoboFIFTI","/robomidi":"RoboMIDI","/robomax":"RoboMAX","/roboplus":"RoboPLUS"};
+    var trail;
+    if(p===`/mulch-mule`)trail=[[`Home`,`/`],[`Our Brands`,`/brands`],[`Mulch Mule`,null]];
+    else if(p===`/remote-controlled-mowers`)trail=[[`Home`,`/`],[`Our Brands`,`/brands`],[`Energreen`,null]];
+    else if(units[p])trail=[[`Home`,`/`],[`Our Brands`,`/brands`],[`Energreen`,`/remote-controlled-mowers`],[units[p],null]];
+    else if(p===`/brands`)trail=[[`Home`,`/`],[`Our Brands`,null]];
+    else return;
+    box.innerHTML=``;
+    trail.forEach(function(it,idx){
+      if(idx>0){var s=document.createElement(`span`);s.setAttribute(`data-soe`,`crumbs-sep`);s.textContent=`/`;box.appendChild(s);}
+      var el;
+      if(it[1]){el=document.createElement(`a`);el.href=it[1];}
+      else{el=document.createElement(`span`);el.setAttribute(`data-soe`,`crumbs-current`);}
+      el.textContent=it[0];
+      box.appendChild(el);
+    });
+  }
+
   function runAll(){
     try { rebuildNav(); } catch(e){}
     try { rebuildFooter(); } catch(e){}
@@ -1463,6 +1483,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     try { normalizeBrandCardLinks(); } catch(e){}
     try { fixPhone(); } catch(e){}
     try { addQuoteOption(); } catch(e){}
+    try { rebuildCrumbs(); } catch(e){}
     /* Reveal the nav once it's been rebuilt — boot-head.css holds it at opacity:0 until this attribute lands */
     try {
       var nl = document.querySelector(`[data-soe=nav-links]`);
