@@ -398,3 +398,54 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 #robomax-hero [data-soe=ru-hero-visual]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a187c0210633147e029fffd_robomax-hero.png);}
 #robofifti-hero [data-soe=ru-hero-visual]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a1863dda37dcea6514bda5f_robofifti-card.png);}
 #roboplus-hero [data-soe=ru-hero-visual]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a1863eac63fe6a5d7a9d834_roboplus-card.png);}
+
+/* ============================================================
+   2026-05-29 — site fix batch (appended last; later rules win)
+   ============================================================ */
+
+/* (A) Mulch Mule video thumbnails: the .mm-vid-bg-* classes set a background-image
+   but no background-size, so the image rendered at natural size ("zoomed in too much").
+   Scale to cover the 16:10 thumb, centered. */
+[data-soe=video-thumb]{background-size:cover !important;background-position:center !important;}
+
+/* (B) Mulch Mule hero logo: .mm-hero-logo-bg is a 1319x767 PNG forced into a 360x120
+   box with no background-size, so only an empty corner showed ("logo missing").
+   Contain + left-align, and force visible (defeat the fade-in opacity:0). */
+[data-soe=hero-brand-tag].mm-hero-logo-bg{background-size:contain !important;background-position:left center !important;opacity:1 !important;transform:none !important;}
+
+/* (C) Energreen pages: use orange (safety amber) instead of JD green for accents. */
+[data-soe=rc-unit-hp]{color:var(--safety-amber) !important;}
+[data-soe=rc-unit-card]:hover{border-color:var(--safety-amber) !important;}
+[data-soe=rc-units-head] [data-soe=eyebrow]{color:var(--safety-amber) !important;}
+[data-soe=ru-spec-cat]{color:var(--safety-amber) !important;}
+[data-soe=ru-specs] [data-soe=eyebrow]{color:var(--safety-amber) !important;}
+[data-soe=ru-form-head] [data-soe=eyebrow]{color:var(--safety-amber) !important;}
+/* primary CTAs on Energreen pages -> amber (the inverse-outline Spec-Sheet buttons untouched) */
+#rc-hero [data-soe=btn][data-soe-variant=primary],
+[data-soe=rc-unit-body] [data-soe=btn][data-soe-variant=primary],
+[data-soe=ru-hero-ctas] [data-soe=btn][data-soe-variant=primary],
+[data-soe=ru-form-el] [data-soe=btn][data-soe-variant=primary]{background:var(--safety-amber) !important;color:var(--black) !important;}
+#rc-hero [data-soe=btn][data-soe-variant=primary]:hover,
+[data-soe=rc-unit-body] [data-soe=btn][data-soe-variant=primary]:hover,
+[data-soe=ru-hero-ctas] [data-soe=btn][data-soe-variant=primary]:hover,
+[data-soe=ru-form-el] [data-soe=btn][data-soe-variant=primary]:hover{background:var(--amber-dark) !important;}
+
+/* (D) Robo unit pages: remove the small "Energreen Robo Series" eyebrow above the H1,
+   and widen the hero's bottom bar (8px -> 16px) in amber. */
+[data-soe=ru-hero] [data-soe=eyebrow]{display:none !important;}
+[data-soe=ru-hero]{border-bottom-width:16px !important;border-bottom-color:var(--safety-amber) !important;}
+
+/* (E) Breadcrumb was faint (11px; current-page item was #FFAA33 on a light bg).
+   Larger + higher contrast; current item dark + bold. */
+[data-soe=crumbs]{font-size:12.5px !important;}
+[data-soe=crumbs] a{color:var(--steel-700) !important;font-weight:600 !important;}
+[data-soe=crumbs] a:hover{color:var(--jd-green) !important;}
+[data-soe=crumbs] [data-soe=crumbs-current]{color:var(--ink) !important;font-weight:700 !important;}
+[data-soe=crumbs-sep]{opacity:.55 !important;}
+
+/* (F) Footer text: nudged up a step. */
+[data-soe=footer-col] li{font-size:15px !important;}
+[data-soe=footer-tag]{font-size:15px !important;}
+[data-soe=footer-col-h]{font-size:12px !important;}
+[data-soe=footer-bot]{font-size:12px !important;}
+[data-soe=footer-social] a{font-size:13px !important;}

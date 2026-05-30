@@ -701,6 +701,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     }
     setOrigin(`Brinemasters`,`Indiana, USA`);
     setOrigin(`Metec`,`Vankleek Hill, Ontario, Canada`);
+    setOrigin(`Mulch Mule`,`Ohio, USA`);
 
     var APOS=String.fromCharCode(39);
     var bannerCopy={};
@@ -1358,6 +1359,13 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     Array.prototype.forEach.call(footer.querySelectorAll(`[data-soe=footer-legal] a`), function(a){
       var t = (a.textContent || ``).trim();
       if (legalMap[t]) a.href = legalMap[t];
+    });
+
+    /* Wire footer social icons (f / in / yt / ig). LinkedIn is now live. */
+    var socialMap = {"in":"https://www.linkedin.com/company/smart-outdoor-equipment/"};
+    Array.prototype.forEach.call(footer.querySelectorAll(`[data-soe=footer-social] a`), function(a){
+      var t = (a.textContent || ``).trim().toLowerCase();
+      if (socialMap[t]){ a.href = socialMap[t]; a.target = `_blank`; a.rel = `noopener`; }
     });
   }
 
