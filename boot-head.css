@@ -454,3 +454,7 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
    (green leaf/arrow + white gear + white wordmark) on the dark nav & footer.
    Relative URL resolves to this same soe-cdn commit. */
 .soe-logo-nav-bg,.soe-logo-footer-bg{background-image:url(soe-logo-greenleaf.png) !important;}
+
+/* (H) Energreen promo-strip — amber variant (the brand page uses orange, not green) */
+[data-soe=promo-strip][data-soe-variant=amber]{background:var(--safety-amber) !important;color:var(--black) !important;}
+[data-soe=promo-strip][data-soe-variant=amber] a{color:var(--black) !important;border-bottom-color:rgba(0,0,0,.45) !important;}
