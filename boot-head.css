@@ -580,3 +580,9 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
    boundary — so the green eases into the lineup section instead of an abrupt green->off-white jump.
    Sits low + still breathes (soeMist). */
 [data-soe=intro]::before{background:linear-gradient(to top,transparent 0%,rgba(74,149,64,.55) 22%,rgba(74,149,64,.52) 44%,rgba(74,149,64,.22) 70%,transparent 90%) !important;}
+
+/* (V) Energreen Robo unit pages: the amber eyebrows ("Get in touch" in ru-form-head, and the
+   ru-specs eyebrow) inherited the base GREEN ::before dash, clashing with their amber text. Make
+   the dash amber so it matches the text on every unit page (::after covered too, harmless if absent). */
+[data-soe=ru-form-head] [data-soe=eyebrow]::before,[data-soe=ru-form-head] [data-soe=eyebrow]::after,
+[data-soe=ru-specs] [data-soe=eyebrow]::before,[data-soe=ru-specs] [data-soe=eyebrow]::after{background:var(--safety-amber) !important;}
