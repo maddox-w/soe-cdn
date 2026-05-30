@@ -494,9 +494,3 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
   [data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg]{transition:none !important;}
   [data-soe=hero-content]{transition:none !important;}
 }
-
-/* (K) Energreen #rc-hero / p-hero banner smoothness parity with the homepage. The
-   homepage's per-slide content FADES (opacity), which self-promotes it to a GPU layer
-   during the slide. The p-hero overlay is a single STATIC block, so the photo sliding
-   under it repainted it every frame (the bit of jank). Promote it to its own layer. */
-[data-soe=p-hero-content]{transform:translateZ(0);}
