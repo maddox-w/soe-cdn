@@ -653,7 +653,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     if(tag)tag.textContent=`Work smarter, not harder.`;
 
     var bhl=document.querySelector(`[data-soe=brands-head-lede]`);
-    if(bhl)bhl.textContent=`Four smart equipment lines that work smarter, not harder.`;
+    if(bhl)bhl.textContent=`Five smart equipment lines that work smarter, not harder.`;
 
     var brand=document.querySelector(`[data-soe=nav-brand]`);
     if(brand){
