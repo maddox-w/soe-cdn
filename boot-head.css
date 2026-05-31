@@ -586,3 +586,13 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
    the dash amber so it matches the text on every unit page (::after covered too, harmless if absent). */
 [data-soe=ru-form-head] [data-soe=eyebrow]::before,[data-soe=ru-form-head] [data-soe=eyebrow]::after,
 [data-soe=ru-specs] [data-soe=eyebrow]::before,[data-soe=ru-specs] [data-soe=eyebrow]::after{background:var(--safety-amber) !important;}
+
+/* (W) Energreen banner (#rc-hero): give it the SAME Ken Burns zoom as the homepage — reuse the
+   soeHomeKB keyframes (scale 1 -> 1.12 over 9s == the shared rotator dwell, holds; prev holds 1.12 =
+   no snap). The cross-fade is already global (block J). Zoom is on the `scale` property of the photo
+   only (GPU-composited), so the static p-hero-content overlay doesn't repaint — smooth, unlike the
+   old translateX slide that stuttered here. */
+#rc-hero [data-soe=hero-bg]{transform:none !important;transition:none !important;scale:1;}
+#rc-hero [data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg]{transform:none !important;transition:none !important;animation:soeHomeKB 9s linear forwards !important;}
+#rc-hero [data-soe=hero-slide][data-soe-state=prev] [data-soe=hero-bg]{transform:none !important;transition:none !important;animation:none !important;scale:1.12;}
+@media (prefers-reduced-motion:reduce){#rc-hero [data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg]{animation:none !important;scale:1.04;}}
