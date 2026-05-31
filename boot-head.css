@@ -741,17 +741,9 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe-page=brands] [data-soe=brands-list-grid] [data-soe=brand-card]:nth-child(4){order:3;}
 [data-soe-page=brands] [data-soe=brands-list-grid] [data-soe=brand-card]:nth-child(5){order:4;}
 
-/* (AE) /brands MOBILE imagery — Concept C ("magazine"): each card gets a photo banner with the brand
-   name + a green category tag overlaid, and a green accent line above the body. Mobile only (≤720);
-   desktop keeps its image-left layout. Overlay element injected in boot-master.js fixBrandsPage. */
-.bc-mob-overlay{display:none;}
-.bc-mob-tag{position:absolute;top:0;left:0;background:var(--jd-green);color:#fff;font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:7px 12px;}
-.bc-mob-name{position:absolute;left:18px;right:18px;bottom:15px;color:#fff;font-family:var(--font-display);font-weight:800;font-size:clamp(26px,8vw,33px);line-height:1.02;letter-spacing:-.02em;}
+/* (AE) /brands MOBILE imagery — Concept A ("classic banner"): each card shows its photo as a banner
+   on top, with the brand name / "Made in X" / "why" stacked below (the normal info layout). Mobile
+   only (≤720); desktop keeps its image-left layout. */
 @media (max-width:720px){
-  [data-soe-page=brands] [data-soe=brand-card-visual-l]{display:block !important;height:230px !important;min-height:230px !important;flex:0 0 230px !important;}
-  [data-soe-page=brands] [data-soe=brand-card-visual-l]::before{display:none !important;}
-  [data-soe-page=brands] [data-soe=brand-card-vmeta]{display:none !important;}
-  [data-soe-page=brands] .bc-mob-overlay{display:block;position:absolute;inset:0;z-index:3;background:linear-gradient(to top,rgba(8,10,9,.86) 0%,rgba(8,10,9,.12) 56%,transparent 100%);pointer-events:none;}
-  [data-soe-page=brands] [data-soe=brand-card-info-top] [data-soe=brand-card-h3]{display:none !important;}
-  [data-soe-page=brands] [data-soe=brand-card-info]{border-top:3px solid var(--jd-green) !important;}
+  [data-soe-page=brands] [data-soe=brand-card-visual-l]{display:block !important;height:200px !important;min-height:200px !important;flex:0 0 200px !important;}
 }

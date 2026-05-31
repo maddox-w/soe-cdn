@@ -1625,17 +1625,6 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       var name=h3?h3.textContent.trim():``;
       var origin=card.querySelector(`[data-soe=brand-card-origin-line]`);
       if(origin){var b=origin.querySelector(`b`); if(b)origin.innerHTML=`Made in `+b.outerHTML;}
-      /* Mobile photo overlay (Concept C): brand name + a green category tag on the card image.
-         Hidden on desktop; shown ≤720 via block AE. */
-      var visual=card.querySelector(`[data-soe=brand-card-visual-l]`);
-      if(visual && name && !visual.querySelector(`.bc-mob-overlay`)){
-        var catMap={"Mulch Mule":`Landscaping`,"Brinemasters":`De-icing`,"Energreen":`Slope & Forestry`,"Metec":`Forestry`,"HydroSpade":`Hydro Excavation`};
-        var cat=catMap[name]||``;
-        var ov=document.createElement(`div`); ov.className=`bc-mob-overlay`;
-        if(cat){var tg=document.createElement(`span`); tg.className=`bc-mob-tag`; tg.textContent=cat; ov.appendChild(tg);}
-        var nm=document.createElement(`span`); nm.className=`bc-mob-name`; nm.textContent=name; ov.appendChild(nm);
-        visual.appendChild(ov);
-      }
       var specs=card.querySelector(`[data-soe=brand-card-specs]`);
       if(specs && specs.parentNode)specs.parentNode.removeChild(specs);
       var data=whyData[name];
