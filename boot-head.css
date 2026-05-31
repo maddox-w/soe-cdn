@@ -731,3 +731,12 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
   [data-soe=hero] [data-soe=hero-brand-tag].mm-hero-logo-bg-sm,
   [data-soe=hero] [data-soe=hero-brand-tag].eg-hero-logo-bg-sm{width:240px !important;}
 }
+
+/* (AD) /brands tile order — Mulch Mule, Energreen, Metec, HydroSpade, Brinemasters (weak photo last).
+   Done via CSS `order` (the grid is auto-placed) so the DOM order — and thus the nth-child
+   background-image mapping — stays correct. DOM is MM(1), Brine(2), Energreen(3), Metec(4), Hydro(5). */
+[data-soe-page=brands] [data-soe=brands-list-grid] [data-soe=brand-card]:nth-child(1){order:1;}
+[data-soe-page=brands] [data-soe=brands-list-grid] [data-soe=brand-card]:nth-child(2){order:5;}
+[data-soe-page=brands] [data-soe=brands-list-grid] [data-soe=brand-card]:nth-child(3){order:2;}
+[data-soe-page=brands] [data-soe=brands-list-grid] [data-soe=brand-card]:nth-child(4){order:3;}
+[data-soe-page=brands] [data-soe=brands-list-grid] [data-soe=brand-card]:nth-child(5){order:4;}

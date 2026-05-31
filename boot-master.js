@@ -1635,10 +1635,13 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
         var ul=document.createElement(`ul`); ul.className=`brand-why-list`;
         data.items.forEach(function(it){var li=document.createElement(`li`); li.textContent=it; ul.appendChild(li);});
         why.appendChild(ul);
-        var desc=card.querySelector(`[data-soe=brand-card-desc-l]`);
-        if(desc && desc.parentNode)desc.parentNode.insertBefore(why,desc.nextSibling);
+        var anchor=origin||card.querySelector(`[data-soe=brand-card-desc-l]`);
+        if(anchor && anchor.parentNode)anchor.parentNode.insertBefore(why,anchor.nextSibling);
         else (card.querySelector(`[data-soe=brand-card-info-top]`)||card).appendChild(why);
       }
+      /* Drop the original one-line description that sat under "Made in X" (user: remove it). */
+      var desc=card.querySelector(`[data-soe=brand-card-desc-l]`);
+      if(desc && desc.parentNode)desc.parentNode.removeChild(desc);
     });
   }
 
