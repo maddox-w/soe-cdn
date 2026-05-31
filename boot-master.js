@@ -1750,3 +1750,34 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     try{ buildEnergreenVideos(); }catch(e){}
   });
 })();
+
+/* === boot-fixes-v2kk ===
+   Keep the desktop nav dropdowns inside the viewport on narrow widths. The mega menu and the
+   rightmost simple menus were overflowing off the right edge. Dropdowns are visibility:hidden
+   (not display:none) on desktop, so we can measure their real width and shift them left to fit. */
+(function(){
+  function position(){
+    var vw=window.innerWidth||document.documentElement.clientWidth;
+    if(vw<721)return; /* mobile uses the drawer, not dropdowns */
+    var pad=12;
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=nav-link-wrap]`),function(wrap){
+      var dd=wrap.querySelector(`[data-soe=nav-dropdown]`); if(!dd)return;
+      /* reset to the default left:0 before measuring */
+      dd.style.setProperty(`left`,`0`,`important`);
+      dd.style.setProperty(`right`,`auto`,`important`);
+      var wr=wrap.getBoundingClientRect();
+      var menuW=dd.getBoundingClientRect().width;
+      if(!menuW)menuW=(dd.getAttribute(`data-soe-menu`)===`mega`?Math.min(960,vw-2*pad):220);
+      var clamped=wr.left;
+      if(clamped+menuW>vw-pad)clamped=vw-pad-menuW;
+      if(clamped<pad)clamped=pad;
+      var offset=Math.round(clamped-wr.left);
+      if(offset<0)dd.style.setProperty(`left`,offset+`px`,`important`);
+    });
+  }
+  function run(){ position(); setTimeout(position,400); setTimeout(position,1200); }
+  if(document.readyState===`loading`)document.addEventListener(`DOMContentLoaded`,run);
+  else run();
+  var rt;
+  window.addEventListener(`resize`,function(){ clearTimeout(rt); rt=setTimeout(position,120); });
+})();

@@ -711,3 +711,9 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 /* AA5: Energreen "See it in action" gallery (injected; mirrors the Mulch Mule videos section). */
 [data-soe=videos][data-soe-built=v2jj]{background:#fff;padding:88px var(--gutter) 100px;}
 [data-soe=videos][data-soe-built=v2jj] [data-soe=videos-head]{max-width:760px;margin:0 0 48px;}
+
+/* (AB) Desktop nav dropdowns must stay inside the viewport on narrow widths (mega menu + the
+   rightmost simple menus were overflowing off-screen). Cap the mega width to the viewport and let
+   its columns wrap; the exact horizontal clamp is done in boot-master.js block v2kk. */
+[data-soe=nav-dropdown]{max-width:calc(100vw - 24px) !important;}
+[data-soe=nav-dropdown][data-soe-menu=mega]{min-width:0 !important;width:min(960px, calc(100vw - 24px)) !important;flex-wrap:wrap !important;}
