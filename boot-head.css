@@ -596,3 +596,10 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 #rc-hero [data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg]{transform:none !important;transition:none !important;animation:soeHomeKB 9s linear forwards !important;}
 #rc-hero [data-soe=hero-slide][data-soe-state=prev] [data-soe=hero-bg]{transform:none !important;transition:none !important;animation:none !important;scale:1.12;}
 @media (prefers-reduced-motion:reduce){#rc-hero [data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg]{animation:none !important;scale:1.04;}}
+
+/* (X) Energreen unit cards: make the WHOLE card clickable (not just the "Find out more" button),
+   like the brand cards on /brands + the homepage. Stretch the button's link across the card via
+   ::after (the <a> stays the keyboard target = accessible) + cursor:pointer so the box reads as
+   clickable. One link per card, so nothing conflicts. */
+[data-soe=rc-unit-card]{position:relative;cursor:pointer;}
+[data-soe=rc-unit-card] [data-soe=btn]::after{content:"";position:absolute;inset:0;z-index:1;}
