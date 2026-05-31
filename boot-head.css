@@ -616,3 +616,65 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 #rc-hero [data-soe=hero-bg],
 #rc-hero [data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg],
 #rc-hero [data-soe=hero-slide][data-soe-state=prev] [data-soe=hero-bg]{animation:none !important;scale:1 !important;}
+
+/* ============================================================================
+   (Z) 2026-05-31 content batch — homepage / Energreen / brands tweaks.
+   Paired with boot-master.js block v2ii. energreen-logo-white.png is committed
+   alongside this file so the relative url() pins to this commit's SHA.
+   ============================================================================ */
+
+/* Z1: Homepage Mulch Mule hero logo slightly bigger on desktop (mobile keeps Webflow's 280x88). */
+@media (min-width:721px){
+  [data-soe=hero-brand-tag].mm-hero-logo-bg-sm{width:330px !important;height:104px !important;}
+}
+
+/* Z2: Energreen logo — replaces the "energreen" text wordmark on the brand hero (#rc-hero) and on the
+   homepage Energreen slide ([data-soe=hero-brand-tag].eg-hero-logo-bg-sm, tagged in JS). White logo for
+   the dark hero. */
+#rc-hero [data-soe=p-hero-mark-logo]{
+  display:block !important;width:clamp(210px,42vw,320px) !important;aspect-ratio:368 / 114;height:auto !important;
+  background:url(energreen-logo-white.png) left center / contain no-repeat !important;
+  font-size:0 !important;color:transparent !important;text-indent:-9999px !important;overflow:hidden !important;font-style:normal !important;
+}
+#rc-hero [data-soe=p-hero-mark-meta]{display:none !important;}
+#rc-hero [data-soe=p-hero-mark]{border:0 !important;gap:0 !important;padding-left:0 !important;}
+
+[data-soe=hero-brand-tag].eg-hero-logo-bg-sm{
+  display:block !important;width:280px !important;aspect-ratio:368 / 114;height:auto !important;margin-bottom:28px;
+  background:url(energreen-logo-white.png) left center / contain no-repeat !important;
+  font-size:0 !important;color:transparent !important;opacity:1 !important;transform:none !important;
+}
+[data-soe=hero-brand-tag].eg-hero-logo-bg-sm::before{content:none !important;display:none !important;}
+@media (min-width:721px){
+  [data-soe=hero-brand-tag].eg-hero-logo-bg-sm{width:330px !important;}
+}
+
+/* Z3: Energreen unit grid — the last two cards (RoboMAX, RoboPLUS) have tight-cropped source images
+   that fill the frame edge-to-edge ("too large for the box, falling outside the boundary"). Scale them
+   down with white margin so they match the well-margined cards. */
+[data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(6) [data-soe=rc-unit-visual],
+[data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(7) [data-soe=rc-unit-visual]{
+  background-size:82% auto !important;background-position:center !important;background-color:#fff !important;
+}
+
+/* Z4: "For more information" promo banners on /mulch-mule (green) and /remote-controlled-mowers (amber)
+   become a thin, subtle accent bar in the same color — content hidden, strip shrunk. */
+[data-soe=promo-strip]{height:6px !important;min-height:0 !important;padding:0 !important;overflow:hidden !important;opacity:1 !important;transform:none !important;}
+[data-soe=promo-strip] > *{display:none !important;}
+
+/* Z5: /brands "why we meet our commitment" block injected under each brand description (neutral, no green). */
+.brand-why{margin-top:18px;}
+.brand-why-head{font-family:var(--font-display);font-weight:800;font-size:18px;line-height:1.2;letter-spacing:-.01em;color:var(--ink);margin:0 0 6px;}
+.brand-why-intro{font-family:var(--font-sans);font-size:14px;line-height:1.55;color:var(--steel-700);margin:0 0 12px;}
+.brand-why-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px;}
+.brand-why-list li{position:relative;padding-left:22px;font-family:var(--font-sans);font-size:14px;line-height:1.5;color:var(--steel-700);}
+.brand-why-list li::before{content:"";position:absolute;left:2px;top:7px;width:8px;height:8px;background:var(--ink);transform:rotate(45deg);}
+
+/* Z6: /brands — remove all green text (eyebrows + card numbers hidden; "View brand" link neutralized). */
+[data-soe-page=brands] [data-soe=eyebrow]{display:none !important;}
+[data-soe-page=brands] [data-soe=brand-card-num]{display:none !important;}
+[data-soe-page=brands] [data-soe=brand-card-link-large]{color:var(--ink) !important;}
+
+/* Z7: Homepage intro lead is now a two-paragraph block (was a single <p>) — control inner spacing. */
+[data-soe=intro-lead] p{margin:0 0 14px;}
+[data-soe=intro-lead] p:last-child{margin-bottom:0;}

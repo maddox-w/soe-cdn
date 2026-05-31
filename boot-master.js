@@ -779,10 +779,10 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       var iEb=introS.querySelector(`[data-soe=eyebrow]`); if(iEb)iEb.style.display=`none`;
       var iUl=introS.querySelector(`[data-soe=intro-underline]`); if(iUl)iUl.style.display=`none`;
       var iTg=introS.querySelector(`[data-soe=intro-tagline]`); if(iTg)iTg.textContent=`Work smarter, not harder.`;
-      var iLead=document.createElement(`p`); iLead.setAttribute(`data-soe`,`intro-lead`);
-      iLead.innerHTML=`We help contractors work <strong>safer, faster, and leaner</strong> — a carefully curated lineup of contractor-focused equipment that solves the real challenges crews face in the field every day, from tractor attachments and hydro excavation to brine makers, material handling, and slope mowers.`;
+      var iLead=document.createElement(`div`); iLead.setAttribute(`data-soe`,`intro-lead`);
+      iLead.innerHTML=`<p>We help contractors work <strong>safer, faster, and leaner</strong> — so they can do more with less, attract and retain quality crews, and grow their bottom line.</p><p>We represent a carefully curated lineup of contractor-focused equipment designed to solve the real challenges crews face in the field every day. From compact tractor attachments and hydro-excavation equipment to brine makers, material handling, and slope mowers, every line we carry earns its place by helping our customers work smarter — not harder.</p>`;
       var iHer=document.createElement(`div`); iHer.setAttribute(`data-soe`,`intro-heritage`);
-      iHer.innerHTML=`<div data-soe="intro-heritage-year">1968</div><div data-soe="intro-heritage-text"><strong>Backed by Brown Equipment Company.</strong> In business since 1968 — trusted by contractors across the country.</div>`;
+      iHer.innerHTML=`<div data-soe="intro-heritage-year">1968</div><div data-soe="intro-heritage-text"><strong>Backed by Brown Equipment Company.</strong> In business since 1968 — trusted by contractors across the Midwest.</div>`;
       var iCtaW=document.createElement(`div`); iCtaW.setAttribute(`data-soe`,`intro-cta-wrap`);
       var iCta=document.createElement(`a`); iCta.setAttribute(`data-soe`,`btn`); iCta.setAttribute(`data-soe-variant`,`primary`); iCta.setAttribute(`data-soe-size`,`lg`); iCta.href=`#`;
       iCta.innerHTML=`Explore the lineup <span data-soe="intro-cta-arr" aria-hidden="true">↓</span>`;
@@ -1520,4 +1520,125 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   } else {
     runAll();
   }
+})();
+
+/* === boot-fixes-v2ii ===
+   2026-05-31 content batch:
+   - Site-wide: drop "municipalities" from audience copy -> "professionals and contractors".
+   - Homepage Energreen hero slide: swap the "Energreen" text tag for the Energreen logo (like the Mulch Mule slide).
+   - Energreen page (/remote-controlled-mowers): rc-units head becomes "The Energreen Difference" + a brand
+     paragraph (this also removes the "— THE LINEUP" eyebrow). The 7 unit cards stay below.
+   - /brands: declutter each card — hide the green eyebrows/numbers (via [data-soe-page=brands] CSS),
+     strip the "· distributor since 20XX" tail after "Made in X", drop the Category/Lineup/Lead time/Service
+     spec list, replace the lede, and inject a per-brand "why" block (head + intro + bullet benefits).
+*/
+(function(){
+  function ready(fn){if(document.readyState !== `loading`)fn();else document.addEventListener(`DOMContentLoaded`,fn);}
+  var path=(location.pathname.replace(/\/+$/,``)||`/`);
+
+  function setPageAttr(){
+    var p=`other`;
+    if(path===`/`)p=`home`;
+    else if(path===`/brands`)p=`brands`;
+    else if(path===`/mulch-mule`)p=`mulch-mule`;
+    else if(path===`/remote-controlled-mowers`)p=`energreen`;
+    document.documentElement.setAttribute(`data-soe-page`,p);
+  }
+
+  /* Audience copy: the company serves "professionals and contractors", not municipalities. */
+  function swapMunicipalities(){
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=footer-tag]`),function(el){
+      el.textContent=el.textContent.split(`the contractors, municipalities, and operators`).join(`professionals and contractors`);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=brand-card-desc-l],[data-soe=brand-card-desc]`),function(el){
+      el.textContent=el.textContent.split(`for municipalities, airports, and contractors`).join(`for professionals and contractors`);
+    });
+  }
+
+  /* Homepage: the Energreen slide shows a plain "Energreen" text tag — swap it for the logo like Mulch Mule. */
+  function tagHomeEnergreenLogo(){
+    if(path!==`/`)return;
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=hero-stage] [data-soe=hero-brand-tag]`),function(tag){
+      if(tag.classList.contains(`eg-hero-logo-bg-sm`))return;
+      if((tag.textContent||``).trim()===`Energreen`){
+        tag.classList.add(`eg-hero-logo-bg-sm`);
+        tag.textContent=``;
+      }
+    });
+  }
+
+  /* Energreen page: "Seven remote-controlled units." -> a Mulch-Mule-style difference head + brand paragraph. */
+  function fixEnergreenPage(){
+    if(path!==`/remote-controlled-mowers`)return;
+    var eb=document.querySelector(`[data-soe=rc-units-head] [data-soe=eyebrow]`);
+    if(eb)eb.textContent=`Why it works`;
+    var h2=document.querySelector(`[data-soe=rc-units-h2]`);
+    if(h2)h2.textContent=`The Energreen Difference`;
+    var lede=document.querySelector(`[data-soe=rc-units-lede]`);
+    if(lede)lede.textContent=`Robos are designed to prioritize well-being, simplify operation, and deliver versatile solutions for demanding applications. Radio-controlled mowers and skid steers keep your operator on flat ground while the machine works slopes up to 61° — zero rollover exposure, and clear of poison ivy, snakes, and other hazards. Quick-change attachments turn a Robo into a mulcher, mower, stump grinder, ditch cleaner, blower, or forestry head — so your carrier keeps you earning all year long.`;
+  }
+
+  /* /brands: declutter cards + inject the per-brand "why" block. */
+  function fixBrandsPage(){
+    if(path!==`/brands`)return;
+    var lede=document.querySelector(`[data-soe=page-head-lede]`);
+    if(lede)lede.textContent=`We represent a carefully curated lineup of contractor-focused equipment designed to solve the real challenges crews face in the field every day. Every line we carry earns its place by helping our customers work smarter — not harder. See below why we meet our commitment.`;
+
+    var whyData={
+      "Mulch Mule":{head:`Mulch Smarter. Move Faster.`,intro:`Here's why the Mulch Mule slashes labor hours, lifts productivity, and keeps your team happier.`,items:[
+        `15-cubic-yard aluminum hopper with a 5-ton payload capacity — superior durability without sacrificing hauling capacity.`,
+        `Rear discharge with game-changing reversible floor to both onload and offload materials in a controlled fashion.`,
+        `Curbside chute fills a wheelbarrow in 3–6 seconds — the heart of why this equipment pays back so fast, typically in 1–3 years depending on your material volume.`]},
+      "Brinemasters":{head:`The Smarter Way to Brine.`,intro:`Here's why Brinemasters is the most precise, user-friendly, and cost-effective brine maker on the market.`,items:[
+        `Most reliable, most accurate density-measurement sensor (patent protected), with fully automated self-calibration that eliminates manual work and errors — backed by an industry-leading 5-year warranty.`,
+        `External spray dissolution system for maximum salt conversion.`,
+        `Simple control system that's very easy to operate.`]},
+      "Energreen":{head:`The Safest Seat Is the One You're Not In.`,intro:`Here's why Robos are designed to prioritize well-being, simplify operation, and deliver versatile solutions for demanding applications.`,items:[
+        `Radio-controlled mowers and skid steers keep your operator on flat ground while the machine works slopes up to 61° — zero rollover exposure, and clear of poison ivy, snakes, and other hazards.`,
+        `Quick-change attachments turn a Robo into a mulcher, mower, stump grinder, ditch cleaner, blower, or forestry head — so your carrier keeps you earning all year long.`]},
+      "Metec":{head:`The Attachment Your Tractor Deserves.`,intro:`Here's why Metec attachments are expertly engineered for universal tractor compatibility with second-to-none quality.`,items:[
+        `Engineered and built in-house: design, prototyping, CNC machining, turning and milling, plasma cutting, forming, welding, finishing, assembly, and testing — all under one roof increasing quality and speed to meet your needs.`,
+        `Broad compatibility: custom fabrication and forming build mounts to standard hitch interfaces, with one-off builds for non-standard machines.`,
+        `Durability: professional welding and specialized coatings protect against wear, corrosion, and weather for a longer service life.`]},
+      "HydroSpade":{head:`Simply Built. Simply Better.`,intro:`Here's why the Hydro-Spade trailer is designed with your work in mind.`,items:[
+        `Easy operation: conveniently located hydraulic controls plus a wireless handheld controller for boom functions.`,
+        `Trusted quality for tough winter conditions: heated wash cabinet, heated water lines, and antifreeze kits prevent the water system from freezing.`,
+        `Quick and easy cleanup using water-pressure wand with convenient rear access door, 6" drain valve, and blower filtration.`]}
+    };
+
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=brand-card]`),function(card){
+      var h3=card.querySelector(`[data-soe=brand-card-h3]`);
+      var name=h3?h3.textContent.trim():``;
+      var origin=card.querySelector(`[data-soe=brand-card-origin-line]`);
+      if(origin){var b=origin.querySelector(`b`); if(b)origin.innerHTML=`Made in `+b.outerHTML;}
+      var specs=card.querySelector(`[data-soe=brand-card-specs]`);
+      if(specs && specs.parentNode)specs.parentNode.removeChild(specs);
+      var data=whyData[name];
+      if(data && !card.querySelector(`.brand-why`)){
+        var why=document.createElement(`div`); why.className=`brand-why`; why.setAttribute(`data-soe`,`brand-why`);
+        var hd=document.createElement(`div`); hd.className=`brand-why-head`; hd.textContent=data.head; why.appendChild(hd);
+        var intro=document.createElement(`p`); intro.className=`brand-why-intro`; intro.textContent=data.intro; why.appendChild(intro);
+        var ul=document.createElement(`ul`); ul.className=`brand-why-list`;
+        data.items.forEach(function(it){var li=document.createElement(`li`); li.textContent=it; ul.appendChild(li);});
+        why.appendChild(ul);
+        var desc=card.querySelector(`[data-soe=brand-card-desc-l]`);
+        if(desc && desc.parentNode)desc.parentNode.insertBefore(why,desc.nextSibling);
+        else (card.querySelector(`[data-soe=brand-card-info-top]`)||card).appendChild(why);
+      }
+    });
+  }
+
+  function runAll(){
+    try{setPageAttr();}catch(e){}
+    try{swapMunicipalities();}catch(e){}
+    try{tagHomeEnergreenLogo();}catch(e){}
+    try{fixEnergreenPage();}catch(e){}
+    try{fixBrandsPage();}catch(e){}
+  }
+  ready(function(){
+    runAll();
+    /* the hero rotator clones the slides at DOMContentLoaded — re-tag after, so the logo class survives */
+    setTimeout(tagHomeEnergreenLogo,300);
+    setTimeout(swapMunicipalities,400);
+  });
 })();
