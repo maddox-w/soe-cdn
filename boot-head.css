@@ -603,3 +603,16 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
    clickable. One link per card, so nothing conflicts. */
 [data-soe=rc-unit-card]{position:relative;cursor:pointer;}
 [data-soe=rc-unit-card] [data-soe=btn]::after{content:"";position:absolute;inset:0;z-index:1;}
+
+/* (Y) Remove the banner Ken Burns zoom on BOTH heroes. ROOT CAUSE of the "shifts down when a new
+   image appears": during the 1.2s cross-fade the OUTGOING photo is zoomed in (scale 1.12) while the
+   INCOMING photo starts zoomed out (scale 1.0) — two overlapping images at different scales make the
+   photo content visibly pull/jump as they blend (reads as a down-nudge at the top of the page). It's
+   a real effect, not a layout shift (measured: hero height + page height + content below are
+   pixel-constant). Both slides now hold scale 1 -> matched, clean cross-fade. The fade stays. */
+[data-soe=hero] [data-soe=hero-bg],
+[data-soe=hero] [data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg],
+[data-soe=hero] [data-soe=hero-slide][data-soe-state=prev] [data-soe=hero-bg],
+#rc-hero [data-soe=hero-bg],
+#rc-hero [data-soe=hero-slide][data-soe-state=active] [data-soe=hero-bg],
+#rc-hero [data-soe=hero-slide][data-soe-state=prev] [data-soe=hero-bg]{animation:none !important;scale:1 !important;}
