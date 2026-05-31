@@ -746,4 +746,5 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
    only (≤720); desktop keeps its image-left layout. */
 @media (max-width:720px){
   [data-soe-page=brands] [data-soe=brand-card-visual-l]{display:block !important;height:200px !important;min-height:200px !important;flex:0 0 200px !important;}
+  [data-soe-page=brands] [data-soe=brand-card-vmeta]{display:none !important;} /* keep the banner clean */
 }
