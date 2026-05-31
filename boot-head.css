@@ -649,12 +649,8 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
   [data-soe=hero-brand-tag].eg-hero-logo-bg-sm{width:330px !important;}
 }
 
-/* Z3: Energreen unit grid — the last two cards (RoboMAX, RoboPLUS) have tight-cropped source images
-   that fill the frame edge-to-edge ("too large for the box, falling outside the boundary"). Scale them
-   down with white margin so they match the well-margined cards. */
-[data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(7) [data-soe=rc-unit-visual]{
-  background-size:82% auto !important;background-position:center !important;background-color:#fff !important;
-}
+/* Z3: (superseded by AA1) — all 7 Energreen cards now use real photos/renders pre-composed at the
+   right size, so the old RoboPLUS 82% scale-down hack is no longer needed. */
 
 /* Z4: "For more information" promo banners on /mulch-mule (green) and /remote-controlled-mowers (amber)
    become a thin, subtle accent bar in the same color — content hidden, strip shrunk. */
@@ -684,12 +680,15 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
    are committed alongside this CSS so the relative url() pins to this commit's SHA.
    ============================================================================ */
 
-/* AA1: Energreen unit cards — real client photos (ECO/EVO/MAX/MIDI = action shots in the ECO style).
-   COMPACT(1), FIFTI(4), PLUS(7) keep their old renders — no client photo provided for those yet. */
+/* AA1: Energreen unit cards — real photos. ECO/EVO/FIFTI/MIDI/MAX = action shots (ECO style);
+   COMPACT + PLUS = current official Energreen renders (no action photo exists publicly for those two). */
+[data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(1) [data-soe=rc-unit-visual]{background-image:url(robocompact-card.jpg) !important;background-size:cover !important;background-color:#fff !important;}
 [data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(2) [data-soe=rc-unit-visual]{background-image:url(roboeco-card.jpg) !important;background-size:cover !important;background-color:#fff !important;}
 [data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(3) [data-soe=rc-unit-visual]{background-image:url(roboevo-card.jpg) !important;background-size:cover !important;background-color:#fff !important;}
+[data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(4) [data-soe=rc-unit-visual]{background-image:url(robofifti-card.jpg) !important;background-size:cover !important;background-color:#fff !important;}
 [data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(5) [data-soe=rc-unit-visual]{background-image:url(robomidi-card.jpg) !important;background-size:cover !important;background-color:#fff !important;}
 [data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(6) [data-soe=rc-unit-visual]{background-image:url(robomax-card.jpg) !important;background-size:cover !important;background-color:#fff !important;}
+[data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(7) [data-soe=rc-unit-visual]{background-image:url(roboplus-card.jpg) !important;background-size:cover !important;background-color:#fff !important;}
 
 /* AA2: Energreen difference head — drop the "Why it works" eyebrow, add space before the paragraph. */
 [data-soe=rc-units-head] [data-soe=eyebrow]{display:none !important;}

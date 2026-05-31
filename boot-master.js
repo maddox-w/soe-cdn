@@ -1545,14 +1545,18 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     document.documentElement.setAttribute(`data-soe-page`,p);
   }
 
-  /* Audience copy: the company serves "professionals and contractors", not municipalities. */
+  /* Audience copy: the company serves "professionals and contractors", not municipalities.
+     Walk every text node so this catches the footer tagline, the RoboECO unit-page description,
+     the Brinemasters brand description — anywhere "municipalities" appears, site-wide. */
   function swapMunicipalities(){
-    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=footer-tag]`),function(el){
-      el.textContent=el.textContent.split(`the contractors, municipalities, and operators`).join(`professionals and contractors`);
-    });
-    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=brand-card-desc-l],[data-soe=brand-card-desc]`),function(el){
-      el.textContent=el.textContent.split(`for municipalities, airports, and contractors`).join(`for professionals and contractors`);
-    });
+    var pairs=[
+      [`the contractors, municipalities, and operators`,`professionals and contractors`],
+      [`professionals, contractors, and municipalities`,`professionals and contractors`],
+      [`for municipalities, airports, and contractors`,`for professionals and contractors`]
+    ];
+    var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null),n,hits=[];
+    while((n=w.nextNode())){ if(n.nodeValue && n.nodeValue.indexOf(`municipalit`)!==-1)hits.push(n); }
+    hits.forEach(function(t){ var v=t.nodeValue; pairs.forEach(function(p){ v=v.split(p[0]).join(p[1]); }); t.nodeValue=v; });
   }
 
   /* Homepage: the Energreen slide shows a plain "Energreen" text tag — swap it for the logo like Mulch Mule. */
@@ -1707,14 +1711,15 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   }
 
   /* ---------- Energreen "See it in action" gallery (model -> client-provided video) ---------- */
+  /* [youtube id, model (cat label), title — a nicely shortened version of the actual YouTube title] */
   var EG_VIDEOS=[
-    [`zcWSN413YhQ`,`RoboECO`,`Remote-operated mower`],
-    [`2PPnzpcxD24`,`RoboEVO`,`Bucket attachment in action`],
+    [`zcWSN413YhQ`,`RoboEVO`,`New remote-controlled tool carrier`],
+    [`2PPnzpcxD24`,`RoboEVO`,`Bucket attachment`],
+    [`P-ti-5qiec0`,`RoboMIDI`,`Cutting head 155`],
     [`jDmJwzqVDRE`,`RoboMIDI`,`Demo, USA`],
-    [`P-ti-5qiec0`,`RoboMIDI`,`Multifunction on slopes`],
     [`gnV30hOBNoY`,`RoboMAX`,`Walk-around`],
-    [`EpQU0SQXtBc`,`RoboMAX`,`Road clearance, South Carolina`],
-    [`wet3nCL5i6c`,`RoboPLUS`,`The monster remote control`]
+    [`EpQU0SQXtBc`,`RoboMAX`,`Country road clearance, SC`],
+    [`wet3nCL5i6c`,`RoboPLUS`,`The MONSTER remote control`]
   ];
   function buildEnergreenVideos(){
     if(path!==`/remote-controlled-mowers`)return;
