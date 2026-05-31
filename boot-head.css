@@ -749,3 +749,12 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 @media (max-width:720px){
   [data-soe-page=brands] [data-soe=brand-card-visual-l]{display:block !important;height:200px !important;min-height:200px !important;flex:0 0 200px !important;}
 }
+
+/* (AF) Homepage "Explore Smart Outdoor Products" lineup grid — same order as everywhere else:
+   Mulch Mule → Energreen → Metec → HydroSpade → Brinemasters (last). Via CSS `order` so the DOM
+   order — and the nth-child background-image mapping — stays correct. DOM: MM(1) Brine(2) Energreen(3) Metec(4) Hydro(5). */
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(1){order:1;}
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(2){order:5;}
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(3){order:2;}
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(4){order:3;}
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(5){order:4;}
