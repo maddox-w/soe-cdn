@@ -481,7 +481,17 @@
     var newSlides=[];
     oldSlides.forEach(function(sl){var c=sl.cloneNode(true);sl.parentNode.replaceChild(c,sl);newSlides.push(c);});
     newSlides.forEach(function(sl,idx){if(idx === 0)sl.setAttribute(`data-soe-state`,`active`);else sl.removeAttribute(`data-soe-state`);});
-    var i=0;
+
+    /* Visit order: keep DOM order (the nth-child background-image rules depend on it) but rotate in a
+       custom sequence so Brinemasters (DOM index 1 — weak photo) shows LAST. Only on the 5-brand
+       homepage banner; the 3-slide Energreen #rc-hero falls through to plain sequential. */
+    var order=[]; for(var k=0;k<newSlides.length;k++)order.push(k);
+    if(newSlides.length===5){
+      var bm=-1; newSlides.forEach(function(sl,idx){ if(/Brinemasters/i.test(sl.textContent||``))bm=idx; });
+      if(bm!==-1){ order=order.filter(function(x){return x!==bm;}); order.push(bm); }
+    }
+
+    var i=0, pos=0;
     function go(n){
       if(n === i)return;
       var prevIdx=i;
@@ -495,15 +505,17 @@
       },2100);
       i=n;
     }
-    function next(){go((i+1)%newSlides.length);}
-    var t=null;
-    function start(){if(t)clearInterval(t);t=setInterval(next,9000);}
-    function stop(){if(t){clearInterval(t);t=null;}}
-    var hero=document.querySelector(`[data-soe=hero]`);
-    if(hero){hero.addEventListener(`mouseenter`,stop);hero.addEventListener(`mouseleave`,start);}
-    /* Dwell = 9000ms (slowed from 7000 for a more relaxed banner). The Ken-Burns zoom (block M,
-       soeHomeKB) is matched to the same 9s so it completes right at the cross-fade (no snap). */
-    setTimeout(function(){next();start();},9000);
+    function next(){ pos=(pos+1)%order.length; go(order[pos]); }
+
+    /* Robust driver: ONE interval that always ticks. NO pause-on-hover — that was the "it stops" bug
+       (hovering the banner paused it; verified the rotator never stops on its own). The timer is never
+       cleared/recreated mid-life, so it can't get stuck. Dwell 9000ms. */
+    var DWELL=9000, t=null;
+    function tick(){ if(!document.hidden) next(); }
+    function start(){ if(t)clearInterval(t); t=setInterval(tick,DWELL); }
+    /* Background tabs throttle setInterval; restart a clean timer when the tab becomes visible again. */
+    document.addEventListener(`visibilitychange`,function(){ if(!document.hidden)start(); });
+    start();
   }
 
   function init(){

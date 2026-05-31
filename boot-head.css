@@ -718,3 +718,16 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
    its columns wrap; the exact horizontal clamp is done in boot-master.js block v2kk. */
 [data-soe=nav-dropdown]{max-width:calc(100vw - 24px) !important;}
 [data-soe=nav-dropdown][data-soe-menu=mega]{min-width:0 !important;width:min(960px, calc(100vw - 24px)) !important;flex-wrap:wrap !important;}
+
+/* (AC) Homepage banner alignment — give every slide's brand mark a fixed-height area so the headline,
+   lede and CTAs sit at the SAME level as the banner rotates (Mulch Mule & Energreen show tall logos;
+   Brinemasters/Metec/HydroSpade show short text tags — that height difference was shifting everything).
+   Scoped to the homepage hero ([data-soe=hero]); the brand pages use [data-soe=p-hero] and are untouched. */
+[data-soe=hero] [data-soe=hero-brand-tag]{height:104px !important;min-height:104px !important;display:flex !important;align-items:flex-end !important;margin:0 0 22px !important;padding:0 !important;}
+[data-soe=hero] [data-soe=hero-brand-tag].mm-hero-logo-bg-sm,
+[data-soe=hero] [data-soe=hero-brand-tag].eg-hero-logo-bg-sm{width:330px !important;background-size:contain !important;background-position:left bottom !important;}
+@media (max-width:720px){
+  [data-soe=hero] [data-soe=hero-brand-tag]{height:74px !important;min-height:74px !important;margin:0 0 16px !important;}
+  [data-soe=hero] [data-soe=hero-brand-tag].mm-hero-logo-bg-sm,
+  [data-soe=hero] [data-soe=hero-brand-tag].eg-hero-logo-bg-sm{width:240px !important;}
+}
