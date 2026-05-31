@@ -1570,8 +1570,6 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   /* Energreen page: "Seven remote-controlled units." -> a Mulch-Mule-style difference head + brand paragraph. */
   function fixEnergreenPage(){
     if(path!==`/remote-controlled-mowers`)return;
-    var eb=document.querySelector(`[data-soe=rc-units-head] [data-soe=eyebrow]`);
-    if(eb)eb.textContent=`Why it works`;
     var h2=document.querySelector(`[data-soe=rc-units-h2]`);
     if(h2)h2.textContent=`The Energreen Difference`;
     var lede=document.querySelector(`[data-soe=rc-units-lede]`);
@@ -1640,5 +1638,115 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     /* the hero rotator clones the slides at DOMContentLoaded — re-tag after, so the logo class survives */
     setTimeout(tagHomeEnergreenLogo,300);
     setTimeout(swapMunicipalities,400);
+  });
+})();
+
+/* === boot-fixes-v2jj ===
+   YouTube popup lightbox (no redirect) for Energreen + Mulch Mule videos, an injected Energreen
+   "See it in action" gallery (mirrors the Mulch Mule videos section), and the Energreen hero
+   "Watch Video" button. Videos provided by the client, mapped to models. */
+(function(){
+  function ready(fn){if(document.readyState !== `loading`)fn();else document.addEventListener(`DOMContentLoaded`,fn);}
+  var path=(location.pathname.replace(/\/+$/,``)||`/`);
+
+  /* ---------- lightbox ---------- */
+  var overlay=null;
+  function closeModal(){ if(overlay){ if(overlay.parentNode)overlay.parentNode.removeChild(overlay); overlay=null; document.body.style.overflow=``; } }
+  function openModal(id){
+    if(!id)return; closeModal();
+    overlay=document.createElement(`div`); overlay.setAttribute(`data-soe`,`video-modal`);
+    var frame=document.createElement(`div`); frame.setAttribute(`data-soe`,`video-modal-frame`);
+    var ifr=document.createElement(`iframe`);
+    ifr.src=`https://www.youtube-nocookie.com/embed/`+id+`?autoplay=1&rel=0&modestbranding=1`;
+    ifr.setAttribute(`allow`,`autoplay; encrypted-media; picture-in-picture; fullscreen`);
+    ifr.setAttribute(`allowfullscreen`,``);
+    var close=document.createElement(`button`); close.setAttribute(`data-soe`,`video-modal-close`); close.setAttribute(`aria-label`,`Close video`); close.innerHTML=`&times;`;
+    frame.appendChild(ifr); overlay.appendChild(close); overlay.appendChild(frame);
+    overlay.addEventListener(`click`,function(e){ if(e.target===overlay||e.target===close)closeModal(); });
+    document.body.appendChild(overlay); document.body.style.overflow=`hidden`;
+  }
+  function vidId(el){
+    var id=el.getAttribute(`data-soe-video`); if(id)return id;
+    var href=el.getAttribute(`href`)||``;
+    var m=href.match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/)([\w-]{6,})/);
+    return m?m[1]:``;
+  }
+  function initLightbox(){
+    if(document.documentElement.getAttribute(`data-soe-vlb`)===`1`)return;
+    document.documentElement.setAttribute(`data-soe-vlb`,`1`);
+    document.addEventListener(`click`,function(e){
+      var t=e.target.closest?e.target.closest(`[data-soe-video],a[data-soe=video-card]`):null;
+      if(!t)return;
+      var id=vidId(t); if(!id)return;
+      e.preventDefault(); e.stopPropagation();
+      openModal(id);
+    },true);
+    document.addEventListener(`keydown`,function(e){ if(e.key===`Escape`)closeModal(); });
+  }
+
+  /* ---------- Mulch Mule: relabel "Watch on YouTube" -> "Watch video" (now opens in-page) ---------- */
+  function polishMM(){
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=video-foot-watch]`),function(s){
+      Array.prototype.forEach.call(s.childNodes,function(n){
+        if(n.nodeType===3 && /Watch on YouTube/.test(n.nodeValue||``)) n.nodeValue=`Watch video`;
+      });
+    });
+  }
+
+  /* ---------- Energreen hero "Watch Demo/Video" -> flagship popup ---------- */
+  function wireEnergreenHero(){
+    if(path!==`/remote-controlled-mowers`)return;
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=p-hero-ctas] a[data-soe=btn]`),function(b){
+      var t=(b.textContent||``).trim();
+      if(t===`Watch Demo`||t===`Watch Video`){
+        b.textContent=`Watch Video`;
+        b.setAttribute(`data-soe-video`,`gnV30hOBNoY`);
+        b.setAttribute(`href`,`#`);
+      }
+    });
+  }
+
+  /* ---------- Energreen "See it in action" gallery (model -> client-provided video) ---------- */
+  var EG_VIDEOS=[
+    [`zcWSN413YhQ`,`RoboECO`,`Remote-operated mower`],
+    [`2PPnzpcxD24`,`RoboEVO`,`Bucket attachment in action`],
+    [`jDmJwzqVDRE`,`RoboMIDI`,`Demo, USA`],
+    [`P-ti-5qiec0`,`RoboMIDI`,`Multifunction on slopes`],
+    [`gnV30hOBNoY`,`RoboMAX`,`Walk-around`],
+    [`EpQU0SQXtBc`,`RoboMAX`,`Road clearance, South Carolina`],
+    [`wet3nCL5i6c`,`RoboPLUS`,`The monster remote control`]
+  ];
+  function buildEnergreenVideos(){
+    if(path!==`/remote-controlled-mowers`)return;
+    if(document.querySelector(`[data-soe=videos][data-soe-built=v2jj]`))return;
+    var anchor=document.querySelector(`[data-soe=rc-units]`); if(!anchor)return;
+    var sec=document.createElement(`section`); sec.setAttribute(`data-soe`,`videos`); sec.setAttribute(`data-soe-built`,`v2jj`);
+    var head=document.createElement(`div`); head.setAttribute(`data-soe`,`videos-head`); head.setAttribute(`data-soe-state`,`in-view`);
+    var h2=document.createElement(`h2`); h2.setAttribute(`data-soe`,`videos-head-h2`); h2.textContent=`See it in action.`;
+    var lede=document.createElement(`p`); lede.setAttribute(`data-soe`,`videos-head-lede`); lede.textContent=`Watch the Robo lineup work real terrain — steep slopes, heavy brush, forestry, and roadside clearance.`;
+    head.appendChild(h2); head.appendChild(lede); sec.appendChild(head);
+    var grid=document.createElement(`div`); grid.setAttribute(`data-soe`,`video-grid`);
+    EG_VIDEOS.forEach(function(v){
+      var a=document.createElement(`a`); a.setAttribute(`data-soe`,`video-card`); a.setAttribute(`data-soe-video`,v[0]); a.setAttribute(`data-soe-state`,`in-view`); a.href=`#`;
+      var thumb=document.createElement(`div`); thumb.setAttribute(`data-soe`,`video-thumb`);
+      thumb.style.backgroundImage=`url(https://i.ytimg.com/vi/`+v[0]+`/hqdefault.jpg)`;
+      var ch=document.createElement(`span`); ch.setAttribute(`data-soe`,`video-channel`); ch.textContent=`Energreen`;
+      var play=document.createElement(`div`); play.setAttribute(`data-soe`,`video-play`);
+      thumb.appendChild(ch); thumb.appendChild(play); a.appendChild(thumb);
+      var body=document.createElement(`div`); body.setAttribute(`data-soe`,`video-body`);
+      var cat=document.createElement(`div`); cat.setAttribute(`data-soe`,`video-cat`); cat.textContent=v[1];
+      var title=document.createElement(`h3`); title.setAttribute(`data-soe`,`video-title`); title.textContent=v[2];
+      body.appendChild(cat); body.appendChild(title); a.appendChild(body);
+      grid.appendChild(a);
+    });
+    sec.appendChild(grid);
+    anchor.parentNode.insertBefore(sec, anchor.nextSibling);
+  }
+
+  ready(function(){
+    try{ initLightbox(); }catch(e){}
+    try{ polishMM(); }catch(e){}
+    try{ wireEnergreenHero(); }catch(e){}
+    try{ buildEnergreenVideos(); }catch(e){}
   });
 })();
