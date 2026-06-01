@@ -872,3 +872,16 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 #hs-lineup [data-soe=rc-unit-card] [data-soe=btn]::after{content:"" !important;position:absolute !important;inset:0 !important;z-index:2 !important;}
 [data-soe-page=hydrospade] [data-soe=rc-unit-card]:hover{border-color:var(--hs-navy) !important;}
 [data-soe-page=hydrospade] [data-soe=ru-spec-cat]{color:var(--hs-navy) !important;}
+
+/* HydroSpade hero polish: drop the meta-slogan "gray banner" by the logo (match Energreen/Mulch pattern),
+   subline -> a visible brand blue (the dark navy is invisible on the dark hero), space before the lede. */
+#hs-hero [data-soe=p-hero-mark-meta]{display:none !important;}
+#hs-hero [data-soe=p-hero-mark]{border:0 !important;gap:0 !important;padding:0 !important;background:transparent !important;}
+#hs-hero [data-soe=p-hero-subline]{color:#4a90d9 !important;}
+#hs-hero [data-soe=p-hero-lede]{margin-top:18px !important;}
+/* Inquiry-form heading on ALL product pages: space out the eyebrow / heading / lede. */
+[data-soe=ru-form-h2]{margin-top:24px !important;margin-bottom:18px !important;}
+
+/* HydroSpade inquiry-form eyebrow sits on the near-black form panel -> bright accent blue (navy is invisible there). */
+[data-soe-page=hydrospade] [data-soe=ru-form-head] [data-soe=eyebrow]{color:#4a90d9 !important;}
+[data-soe-page=hydrospade] [data-soe=ru-form-head] [data-soe=eyebrow]::before,[data-soe-page=hydrospade] [data-soe=ru-form-head] [data-soe=eyebrow]::after{background:#4a90d9 !important;}
