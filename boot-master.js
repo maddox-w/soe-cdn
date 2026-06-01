@@ -1657,9 +1657,11 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
 })();
 
 /* === boot-fixes-v2jj ===
-   YouTube popup lightbox (no redirect) for Energreen + Mulch Mule videos, an injected Energreen
-   "See it in action" gallery (mirrors the Mulch Mule videos section), and the Energreen hero
-   "Watch Video" button. Videos provided by the client, mapped to models. */
+   YouTube popup lightbox (no redirect) for the Mulch Mule + Energreen videos. Both "See it in action"
+   galleries are JS-built from arrays (MM_VIDEOS / EG_VIDEOS) via the shared buildVideoCard(): on
+   /mulch-mule the static 3-card grid is rebuilt to the client's 9; on /remote-controlled-mowers the
+   gallery is injected after the unit grid. Also wires the hero "Watch Video" buttons — Mulch Mule ->
+   X8TkDU5Vllo (Todd Pugh intro), Energreen -> zcWSN413YhQ (RoboEVO intro). Client-provided videos. */
 (function(){
   function ready(fn){if(document.readyState !== `loading`)fn();else document.addEventListener(`DOMContentLoaded`,fn);}
   var path=(location.pathname.replace(/\/+$/,``)||`/`);
@@ -1721,22 +1723,66 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     });
   }
 
-  /* ---------- Energreen "See it in action" gallery (model -> client-provided video) ---------- */
-  /* [youtube id, model (cat label), title — a nicely shortened version of the actual YouTube title] */
+  /* ---------- "See it in action" galleries (model/category -> client-provided video) ---------- */
+  /* [youtube id, category (CSS-hidden), title]. Titles are the client's preferred labels (they don't
+     always match the raw YouTube title — e.g. fz9OyWLYVOM is YT-titled "Mulch Mule delivery day!" but
+     the client wants "Tarping system demonstration"). The category line is currently display:none. */
+  var MM_VIDEOS=[
+    [`8ztI_DR0cBU`,`Spencer Lawn Care`,`The Mulch Mule is Incredible!`],
+    [`FZW8PxGw_Sc`,`Spencer Lawn Care`,`The Biggest Fall Cleanup Ever!`],
+    [`OyG0qaK-4ww`,`Demonstration`,`Toro Grandstand Multi Force being filled up by the Mulch Mule`],
+    [`fz9OyWLYVOM`,`Demonstration`,`Tarping system demonstration`],
+    [`BJZ2gBzF4tA`,`Demonstration`,`Big Foot Jack demonstration`],
+    [`_L5xSj604UM`,`Demonstration`,`Wireless Remote demonstration`],
+    [`MQdX3UKl2MA`,`Spencer Lawn Care`,`Mulch Mule showing off its rock hauling and distribution with the Toro Dingo`],
+    [`FW9pK3_SAd4`,`Demonstration`,`Billy Goat leaf vacuum demonstration`],
+    [`eRv58gN6ix4`,`Spencer Lawn Care`,`Testimonials`]
+  ];
   var EG_VIDEOS=[
     [`zcWSN413YhQ`,`RoboEVO`,`RoboEVO Introduction`],
     [`2PPnzpcxD24`,`RoboEVO`,`RoboEVO Demo with Bucket Attachment`],
     [`Tv20xFAmHWg`,`RoboEVO`,`RoboEVO Demo with Flail Mower`],
+    [`5Nukj63t8ZM`,`RoboEVO`,`RoboEVO Demo with Stump Grinder`],
     [`P-ti-5qiec0`,`RoboMIDI`,`RoboMIDI Demo with Cutting Head 155`],
     [`jDmJwzqVDRE`,`RoboMIDI`,`RoboMIDI Demo with Forestry Mulcher Head`]
   ];
-  /* Accurate YouTube view counts + durations (fetched 2026-06-01) — labels the Energreen cards below
-     AND corrects the Mulch Mule cards, whose static DOM had placeholder numbers. */
+  /* Accurate YouTube view counts + durations (fetched 2026-06-01). Duration shows on the thumb;
+     views feed the (currently CSS-hidden) footer. To refresh, curl youtube.com/watch?v=ID with a
+     browser UA and read the videoDetails "viewCount"/"lengthSeconds". */
   var VIDEO_META={
-    "lc0dDLq23ns":{views:`30K`,dur:`20:27`},"FW9pK3_SAd4":{views:`16K`,dur:`0:13`},"yQBlkBtwCZI":{views:`21K`,dur:`14:26`},
+    /* Mulch Mule */
+    "8ztI_DR0cBU":{views:`39K`,dur:`26:36`},"FZW8PxGw_Sc":{views:`53K`,dur:`21:50`},"OyG0qaK-4ww":{views:`193K`,dur:`0:12`},
+    "fz9OyWLYVOM":{views:`18K`,dur:`0:28`},"BJZ2gBzF4tA":{views:`18K`,dur:`0:08`},"_L5xSj604UM":{views:`110K`,dur:`0:16`},
+    "MQdX3UKl2MA":{views:`32K`,dur:`26:41`},"FW9pK3_SAd4":{views:`16K`,dur:`0:13`},"eRv58gN6ix4":{views:`829`,dur:`1:00`},
+    /* Energreen */
     "zcWSN413YhQ":{views:`3.8K`,dur:`1:48`},"2PPnzpcxD24":{views:`6.3K`,dur:`0:57`},"Tv20xFAmHWg":{views:`2K`,dur:`1:40`},
-    "P-ti-5qiec0":{views:`3.7K`,dur:`2:14`},"jDmJwzqVDRE":{views:`2.3K`,dur:`2:30`}
+    "5Nukj63t8ZM":{views:`13K`,dur:`2:22`},"P-ti-5qiec0":{views:`3.7K`,dur:`2:14`},"jDmJwzqVDRE":{views:`2.3K`,dur:`2:30`}
   };
+  /* Build one video card (identical structure for both galleries). channel = the (hidden) channel tag. */
+  function buildVideoCard(v,channel){
+    var meta=VIDEO_META[v[0]]||{};
+    var a=document.createElement(`a`); a.setAttribute(`data-soe`,`video-card`); a.setAttribute(`data-soe-video`,v[0]); a.setAttribute(`data-soe-state`,`in-view`); a.href=`#`;
+    var thumb=document.createElement(`div`); thumb.setAttribute(`data-soe`,`video-thumb`);
+    thumb.style.backgroundImage=`url(https://i.ytimg.com/vi/`+v[0]+`/hqdefault.jpg)`;
+    var ch=document.createElement(`span`); ch.setAttribute(`data-soe`,`video-channel`); ch.textContent=channel;
+    var play=document.createElement(`div`); play.setAttribute(`data-soe`,`video-play`);
+    thumb.appendChild(ch); thumb.appendChild(play);
+    if(meta.dur){ var dur=document.createElement(`span`); dur.setAttribute(`data-soe`,`video-duration`); dur.textContent=meta.dur; thumb.appendChild(dur); }
+    a.appendChild(thumb);
+    var body=document.createElement(`div`); body.setAttribute(`data-soe`,`video-body`);
+    var cat=document.createElement(`div`); cat.setAttribute(`data-soe`,`video-cat`); cat.textContent=v[1];
+    var title=document.createElement(`h3`); title.setAttribute(`data-soe`,`video-title`); title.textContent=v[2];
+    body.appendChild(cat); body.appendChild(title);
+    if(meta.views){
+      var foot=document.createElement(`div`); foot.setAttribute(`data-soe`,`video-foot`);
+      var vs=document.createElement(`span`); var b=document.createElement(`b`); b.textContent=meta.views; vs.appendChild(b); vs.appendChild(document.createTextNode(` views`));
+      var w=document.createElement(`span`); w.setAttribute(`data-soe`,`video-foot-watch`); w.textContent=`Watch video`;
+      var arr=document.createElement(`span`); arr.setAttribute(`data-soe`,`arr`); w.appendChild(arr);
+      foot.appendChild(vs); foot.appendChild(w); body.appendChild(foot);
+    }
+    a.appendChild(body);
+    return a;
+  }
   function buildEnergreenVideos(){
     if(path!==`/remote-controlled-mowers`)return;
     if(document.querySelector(`[data-soe=videos][data-soe-built=v2jj]`))return;
@@ -1747,50 +1793,40 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     var lede=document.createElement(`p`); lede.setAttribute(`data-soe`,`videos-head-lede`); lede.textContent=`Watch the Robo lineup work real terrain — steep slopes, heavy brush, forestry, and roadside clearance.`;
     head.appendChild(h2); head.appendChild(lede); sec.appendChild(head);
     var grid=document.createElement(`div`); grid.setAttribute(`data-soe`,`video-grid`);
-    EG_VIDEOS.forEach(function(v){
-      var meta=VIDEO_META[v[0]]||{};
-      var a=document.createElement(`a`); a.setAttribute(`data-soe`,`video-card`); a.setAttribute(`data-soe-video`,v[0]); a.setAttribute(`data-soe-state`,`in-view`); a.href=`#`;
-      var thumb=document.createElement(`div`); thumb.setAttribute(`data-soe`,`video-thumb`);
-      thumb.style.backgroundImage=`url(https://i.ytimg.com/vi/`+v[0]+`/hqdefault.jpg)`;
-      var ch=document.createElement(`span`); ch.setAttribute(`data-soe`,`video-channel`); ch.textContent=`Energreen`;
-      var play=document.createElement(`div`); play.setAttribute(`data-soe`,`video-play`);
-      thumb.appendChild(ch); thumb.appendChild(play);
-      if(meta.dur){ var dur=document.createElement(`span`); dur.setAttribute(`data-soe`,`video-duration`); dur.textContent=meta.dur; thumb.appendChild(dur); }
-      a.appendChild(thumb);
-      var body=document.createElement(`div`); body.setAttribute(`data-soe`,`video-body`);
-      var cat=document.createElement(`div`); cat.setAttribute(`data-soe`,`video-cat`); cat.textContent=v[1];
-      var title=document.createElement(`h3`); title.setAttribute(`data-soe`,`video-title`); title.textContent=v[2];
-      body.appendChild(cat); body.appendChild(title);
-      if(meta.views){
-        var foot=document.createElement(`div`); foot.setAttribute(`data-soe`,`video-foot`);
-        var vs=document.createElement(`span`); var b=document.createElement(`b`); b.textContent=meta.views; vs.appendChild(b); vs.appendChild(document.createTextNode(` views`));
-        var w=document.createElement(`span`); w.setAttribute(`data-soe`,`video-foot-watch`); w.textContent=`Watch video`;
-        var arr=document.createElement(`span`); arr.setAttribute(`data-soe`,`arr`); w.appendChild(arr);
-        foot.appendChild(vs); foot.appendChild(w); body.appendChild(foot);
-      }
-      a.appendChild(body);
-      grid.appendChild(a);
-    });
+    EG_VIDEOS.forEach(function(v){ grid.appendChild(buildVideoCard(v,`Energreen`)); });
     sec.appendChild(grid);
     anchor.parentNode.insertBefore(sec, anchor.nextSibling);
   }
 
-  /* Mulch Mule: correct the static cards' view counts + durations to the real YouTube numbers. */
-  function fixMulchMuleVideos(){
+  /* Mulch Mule: rebuild the static 3-card grid into the client's full video list (9) — same card
+     chrome as Energreen, thumbnails from i.ytimg.com, all opening the in-page popup. */
+  function buildMulchMuleVideos(){
     if(path!==`/mulch-mule`)return;
-    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=video-card]`),function(card){
-      var m=(card.getAttribute(`href`)||``).match(/[?&]v=([\w-]+)/); if(!m)return;
-      var meta=VIDEO_META[m[1]]; if(!meta)return;
-      var dur=card.querySelector(`[data-soe=video-duration]`); if(dur && meta.dur)dur.textContent=meta.dur;
-      var foot=card.querySelector(`[data-soe=video-foot]`);
-      if(foot && meta.views){ var b=foot.querySelector(`b`); if(b)b.textContent=meta.views; }
+    var grid=document.querySelector(`[data-soe=video-grid]`); if(!grid)return;
+    if(grid.getAttribute(`data-soe-built`)===`v2mm`)return;
+    while(grid.firstChild)grid.removeChild(grid.firstChild);
+    MM_VIDEOS.forEach(function(v){ grid.appendChild(buildVideoCard(v,`Spencer Lawn Care`)); });
+    grid.setAttribute(`data-soe-built`,`v2mm`);
+  }
+
+  /* Mulch Mule landing hero: wire the "Watch Demo" button to the Mulch Mule intro popup. */
+  function wireMulchMuleHero(){
+    if(path!==`/mulch-mule`)return;
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=p-hero-ctas] a[data-soe=btn]`),function(b){
+      var t=(b.textContent||``).trim();
+      if(t===`Watch Demo`||t===`Watch Video`){
+        b.textContent=`Watch Video`;
+        b.setAttribute(`data-soe-video`,`X8TkDU5Vllo`);
+        b.setAttribute(`href`,`#`);
+      }
     });
   }
 
   ready(function(){
     try{ initLightbox(); }catch(e){}
     try{ polishMM(); }catch(e){}
-    try{ fixMulchMuleVideos(); }catch(e){}
+    try{ buildMulchMuleVideos(); }catch(e){}
+    try{ wireMulchMuleHero(); }catch(e){}
     try{ wireEnergreenHero(); }catch(e){}
     try{ buildEnergreenVideos(); }catch(e){}
   });
