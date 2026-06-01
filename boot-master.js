@@ -1611,9 +1611,12 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
         `Broad compatibility: custom fabrication and forming build mounts to standard hitch interfaces, with one-off builds for non-standard machines.`,
         `Durability: professional welding and specialized coatings protect against wear, corrosion, and weather for a longer service life.`]},
       "HydroSpade":{head:`Simply Built. Simply Better.`,intro:`Here's why the Hydro-Spade trailer is designed with your work in mind.`,items:[
-        `Easy operation: conveniently located hydraulic controls plus a wireless handheld controller for boom functions.`,
-        `Trusted quality for tough winter conditions: heated wash cabinet, heated water lines, and antifreeze kits prevent the water system from freezing.`,
-        `Quick and easy cleanup using water-pressure wand with convenient rear access door, 6" drain valve, and blower filtration.`]}
+        `Enhanced Maneuverability — the Hydro-Spade trailer delivers in tight spots, urban projects, and difficult turnaround situations.`,
+        `Maximize Payload — a specialized balanced weight distribution design allows balance-sensitive trucks to maximize payload.`,
+        `Reduce Noise — an enclosed blower compartment helps minimize blower noise.`,
+        `Enjoy Easy Operations — conveniently located hydraulic controls plus a wireless handheld controller for boom functions.`,
+        `Protect Your Equipment — positive shut-off protection and filter with spun-bonded filter cartridges provide great protection for the blower unit.`,
+        `Quick and Easy Cleanup — using a water-pressure wand with convenient rear access door, 6" drain valve, and blower filtration.`]}
     };
 
     Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=brand-card]`),function(card){
