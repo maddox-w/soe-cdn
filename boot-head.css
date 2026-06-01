@@ -788,12 +788,11 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(4){order:3;}
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(5){order:4;}
 
-/* AG (2026-06-01): the "See it in action" video cards were WIDER than the product imagery on the brand
-   pages (videos rendered ~356px vs the ~265px Energreen unit cards). Make the videos read smaller/secondary,
-   scoped per page (desktop only — tablet/mobile keep the responsive 2-/1-col stack):
-   - Energreen has 5 videos -> a 5-col row (~200px each, smaller than the 4-col ~265px unit cards).
-   - Mulch Mule has 3 videos -> cap + center the 3-col grid (~280px each, smaller than the ~360px features). */
+/* AG (2026-06-01): brand-page "See it in action" video cards sized smaller than the product imagery AND
+   identical across both pages (user: "Mulch Mule vids should be the same size as Energreen's"). One shared
+   rule: cap each card + center the row. auto-fit collapses empty tracks, so Energreen's 5 fill the row and
+   Mulch Mule's 3 sit centered — both at the SAME ~205px width. Desktop only (tablet/mobile keep the
+   responsive 2-/1-col stack). */
 @media (min-width:992px){
-  [data-soe-page=energreen] [data-soe=video-grid]{grid-template-columns:repeat(5,1fr) !important;gap:24px !important;}
-  [data-soe-page=mulch-mule] [data-soe=video-grid]{max-width:900px !important;margin-left:auto !important;margin-right:auto !important;}
+  [data-soe=video-grid]{grid-template-columns:repeat(auto-fit,minmax(180px,205px)) !important;justify-content:center !important;gap:24px !important;}
 }
