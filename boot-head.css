@@ -788,17 +788,16 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(4){order:3;}
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(5){order:4;}
 
-/* AG (2026-06-01): brand-page "See it in action" video cards — smaller than the product imagery AND
-   IDENTICAL on both pages (Mulch Mule == Energreen). Uses FLEXBOX, not grid auto-fit: the auto-fit +
-   justify-content:center approach centered inconsistently across browsers (collapsed empty tracks
-   right-shifted the row on some engines). Flex with fixed 205px cards + wrap + center is rock-solid:
-   Energreen's 5 and Mulch Mule's 3 both sit centered at the exact same size. Desktop only (≥992px;
-   tablet/mobile keep the responsive grid stack). */
+/* AG (2026-06-01, updated): brand-page "See it in action" video cards — 3 PER ROW on desktop (client:
+   "rows of 3 looks a tad better"). FIXED 3-col grid, NOT grid auto-fit — auto-fit collapses empty tracks
+   and centered inconsistently cross-browser (the old lesson); a fixed repeat(3) has no empty tracks, so
+   it's safe. Columns capped via minmax(0,380px) so cards don't balloon on wide screens, and the track
+   group is centered like the old flex row. Clean full rows: 9 Mulch Mule cards -> 3x3, 6 Energreen ->
+   3x2. Desktop only (≥992px; below that the responsive grid stack stays: 2-col ≤1024, 1-col ≤720). */
 @media (min-width:992px){
-  [data-soe=video-grid]{display:flex !important;flex-wrap:wrap !important;justify-content:center !important;align-items:stretch !important;gap:28px !important;}
-  [data-soe=video-grid] [data-soe=video-card]{flex:0 0 232px !important;width:232px !important;max-width:232px !important;}
-  /* equal-height cards regardless of title length: card fills the stretched row height */
-  [data-soe=video-grid] [data-soe=video-card]{align-self:stretch !important;}
+  [data-soe=video-grid]{display:grid !important;grid-template-columns:repeat(3,minmax(0,380px)) !important;justify-content:center !important;align-items:stretch !important;gap:28px !important;}
+  /* reset the old fixed-width flex sizing so the grid controls card width; keep equal-height rows */
+  [data-soe=video-grid] [data-soe=video-card]{flex:none !important;width:auto !important;max-width:none !important;align-self:stretch !important;}
 }
 
 /* AH (2026-06-01): strip the YouTube chrome so the brand-page video cards read as clean product-box-style

@@ -1660,8 +1660,9 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
    YouTube popup lightbox (no redirect) for the Mulch Mule + Energreen videos. Both "See it in action"
    galleries are JS-built from arrays (MM_VIDEOS / EG_VIDEOS) via the shared buildVideoCard(): on
    /mulch-mule the static 3-card grid is rebuilt to the client's 9; on /remote-controlled-mowers the
-   gallery is injected after the unit grid. Also wires the hero "Watch Video" buttons — Mulch Mule ->
-   X8TkDU5Vllo (Todd Pugh intro), Energreen -> zcWSN413YhQ (RoboEVO intro). Client-provided videos. */
+   gallery is injected after the unit grid. Also wires the brand-page hero "Watch Video" buttons —
+   Mulch Mule -> X8TkDU5Vllo (Todd Pugh intro), Energreen -> yHaA7LCPtWY (New RoboEVO overview); these
+   match the landing-page slides 1:1 (see wireHomeWatch in v2ll). Client-provided videos. */
 (function(){
   function ready(fn){if(document.readyState !== `loading`)fn();else document.addEventListener(`DOMContentLoaded`,fn);}
   var path=(location.pathname.replace(/\/+$/,``)||`/`);
@@ -1710,32 +1711,32 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     });
   }
 
-  /* ---------- Energreen hero "Watch Demo/Video" -> flagship popup ---------- */
+  /* ---------- Energreen hero "Watch Demo/Video" -> New RoboEVO overview (1:1 w/ landing slide) ---------- */
   function wireEnergreenHero(){
     if(path!==`/remote-controlled-mowers`)return;
     Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=p-hero-ctas] a[data-soe=btn]`),function(b){
       var t=(b.textContent||``).trim();
       if(t===`Watch Demo`||t===`Watch Video`){
         b.textContent=`Watch Video`;
-        b.setAttribute(`data-soe-video`,`zcWSN413YhQ`);
+        b.setAttribute(`data-soe-video`,`yHaA7LCPtWY`);
         b.setAttribute(`href`,`#`);
       }
     });
   }
 
   /* ---------- "See it in action" galleries (model/category -> client-provided video) ---------- */
-  /* [youtube id, category (CSS-hidden), title]. Titles are the client's preferred labels (they don't
-     always match the raw YouTube title — e.g. fz9OyWLYVOM is YT-titled "Mulch Mule delivery day!" but
-     the client wants "Tarping system demonstration"). The category line is currently display:none. */
+  /* [youtube id, category (CSS-hidden), title]. Titles are the client's preferred labels in Title Case
+     (they don't always match the raw YouTube title — e.g. fz9OyWLYVOM is YT-titled "Mulch Mule delivery
+     day!" but the client wants "Tarping System Demonstration"). The category line is currently display:none. */
   var MM_VIDEOS=[
-    [`8ztI_DR0cBU`,`Spencer Lawn Care`,`The Mulch Mule is Incredible!`],
+    [`8ztI_DR0cBU`,`Spencer Lawn Care`,`The Mulch Mule Is Incredible!`],
     [`FZW8PxGw_Sc`,`Spencer Lawn Care`,`The Biggest Fall Cleanup Ever!`],
-    [`OyG0qaK-4ww`,`Demonstration`,`Toro Grandstand Multi Force being filled up by the Mulch Mule`],
-    [`fz9OyWLYVOM`,`Demonstration`,`Tarping system demonstration`],
-    [`BJZ2gBzF4tA`,`Demonstration`,`Big Foot Jack demonstration`],
-    [`_L5xSj604UM`,`Demonstration`,`Wireless Remote demonstration`],
-    [`MQdX3UKl2MA`,`Spencer Lawn Care`,`Mulch Mule showing off its rock hauling and distribution with the Toro Dingo`],
-    [`FW9pK3_SAd4`,`Demonstration`,`Billy Goat leaf vacuum demonstration`],
+    [`OyG0qaK-4ww`,`Demonstration`,`Toro Grandstand Multi Force Being Filled Up by the Mulch Mule`],
+    [`fz9OyWLYVOM`,`Demonstration`,`Tarping System Demonstration`],
+    [`BJZ2gBzF4tA`,`Demonstration`,`Big Foot Jack Demonstration`],
+    [`_L5xSj604UM`,`Demonstration`,`Wireless Remote Demonstration`],
+    [`MQdX3UKl2MA`,`Spencer Lawn Care`,`Mulch Mule Showing Off Its Rock Hauling and Distribution with the Toro Dingo`],
+    [`FW9pK3_SAd4`,`Demonstration`,`Billy Goat Leaf Vacuum Demonstration`],
     [`eRv58gN6ix4`,`Spencer Lawn Care`,`Testimonials`]
   ];
   var EG_VIDEOS=[
@@ -1866,7 +1867,8 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
 /* === boot-fixes-v2ll ===
    2026-06-01 content batch:
    - Site-wide: "Request Quote"/"Request a Quote" CTA buttons -> "Request Info"; hours -> 7:00 AM - 4:00 PM Central.
-   - Landing page hero "Watch Video" -> RoboEVO Introduction popup (zcWSN413YhQ). (Energreen hero handled in v2jj.)
+   - Landing page hero "Watch Video": per-brand, 1:1 with brand pages — Mulch Mule -> X8TkDU5Vllo,
+     Energreen -> yHaA7LCPtWY; other brands' placeholder Watch buttons removed (only 2 brands have videos).
    - /request-quote: H1 + breadcrumb "Request a Quote" -> "Request more info"; card heading -> bold
      "Two ways to start. Choose what fits your time." (the gray sub duplicated it, so it's hidden);
      tabs "Quick Quote"->"Quick" / "Detailed Quote"->"More Detail The Better"; detailed submit ->
@@ -1912,12 +1914,28 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     swapText(`5:00 PM EST`,`4:00 PM Central`);
   }
 
-  /* ---- Landing page: wire "Watch Video" hero buttons to the RoboEVO Introduction popup (v2jj lightbox) ---- */
+  /* ---- Landing page: Watch Video buttons are 1:1 with the brand pages. Only Mulch Mule + Energreen
+     have a video right now (same ids as their brand-page heroes); every other brand's placeholder
+     "Watch Demo" button is removed. Brand is read from the slide's "Explore <Brand>" CTA (that text
+     survives tagHomeBrandLogos, which clears the brand-tag). Idempotent — runAll re-runs it for the
+     rotator's cloned slides. ---- */
   function wireHomeWatch(){
     if(path!==`/`)return;
-    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=hero-ctas] a[data-soe=btn]`),function(b){
-      var t=(b.textContent||``).trim();
-      if(t===`Watch Video`||t===`Watch Demo`){ b.setAttribute(`data-soe-video`,`zcWSN413YhQ`); b.setAttribute(`href`,`#`); }
+    var MAP={ "mulch mule":`X8TkDU5Vllo`, "energreen":`yHaA7LCPtWY` };
+    /* Each slide's hero-ctas = an "Explore <Brand>" button + ONE secondary CTA (a "Watch Demo" or a
+       "View Specs" that an earlier block relabels to "Watch Video"). For Mulch Mule + Energreen the
+       secondary becomes the real Watch Video; for every other brand it's a placeholder and is removed
+       outright (works regardless of its current label, so it doesn't depend on the relabel's timing). */
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=hero-ctas]`),function(ctas){
+      var brand=``, secondary=null;
+      Array.prototype.forEach.call(ctas.querySelectorAll(`a[data-soe=btn]`),function(b){
+        var ex=(b.textContent||``).trim().match(/^Explore (.+)$/i);
+        if(ex) brand=ex[1].trim().toLowerCase(); else secondary=b;
+      });
+      if(!secondary)return;
+      var vid=MAP[brand];
+      if(vid){ secondary.textContent=`Watch Video`; secondary.setAttribute(`data-soe-video`,vid); secondary.setAttribute(`href`,`#`); }
+      else if(secondary.parentNode){ secondary.parentNode.removeChild(secondary); }
     });
   }
 
