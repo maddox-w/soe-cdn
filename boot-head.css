@@ -787,3 +787,13 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(3){order:2;}
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(4){order:3;}
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(5){order:4;}
+
+/* AG (2026-06-01): the "See it in action" video cards were WIDER than the product imagery on the brand
+   pages (videos rendered ~356px vs the ~265px Energreen unit cards). Make the videos read smaller/secondary,
+   scoped per page (desktop only — tablet/mobile keep the responsive 2-/1-col stack):
+   - Energreen has 5 videos -> a 5-col row (~200px each, smaller than the 4-col ~265px unit cards).
+   - Mulch Mule has 3 videos -> cap + center the 3-col grid (~280px each, smaller than the ~360px features). */
+@media (min-width:992px){
+  [data-soe-page=energreen] [data-soe=video-grid]{grid-template-columns:repeat(5,1fr) !important;gap:24px !important;}
+  [data-soe-page=mulch-mule] [data-soe=video-grid]{max-width:900px !important;margin-left:auto !important;margin-right:auto !important;}
+}
