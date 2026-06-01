@@ -864,3 +864,11 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 /* HydroSpade detail pages: neutralize the Robo amber sub-headline + hero bottom bar */
 [data-soe-page=hydrospade] [data-soe=ru-hero-sub]{color:#fff !important;}
 [data-soe-page=hydrospade] [data-soe=ru-hero]{border-bottom-color:var(--hs-navy) !important;}
+
+/* HydroSpade lineup cards: visible navy "Find out more" + guaranteed whole-card click + navy hover; detail spec titles navy */
+#hs-lineup [data-soe=rc-unit-body] [data-soe=btn]{background:var(--hs-navy) !important;color:#fff !important;padding:11px 22px !important;}
+#hs-lineup [data-soe=rc-unit-body] [data-soe=btn]:hover{background:var(--hs-navy-dark) !important;}
+#hs-lineup [data-soe=rc-unit-card]{position:relative !important;cursor:pointer;}
+#hs-lineup [data-soe=rc-unit-card] [data-soe=btn]::after{content:"" !important;position:absolute !important;inset:0 !important;z-index:2 !important;}
+[data-soe-page=hydrospade] [data-soe=rc-unit-card]:hover{border-color:var(--hs-navy) !important;}
+[data-soe-page=hydrospade] [data-soe=ru-spec-cat]{color:var(--hs-navy) !important;}
