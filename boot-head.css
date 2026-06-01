@@ -649,6 +649,29 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
   [data-soe=hero-brand-tag].eg-hero-logo-bg-sm{width:330px !important;}
 }
 
+/* Z2b: Homepage banner logos for Brinemasters / Metec / HydroSpade — white logos on the dark hero,
+   same treatment as the Energreen slide. Tagged in JS (tagHomeBrandLogos). The three brand wordmarks
+   are wide/thin (Metec ~10:1, Brinemasters ~8.5:1, HydroSpade ~2.36:1) so they render at their natural
+   ratio, bottom-aligned in the 104px brand-tag box like Mulch Mule / Energreen. */
+[data-soe=hero-brand-tag].bm-hero-logo-bg-sm,
+[data-soe=hero-brand-tag].mt-hero-logo-bg-sm,
+[data-soe=hero-brand-tag].hs-hero-logo-bg-sm{
+  display:block !important;width:280px !important;height:auto !important;
+  background-repeat:no-repeat !important;background-position:left center !important;background-size:contain !important;
+  font-size:0 !important;color:transparent !important;opacity:1 !important;transform:none !important;
+}
+[data-soe=hero-brand-tag].bm-hero-logo-bg-sm{background-image:url(brinemasters-logo-white.png) !important;aspect-ratio:1348 / 158;}
+[data-soe=hero-brand-tag].mt-hero-logo-bg-sm{background-image:url(metec-logo-white.png) !important;aspect-ratio:750 / 75;}
+[data-soe=hero-brand-tag].hs-hero-logo-bg-sm{background-image:url(hydrospade-logo-white.svg) !important;aspect-ratio:184 / 78;}
+[data-soe=hero-brand-tag].bm-hero-logo-bg-sm::before,
+[data-soe=hero-brand-tag].mt-hero-logo-bg-sm::before,
+[data-soe=hero-brand-tag].hs-hero-logo-bg-sm::before{content:none !important;display:none !important;}
+@media (min-width:721px){
+  [data-soe=hero-brand-tag].bm-hero-logo-bg-sm,
+  [data-soe=hero-brand-tag].mt-hero-logo-bg-sm,
+  [data-soe=hero-brand-tag].hs-hero-logo-bg-sm{width:330px !important;}
+}
+
 /* Z3: (superseded by AA1) — all 7 Energreen cards now use real photos/renders pre-composed at the
    right size, so the old RoboPLUS 82% scale-down hack is no longer needed. */
 
@@ -725,11 +748,17 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
    Scoped to the homepage hero ([data-soe=hero]); the brand pages use [data-soe=p-hero] and are untouched. */
 [data-soe=hero] [data-soe=hero-brand-tag]{height:104px !important;min-height:104px !important;display:flex !important;align-items:flex-end !important;margin:0 0 22px !important;padding:0 !important;}
 [data-soe=hero] [data-soe=hero-brand-tag].mm-hero-logo-bg-sm,
-[data-soe=hero] [data-soe=hero-brand-tag].eg-hero-logo-bg-sm{width:330px !important;background-size:contain !important;background-position:left bottom !important;}
+[data-soe=hero] [data-soe=hero-brand-tag].eg-hero-logo-bg-sm,
+[data-soe=hero] [data-soe=hero-brand-tag].bm-hero-logo-bg-sm,
+[data-soe=hero] [data-soe=hero-brand-tag].mt-hero-logo-bg-sm,
+[data-soe=hero] [data-soe=hero-brand-tag].hs-hero-logo-bg-sm{width:330px !important;background-size:contain !important;background-position:left bottom !important;}
 @media (max-width:720px){
   [data-soe=hero] [data-soe=hero-brand-tag]{height:74px !important;min-height:74px !important;margin:0 0 16px !important;}
   [data-soe=hero] [data-soe=hero-brand-tag].mm-hero-logo-bg-sm,
-  [data-soe=hero] [data-soe=hero-brand-tag].eg-hero-logo-bg-sm{width:240px !important;}
+  [data-soe=hero] [data-soe=hero-brand-tag].eg-hero-logo-bg-sm,
+  [data-soe=hero] [data-soe=hero-brand-tag].bm-hero-logo-bg-sm,
+  [data-soe=hero] [data-soe=hero-brand-tag].mt-hero-logo-bg-sm,
+  [data-soe=hero] [data-soe=hero-brand-tag].hs-hero-logo-bg-sm{width:240px !important;}
 }
 
 /* (AD) /brands tile order — Mulch Mule, Energreen, Metec, HydroSpade, Brinemasters (weak photo last).

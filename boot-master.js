@@ -1569,15 +1569,14 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     hits.forEach(function(t){ var v=t.nodeValue; pairs.forEach(function(p){ v=v.split(p[0]).join(p[1]); }); t.nodeValue=v; });
   }
 
-  /* Homepage: the Energreen slide shows a plain "Energreen" text tag — swap it for the logo like Mulch Mule. */
-  function tagHomeEnergreenLogo(){
+  /* Homepage: the brand slides show plain text tags (Brinemasters/Energreen/Metec/HydroSpade) — swap each
+     for its white logo, like Mulch Mule's baked-in logo. (Re-run after the rotator clones the slides.) */
+  function tagHomeBrandLogos(){
     if(path!==`/`)return;
+    var map={"Energreen":"eg-hero-logo-bg-sm","Brinemasters":"bm-hero-logo-bg-sm","Metec":"mt-hero-logo-bg-sm","HydroSpade":"hs-hero-logo-bg-sm"};
     Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=hero-stage] [data-soe=hero-brand-tag]`),function(tag){
-      if(tag.classList.contains(`eg-hero-logo-bg-sm`))return;
-      if((tag.textContent||``).trim()===`Energreen`){
-        tag.classList.add(`eg-hero-logo-bg-sm`);
-        tag.textContent=``;
-      }
+      var cls=map[(tag.textContent||``).trim()];
+      if(cls && !tag.classList.contains(cls)){ tag.classList.add(cls); tag.textContent=``; }
     });
   }
 
@@ -1646,14 +1645,14 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   function runAll(){
     try{setPageAttr();}catch(e){}
     try{swapMunicipalities();}catch(e){}
-    try{tagHomeEnergreenLogo();}catch(e){}
+    try{tagHomeBrandLogos();}catch(e){}
     try{fixEnergreenPage();}catch(e){}
     try{fixBrandsPage();}catch(e){}
   }
   ready(function(){
     runAll();
     /* the hero rotator clones the slides at DOMContentLoaded — re-tag after, so the logo class survives */
-    setTimeout(tagHomeEnergreenLogo,300);
+    setTimeout(tagHomeBrandLogos,300);
     setTimeout(swapMunicipalities,400);
   });
 })();
