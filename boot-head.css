@@ -788,11 +788,13 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(4){order:3;}
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(5){order:4;}
 
-/* AG (2026-06-01): brand-page "See it in action" video cards sized smaller than the product imagery AND
-   identical across both pages (user: "Mulch Mule vids should be the same size as Energreen's"). One shared
-   rule: cap each card + center the row. auto-fit collapses empty tracks, so Energreen's 5 fill the row and
-   Mulch Mule's 3 sit centered — both at the SAME ~205px width. Desktop only (tablet/mobile keep the
-   responsive 2-/1-col stack). */
+/* AG (2026-06-01): brand-page "See it in action" video cards — smaller than the product imagery AND
+   IDENTICAL on both pages (Mulch Mule == Energreen). Uses FLEXBOX, not grid auto-fit: the auto-fit +
+   justify-content:center approach centered inconsistently across browsers (collapsed empty tracks
+   right-shifted the row on some engines). Flex with fixed 205px cards + wrap + center is rock-solid:
+   Energreen's 5 and Mulch Mule's 3 both sit centered at the exact same size. Desktop only (≥992px;
+   tablet/mobile keep the responsive grid stack). */
 @media (min-width:992px){
-  [data-soe=video-grid]{grid-template-columns:repeat(auto-fit,minmax(180px,205px)) !important;justify-content:center !important;gap:24px !important;}
+  [data-soe=video-grid]{display:flex !important;flex-wrap:wrap !important;justify-content:center !important;align-items:flex-start !important;gap:24px !important;}
+  [data-soe=video-grid] [data-soe=video-card]{flex:0 0 205px !important;width:205px !important;max-width:205px !important;}
 }
