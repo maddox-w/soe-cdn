@@ -1157,8 +1157,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       [`RoboCOMPACT`,`/robocompact`],
       [`RoboECO`,`/roboeco`],
       [`RoboEVO`,`/roboevo`],
-      [`RoboMIDI`,`/robomidi`],
-      [`RoboPLUS`,`/roboplus`]
+      [`RoboMIDI`,`/robomidi`]
     ]},
     {brand:`Metec`, href:`/brands`, items:[
       [`Snow Blowers`,`/brands`],
@@ -1844,7 +1843,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   var path=(location.pathname.replace(/\/+$/,``)||`/`).toLowerCase();
 
   /* Discontinued models: bounce the orphaned unit pages to the brand page (fire ASAP). */
-  if(path===`/robofifti`||path===`/robomax`){ try{ location.replace(`/remote-controlled-mowers`); }catch(e){} return; }
+  if(path===`/robofifti`||path===`/robomax`||path===`/roboplus`){ try{ location.replace(`/remote-controlled-mowers`); }catch(e){} return; }
 
   function ready(fn){if(document.readyState!==`loading`)fn();else document.addEventListener(`DOMContentLoaded`,fn);}
 
@@ -1892,7 +1891,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=rc-unit-card]`),function(card){
       var links=card.querySelectorAll(`a[href]`);
       for(var i=0;i<links.length;i++){
-        if(/robofifti|robomax/i.test(links[i].getAttribute(`href`)||``)){ card.style.display=`none`; return; }
+        if(/robofifti|robomax|roboplus/i.test(links[i].getAttribute(`href`)||``)){ card.style.display=`none`; return; }
       }
     });
   }
