@@ -1169,7 +1169,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     {brand:`Hydroexcavation`, href:`/brands`, items:[
       [`HydroSpade Trucks`,`/brands`],
       [`HydroSpade Trailers`,`/brands`],
-      [`View All HydroSpade`,`/brands`]
+      [`View All HydroSpade`,`/hydrospade`]
     ]}
   ];
 
@@ -1179,7 +1179,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     [`Brinemasters`,`/brands`],
     [`Energreen`,`/remote-controlled-mowers`],
     [`Metec`,`/brands`],
-    [`HydroSpade`,`/brands`],
+    [`HydroSpade`,`/hydrospade`],
     [`View All Brands`,`/brands`]
   ];
   simpleMenus[`Build & Quote`] = [
@@ -1325,7 +1325,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
         [`Brinemasters`,`/brands`],
         [`Energreen`,`/remote-controlled-mowers`],
         [`Metec`,`/brands`],
-        [`HydroSpade`,`/brands`],
+        [`HydroSpade`,`/hydrospade`],
         [`View All Brands`,`/brands`]
       ]},
       {head:`Build & Quote`, items:[
@@ -1495,6 +1495,9 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     if(p===`/mulch-mule`)trail=[[`Home`,`/`],[`Our Brands`,`/brands`],[`Mulch Mule`,null]];
     else if(p===`/remote-controlled-mowers`)trail=[[`Home`,`/`],[`Our Brands`,`/brands`],[`Energreen`,null]];
     else if(units[p])trail=[[`Home`,`/`],[`Our Brands`,`/brands`],[`Energreen`,`/remote-controlled-mowers`],[units[p],null]];
+    else if(p===`/hydrospade`)trail=[[`Home`,`/`],[`Our Brands`,`/brands`],[`HydroSpade`,null]];
+    else if(p===`/hydrospade-trucks`)trail=[[`Home`,`/`],[`Our Brands`,`/brands`],[`HydroSpade`,`/hydrospade`],[`Trucks`,null]];
+    else if(p===`/hydrospade-trailers`)trail=[[`Home`,`/`],[`Our Brands`,`/brands`],[`HydroSpade`,`/hydrospade`],[`Trailers`,null]];
     else if(p===`/brands`)trail=[[`Home`,`/`],[`Our Brands`,null]];
     else return;
     box.innerHTML=``;
@@ -1551,6 +1554,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     else if(path===`/brands`)p=`brands`;
     else if(path===`/mulch-mule`)p=`mulch-mule`;
     else if(path===`/remote-controlled-mowers`)p=`energreen`;
+    else if(path===`/hydrospade`||path===`/hydrospade-trucks`||path===`/hydrospade-trailers`)p=`hydrospade`;
     document.documentElement.setAttribute(`data-soe-page`,p);
   }
 
@@ -1925,16 +1929,19 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   function wireHomeWatch(){
     if(path!==`/`)return;
     var MAP={ "mulch mule":`X8TkDU5Vllo`, "energreen":`yHaA7LCPtWY` };
+    /* Brands with a live brand page — point their "Explore <Brand>" CTA at it (others stay '#'). */
+    var EXPLORE={ "mulch mule":`/mulch-mule`, "energreen":`/remote-controlled-mowers`, "hydrospade":`/hydrospade` };
     /* Each slide's hero-ctas = an "Explore <Brand>" button + ONE secondary CTA (a "Watch Demo" or a
        "View Specs" that an earlier block relabels to "Watch Video"). For Mulch Mule + Energreen the
        secondary becomes the real Watch Video; for every other brand it's a placeholder and is removed
        outright (works regardless of its current label, so it doesn't depend on the relabel's timing). */
     Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=hero-ctas]`),function(ctas){
-      var brand=``, secondary=null;
+      var brand=``, secondary=null, explore=null;
       Array.prototype.forEach.call(ctas.querySelectorAll(`a[data-soe=btn]`),function(b){
         var ex=(b.textContent||``).trim().match(/^Explore (.+)$/i);
-        if(ex) brand=ex[1].trim().toLowerCase(); else secondary=b;
+        if(ex){ brand=ex[1].trim().toLowerCase(); explore=b; } else secondary=b;
       });
+      if(explore && EXPLORE[brand]) explore.setAttribute(`href`,EXPLORE[brand]);
       if(!secondary)return;
       var vid=MAP[brand];
       if(vid){ secondary.textContent=`Watch Video`; secondary.setAttribute(`data-soe-video`,vid); secondary.setAttribute(`href`,`#`); }

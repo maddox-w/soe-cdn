@@ -808,3 +808,51 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe=videos] [data-soe=video-channel],
 [data-soe=videos] [data-soe=video-foot],
 [data-soe=videos] [data-soe=video-desc]{display:none !important;}
+
+
+/* ============================================================
+   HydroSpade brand pages — navy #003473 theme + page layout (appended last; later rules win)
+   Scoped to [data-soe-page=hydrospade] (set by setPageAttr for /hydrospade, -trucks, -trailers) and #hs-* ids.
+   ============================================================ */
+[data-soe-page=hydrospade]{--hs-navy:#003473;--hs-navy-dark:#00264f;}
+
+/* Hero (#hs-hero): HydroSpade photo + left navy gradient + white logo */
+#hs-hero [data-soe=hero-bg]{background-image:linear-gradient(90deg,rgba(0,26,52,.9) 0%,rgba(0,26,52,.6) 45%,rgba(0,26,52,.12) 100%),url("hydrospade-hero.jpg") !important;background-size:cover !important;background-position:center right !important;}
+#hs-hero [data-soe=p-hero-mark-logo]{display:inline-block;width:188px;height:80px;background-image:url("hydrospade-logo-white.svg") !important;background-repeat:no-repeat;background-position:left center;background-size:contain;}
+#hs-hero [data-soe=p-hero-mark-meta]{color:#fff;font-weight:600;letter-spacing:.04em;}
+
+/* Navy buttons + accents (scoped to the HydroSpade pages) */
+[data-soe-page=hydrospade] [data-soe=btn][data-soe-variant=primary]{background:var(--hs-navy) !important;border-color:var(--hs-navy) !important;color:#fff !important;}
+[data-soe-page=hydrospade] [data-soe=btn][data-soe-variant=primary]:hover{background:var(--hs-navy-dark) !important;border-color:var(--hs-navy-dark) !important;}
+[data-soe-page=hydrospade] [data-soe=eyebrow]{color:var(--hs-navy) !important;}
+[data-soe-page=hydrospade] [data-soe=eyebrow]::before,[data-soe-page=hydrospade] [data-soe=eyebrow]::after{background:var(--hs-navy) !important;}
+[data-soe-page=hydrospade] [data-soe=rc-unit-hp]{color:var(--hs-navy) !important;}
+
+/* Promo strip -> navy */
+[data-soe-page=hydrospade] [data-soe=promo-strip]{background:var(--hs-navy) !important;}
+[data-soe-page=hydrospade] [data-soe=promo-strip] a{color:#fff !important;text-decoration:underline;}
+
+/* The HydroSpade Difference — icon feature cards (#hs-difference) */
+#hs-difference [data-soe=feature-grid]{display:grid !important;grid-template-columns:repeat(3,1fr) !important;gap:24px !important;}
+#hs-difference [data-soe=feature]{background:#fff !important;border:1px solid var(--steel-200) !important;padding:30px !important;display:flex !important;flex-direction:column !important;transform:none !important;box-shadow:none !important;}
+#hs-difference [data-soe=feature-visual]{width:54px !important;height:54px !important;min-height:54px !important;flex:0 0 auto !important;aspect-ratio:auto !important;background-color:rgba(0,52,115,.07) !important;background-repeat:no-repeat !important;background-position:center !important;background-size:28px 28px !important;margin:0 0 18px 0 !important;border:0 !important;border-radius:0 !important;}
+#hs-difference [data-soe=feature-visual]::before,#hs-difference [data-soe=feature-visual]::after{display:none !important;content:none !important;background:none !important;}
+#hs-difference [data-soe=feature]:nth-child(1) [data-soe=feature-visual]{background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23003473'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpolyline%20points='5%209%202%2012%205%2015'/%3E%3Cpolyline%20points='9%205%2012%202%2015%205'/%3E%3Cpolyline%20points='15%2019%2012%2022%209%2019'/%3E%3Cpolyline%20points='19%209%2022%2012%2019%2015'/%3E%3Cline%20x1='2'%20y1='12'%20x2='22'%20y2='12'/%3E%3Cline%20x1='12'%20y1='2'%20x2='12'%20y2='22'/%3E%3C/svg%3E") !important;}
+#hs-difference [data-soe=feature]:nth-child(2) [data-soe=feature-visual]{background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23003473'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpolyline%20points='3%2017%209%2011%2013%2015%2021%207'/%3E%3Cpolyline%20points='15%207%2021%207%2021%2013'/%3E%3C/svg%3E") !important;}
+#hs-difference [data-soe=feature]:nth-child(3) [data-soe=feature-visual]{background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23003473'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpolygon%20points='11%205%206%209%202%209%202%2015%206%2015%2011%2019%2011%205'/%3E%3Cline%20x1='23'%20y1='9'%20x2='17'%20y2='15'/%3E%3Cline%20x1='17'%20y1='9'%20x2='23'%20y2='15'/%3E%3C/svg%3E") !important;}
+#hs-difference [data-soe=feature]:nth-child(4) [data-soe=feature-visual]{background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23003473'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cline%20x1='4'%20y1='21'%20x2='4'%20y2='14'/%3E%3Cline%20x1='4'%20y1='10'%20x2='4'%20y2='3'/%3E%3Cline%20x1='12'%20y1='21'%20x2='12'%20y2='12'/%3E%3Cline%20x1='12'%20y1='8'%20x2='12'%20y2='3'/%3E%3Cline%20x1='20'%20y1='21'%20x2='20'%20y2='16'/%3E%3Cline%20x1='20'%20y1='12'%20x2='20'%20y2='3'/%3E%3Cline%20x1='1'%20y1='14'%20x2='7'%20y2='14'/%3E%3Cline%20x1='9'%20y1='8'%20x2='15'%20y2='8'/%3E%3Cline%20x1='17'%20y1='16'%20x2='23'%20y2='16'/%3E%3C/svg%3E") !important;}
+#hs-difference [data-soe=feature]:nth-child(5) [data-soe=feature-visual]{background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23003473'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M12%2022s8-4%208-10V5l-8-3-8%203v7c0%206%208%2010%208%2010z'/%3E%3C/svg%3E") !important;}
+#hs-difference [data-soe=feature]:nth-child(6) [data-soe=feature-visual]{background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23003473'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M12%202.7l5.66%205.66a8%208%200%201%201-11.31%200z'/%3E%3C/svg%3E") !important;}
+#hs-difference [data-soe=feature-title]{font-family:var(--font-display);font-weight:700;font-size:19px;line-height:1.25;color:var(--ink);margin:0 0 10px 0;}
+#hs-difference [data-soe=feature-desc]{font-family:var(--font-sans);font-size:15px;line-height:1.55;color:var(--steel-700);margin:0;}
+@media (max-width:991px){#hs-difference [data-soe=feature-grid]{grid-template-columns:repeat(2,1fr) !important;}}
+@media (max-width:600px){#hs-difference [data-soe=feature-grid]{grid-template-columns:1fr !important;}}
+
+/* The Lineup — 2 product cards (#hs-lineup) */
+#hs-lineup [data-soe=rc-units-grid]{display:grid !important;grid-template-columns:repeat(2,1fr) !important;gap:28px !important;max-width:900px;margin-left:auto;margin-right:auto;}
+#hs-lineup [data-soe=rc-unit-visual]{background-color:var(--steel-100) !important;background-repeat:no-repeat !important;background-position:center !important;background-size:82% auto !important;}
+#hs-lineup [data-soe=rc-unit-card]:nth-child(1) [data-soe=rc-unit-visual]{background-image:url("hydrospade-truck.png") !important;}
+#hs-lineup [data-soe=rc-unit-card]:nth-child(2) [data-soe=rc-unit-visual]{background-image:url("hydrospade-trailer.png") !important;}
+@media (max-width:600px){#hs-lineup [data-soe=rc-units-grid]{grid-template-columns:1fr !important;}}
+
+#hs-hero [data-soe=p-hero-subline]{color:#fff !important;}
