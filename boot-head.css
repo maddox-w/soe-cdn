@@ -795,8 +795,10 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
    Energreen's 5 and Mulch Mule's 3 both sit centered at the exact same size. Desktop only (≥992px;
    tablet/mobile keep the responsive grid stack). */
 @media (min-width:992px){
-  [data-soe=video-grid]{display:flex !important;flex-wrap:wrap !important;justify-content:center !important;align-items:flex-start !important;gap:24px !important;}
-  [data-soe=video-grid] [data-soe=video-card]{flex:0 0 205px !important;width:205px !important;max-width:205px !important;}
+  [data-soe=video-grid]{display:flex !important;flex-wrap:wrap !important;justify-content:center !important;align-items:stretch !important;gap:28px !important;}
+  [data-soe=video-grid] [data-soe=video-card]{flex:0 0 232px !important;width:232px !important;max-width:232px !important;}
+  /* equal-height cards regardless of title length: card fills the stretched row height */
+  [data-soe=video-grid] [data-soe=video-card]{align-self:stretch !important;}
 }
 
 /* AH (2026-06-01): strip the YouTube chrome so the brand-page video cards read as clean product-box-style
