@@ -1157,9 +1157,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       [`RoboCOMPACT`,`/robocompact`],
       [`RoboECO`,`/roboeco`],
       [`RoboEVO`,`/roboevo`],
-      [`RoboFIFTI`,`/robofifti`],
       [`RoboMIDI`,`/robomidi`],
-      [`RoboMAX`,`/robomax`],
       [`RoboPLUS`,`/roboplus`]
     ]},
     {brand:`Metec`, href:`/brands`, items:[
@@ -1596,7 +1594,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   function fixBrandsPage(){
     if(path!==`/brands`)return;
     var lede=document.querySelector(`[data-soe=page-head-lede]`);
-    if(lede)lede.textContent=`We represent a carefully curated lineup of contractor-focused equipment designed to solve the real challenges crews face in the field every day. Every line we carry earns its place by helping our customers work smarter — not harder. See below why we meet our commitment.`;
+    if(lede)lede.textContent=`We represent a carefully curated lineup of contractor-focused equipment designed to solve the real challenges crews face in the field every day. Every line we carry earns its place by helping our customers work smarter — not harder.`;
 
     var whyData={
       "Mulch Mule":{head:`Mulch Smarter. Move Faster.`,intro:`Here's why the Mulch Mule slashes labor hours, lifts productivity, and keeps your team happier.`,items:[
@@ -1719,7 +1717,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       var t=(b.textContent||``).trim();
       if(t===`Watch Demo`||t===`Watch Video`){
         b.textContent=`Watch Video`;
-        b.setAttribute(`data-soe-video`,`gnV30hOBNoY`);
+        b.setAttribute(`data-soe-video`,`zcWSN413YhQ`);
         b.setAttribute(`href`,`#`);
       }
     });
@@ -1728,13 +1726,11 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   /* ---------- Energreen "See it in action" gallery (model -> client-provided video) ---------- */
   /* [youtube id, model (cat label), title — a nicely shortened version of the actual YouTube title] */
   var EG_VIDEOS=[
-    [`zcWSN413YhQ`,`RoboEVO`,`New remote-controlled tool carrier`],
-    [`2PPnzpcxD24`,`RoboEVO`,`Bucket attachment`],
-    [`P-ti-5qiec0`,`RoboMIDI`,`Cutting head 155`],
-    [`jDmJwzqVDRE`,`RoboMIDI`,`Demo, USA`],
-    [`gnV30hOBNoY`,`RoboMAX`,`Walk-around`],
-    [`EpQU0SQXtBc`,`RoboMAX`,`Country road clearance, SC`],
-    [`wet3nCL5i6c`,`RoboPLUS`,`The MONSTER remote control`]
+    [`zcWSN413YhQ`,`RoboEVO`,`RoboEVO Introduction`],
+    [`2PPnzpcxD24`,`RoboEVO`,`RoboEVO demo with bucket attachment`],
+    [`Tv20xFAmHWg`,`RoboEVO`,`RoboEVO demo with flail mower`],
+    [`P-ti-5qiec0`,`RoboMIDI`,`RoboMIDI demo with cutting head 155`],
+    [`jDmJwzqVDRE`,`RoboMIDI`,`RoboMIDI demo with forestry mulcher head`]
   ];
   function buildEnergreenVideos(){
     if(path!==`/remote-controlled-mowers`)return;
@@ -1800,4 +1796,144 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   else run();
   var rt;
   window.addEventListener(`resize`,function(){ clearTimeout(rt); rt=setTimeout(position,120); });
+})();
+
+/* === boot-fixes-v2ll ===
+   2026-06-01 content batch:
+   - Site-wide: "Request Quote"/"Request a Quote" CTA buttons -> "Request Info"; hours -> 7:00 AM - 4:00 PM Central.
+   - Landing page hero "Watch Video" -> RoboEVO Introduction popup (zcWSN413YhQ). (Energreen hero handled in v2jj.)
+   - /request-quote: H1 + breadcrumb "Request a Quote" -> "Request more info"; card heading -> bold
+     "Two ways to start. Choose what fits your time." (the gray sub duplicated it, so it's hidden);
+     tabs "Quick Quote"->"Quick" / "Detailed Quote"->"More Detail The Better"; detailed submit ->
+     "Submit More Info Request"; "Demo scheduling upon request" -> "Demo scheduling"; + a new
+     "I'm interested in a quote" checkbox on the detailed form.
+   - /mulch-mule: replace "The Mulch Mule Difference" lede.
+   - Energreen: hide the discontinued RoboFIFTI + RoboMAX unit cards and bounce their orphaned unit
+     pages to /remote-controlled-mowers. (Their videos are removed from EG_VIDEOS + the nav menu.) */
+(function(){
+  var path=(location.pathname.replace(/\/+$/,``)||`/`).toLowerCase();
+
+  /* Discontinued models: bounce the orphaned unit pages to the brand page (fire ASAP). */
+  if(path===`/robofifti`||path===`/robomax`){ try{ location.replace(`/remote-controlled-mowers`); }catch(e){} return; }
+
+  function ready(fn){if(document.readyState!==`loading`)fn();else document.addEventListener(`DOMContentLoaded`,fn);}
+
+  /* Replace the first non-empty text node of el (preserves child <span>: the arrow, "~30 sec", etc.). */
+  function setLabel(el,txt){
+    for(var i=0;i<el.childNodes.length;i++){
+      var cn=el.childNodes[i];
+      if(cn.nodeType===3 && (cn.nodeValue||``).trim().length){ cn.nodeValue=txt; return; }
+    }
+    el.insertBefore(document.createTextNode(txt), el.firstChild);
+  }
+
+  /* Walk text nodes and replace a substring wherever it appears (like fixPhone). */
+  function swapText(find,repl){
+    if(!document.body)return;
+    var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null),n,hit=[];
+    while((n=w.nextNode())){ if(n.nodeValue && n.nodeValue.indexOf(find)!==-1)hit.push(n); }
+    hit.forEach(function(t){ t.nodeValue=t.nodeValue.split(find).join(repl); });
+  }
+
+  /* ---- Site-wide: CTA relabel + hours of operation ---- */
+  function siteWide(){
+    var reQuote=/^request\s+(a\s+)?quote$/i;
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=nav-cta]`),function(a){
+      if(reQuote.test((a.textContent||``).trim())) setLabel(a,`Request Info`);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(`a[data-soe=btn]`),function(b){
+      if(reQuote.test((b.textContent||``).trim())) setLabel(b,`Request Info`);
+    });
+    swapText(`5:00 PM EST`,`4:00 PM Central`);
+  }
+
+  /* ---- Landing page: wire "Watch Video" hero buttons to the RoboEVO Introduction popup (v2jj lightbox) ---- */
+  function wireHomeWatch(){
+    if(path!==`/`)return;
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=hero-ctas] a[data-soe=btn]`),function(b){
+      var t=(b.textContent||``).trim();
+      if(t===`Watch Video`||t===`Watch Demo`){ b.setAttribute(`data-soe-video`,`zcWSN413YhQ`); b.setAttribute(`href`,`#`); }
+    });
+  }
+
+  /* ---- Energreen brand page: hide the discontinued RoboFIFTI + RoboMAX unit cards ---- */
+  function pruneEnergreenCards(){
+    if(path!==`/remote-controlled-mowers`)return;
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=rc-unit-card]`),function(card){
+      var links=card.querySelectorAll(`a[href]`);
+      for(var i=0;i<links.length;i++){
+        if(/robofifti|robomax/i.test(links[i].getAttribute(`href`)||``)){ card.style.display=`none`; return; }
+      }
+    });
+  }
+
+  /* ---- Energreen hero banner: the 3rd slide is a RoboMAX photo (CSS nth-child(3) bg). RoboMAX is
+     discontinued, so override that slide's background with the existing RoboMIDI-1 banner. Done by
+     computed-bg match (survives the rotator's slide-clone) rather than touching the fragile rotator. ---- */
+  function replaceRoboMaxBanner(){
+    if(path!==`/remote-controlled-mowers`)return;
+    var MIDI1=`https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a1863cf4568c814e3dc19b0_energreen-banner-robomidi-1.jpg`;
+    Array.prototype.forEach.call(document.querySelectorAll(`#rc-hero [data-soe=hero-bg]`),function(bg){
+      var img=``; try{ img=getComputedStyle(bg).backgroundImage||``; }catch(e){}
+      if(/robomax/i.test(img)||/robomax/i.test(bg.style.backgroundImage||``)){
+        bg.style.setProperty(`background-image`,`url("`+MIDI1+`")`,`important`);
+      }
+    });
+  }
+
+  /* ---- /mulch-mule: replace the "The Mulch Mule Difference" lede ---- */
+  function fixMulchMule(){
+    if(path!==`/mulch-mule`)return;
+    var lede=document.querySelector(`[data-soe=difference-head-lede]`);
+    if(lede)lede.textContent=`When it comes to efficient material handling, durability, and ease of use, the Mulch Mule stands unmatched. Designed with over 30 years of practical experience, see below what separates the Mulch Mule from every dump trailer and skid-steer combo your competition is still using.`;
+  }
+
+  /* ---- /request-quote: copy changes + new checkbox ---- */
+  function addQuoteCheckbox(){
+    var form=document.querySelector(`form[data-name=detailed-quote]`); if(!form)return;
+    if(form.querySelector(`input[name=interested-in-quote]`))return;
+    var outer=document.createElement(`label`); outer.setAttribute(`data-soe`,`quote-checkbox`);
+    var inner=document.createElement(`label`); inner.className=`w-checkbox`;
+    var input=document.createElement(`input`); input.type=`checkbox`; input.className=`w-checkbox-input`;
+    input.setAttribute(`name`,`interested-in-quote`); input.setAttribute(`data-name`,`interested-in-quote`);
+    var span=document.createElement(`span`); span.className=`w-form-label`; span.setAttribute(`for`,`interested-in-quote`); span.textContent=`quote`;
+    inner.appendChild(input); inner.appendChild(span);
+    outer.appendChild(inner); outer.appendChild(document.createTextNode(`I'm interested in a quote`));
+    var checks=form.querySelectorAll(`[data-soe=quote-checkbox]`);
+    if(checks.length){ var last=checks[checks.length-1]; last.parentNode.insertBefore(outer,last.nextSibling); }
+    else { var sub=form.querySelector(`[data-soe=quote-submit]`); if(sub)sub.parentNode.insertBefore(outer,sub); else form.appendChild(outer); }
+  }
+  function fixRequestQuote(){
+    if(path!==`/request-quote`)return;
+    var h1=document.querySelector(`[data-soe=page-head-h1]`); if(h1)h1.textContent=`Request more info`;
+    var cc=document.querySelector(`[data-soe=crumbs-current]`); if(cc)cc.textContent=`Request more info`;
+    if(/request a quote/i.test(document.title))document.title=`Request More Info | Smart Outdoor Equipment`;
+    var ch=document.querySelector(`[data-soe=quote-card-h]`); if(ch)ch.textContent=`Two ways to start. Choose what fits your time.`;
+    var sub=document.querySelector(`[data-soe=quote-card-sub]`); if(sub)sub.style.display=`none`;
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=quote-tab]`),function(tab){
+      var k=tab.getAttribute(`data-soe-tab`);
+      if(k===`quick`)setLabel(tab,`Quick `);
+      if(k===`detailed`)setLabel(tab,`More Detail The Better `);
+    });
+    swapText(`Demo scheduling upon request`,`Demo scheduling`);
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=quote-submit][data-soe-form=detailed]`),function(s){
+      s.textContent=`Submit More Info Request`;
+    });
+    addQuoteCheckbox();
+  }
+
+  function runAll(){
+    try{siteWide();}catch(e){}
+    try{wireHomeWatch();}catch(e){}
+    try{pruneEnergreenCards();}catch(e){}
+    try{replaceRoboMaxBanner();}catch(e){}
+    try{fixMulchMule();}catch(e){}
+    try{fixRequestQuote();}catch(e){}
+  }
+  ready(function(){
+    runAll();
+    /* Re-run for cloned hero slides (rotator) + v2ee's +300ms submit-button swap. */
+    setTimeout(runAll,400);
+    setTimeout(runAll,1200);
+  });
 })();
