@@ -1731,6 +1731,13 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     [`P-ti-5qiec0`,`RoboMIDI`,`RoboMIDI Demo with Cutting Head 155`],
     [`jDmJwzqVDRE`,`RoboMIDI`,`RoboMIDI Demo with Forestry Mulcher Head`]
   ];
+  /* Accurate YouTube view counts + durations (fetched 2026-06-01) — labels the Energreen cards below
+     AND corrects the Mulch Mule cards, whose static DOM had placeholder numbers. */
+  var VIDEO_META={
+    "lc0dDLq23ns":{views:`30K`,dur:`20:27`},"FW9pK3_SAd4":{views:`16K`,dur:`0:13`},"yQBlkBtwCZI":{views:`21K`,dur:`14:26`},
+    "zcWSN413YhQ":{views:`3.8K`,dur:`1:48`},"2PPnzpcxD24":{views:`6.3K`,dur:`0:57`},"Tv20xFAmHWg":{views:`2K`,dur:`1:40`},
+    "P-ti-5qiec0":{views:`3.7K`,dur:`2:14`},"jDmJwzqVDRE":{views:`2.3K`,dur:`2:30`}
+  };
   function buildEnergreenVideos(){
     if(path!==`/remote-controlled-mowers`)return;
     if(document.querySelector(`[data-soe=videos][data-soe-built=v2jj]`))return;
@@ -1742,25 +1749,49 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     head.appendChild(h2); head.appendChild(lede); sec.appendChild(head);
     var grid=document.createElement(`div`); grid.setAttribute(`data-soe`,`video-grid`);
     EG_VIDEOS.forEach(function(v){
+      var meta=VIDEO_META[v[0]]||{};
       var a=document.createElement(`a`); a.setAttribute(`data-soe`,`video-card`); a.setAttribute(`data-soe-video`,v[0]); a.setAttribute(`data-soe-state`,`in-view`); a.href=`#`;
       var thumb=document.createElement(`div`); thumb.setAttribute(`data-soe`,`video-thumb`);
       thumb.style.backgroundImage=`url(https://i.ytimg.com/vi/`+v[0]+`/hqdefault.jpg)`;
       var ch=document.createElement(`span`); ch.setAttribute(`data-soe`,`video-channel`); ch.textContent=`Energreen`;
       var play=document.createElement(`div`); play.setAttribute(`data-soe`,`video-play`);
-      thumb.appendChild(ch); thumb.appendChild(play); a.appendChild(thumb);
+      thumb.appendChild(ch); thumb.appendChild(play);
+      if(meta.dur){ var dur=document.createElement(`span`); dur.setAttribute(`data-soe`,`video-duration`); dur.textContent=meta.dur; thumb.appendChild(dur); }
+      a.appendChild(thumb);
       var body=document.createElement(`div`); body.setAttribute(`data-soe`,`video-body`);
       var cat=document.createElement(`div`); cat.setAttribute(`data-soe`,`video-cat`); cat.textContent=v[1];
       var title=document.createElement(`h3`); title.setAttribute(`data-soe`,`video-title`); title.textContent=v[2];
-      body.appendChild(cat); body.appendChild(title); a.appendChild(body);
+      body.appendChild(cat); body.appendChild(title);
+      if(meta.views){
+        var foot=document.createElement(`div`); foot.setAttribute(`data-soe`,`video-foot`);
+        var vs=document.createElement(`span`); var b=document.createElement(`b`); b.textContent=meta.views; vs.appendChild(b); vs.appendChild(document.createTextNode(` views`));
+        var w=document.createElement(`span`); w.setAttribute(`data-soe`,`video-foot-watch`); w.textContent=`Watch video`;
+        var arr=document.createElement(`span`); arr.setAttribute(`data-soe`,`arr`); w.appendChild(arr);
+        foot.appendChild(vs); foot.appendChild(w); body.appendChild(foot);
+      }
+      a.appendChild(body);
       grid.appendChild(a);
     });
     sec.appendChild(grid);
     anchor.parentNode.insertBefore(sec, anchor.nextSibling);
   }
 
+  /* Mulch Mule: correct the static cards' view counts + durations to the real YouTube numbers. */
+  function fixMulchMuleVideos(){
+    if(path!==`/mulch-mule`)return;
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=video-card]`),function(card){
+      var m=(card.getAttribute(`href`)||``).match(/[?&]v=([\w-]+)/); if(!m)return;
+      var meta=VIDEO_META[m[1]]; if(!meta)return;
+      var dur=card.querySelector(`[data-soe=video-duration]`); if(dur && meta.dur)dur.textContent=meta.dur;
+      var foot=card.querySelector(`[data-soe=video-foot]`);
+      if(foot && meta.views){ var b=foot.querySelector(`b`); if(b)b.textContent=meta.views; }
+    });
+  }
+
   ready(function(){
     try{ initLightbox(); }catch(e){}
     try{ polishMM(); }catch(e){}
+    try{ fixMulchMuleVideos(); }catch(e){}
     try{ wireEnergreenHero(); }catch(e){}
     try{ buildEnergreenVideos(); }catch(e){}
   });
