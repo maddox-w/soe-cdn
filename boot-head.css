@@ -798,3 +798,12 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
   [data-soe=video-grid]{display:flex !important;flex-wrap:wrap !important;justify-content:center !important;align-items:flex-start !important;gap:24px !important;}
   [data-soe=video-grid] [data-soe=video-card]{flex:0 0 205px !important;width:205px !important;max-width:205px !important;}
 }
+
+/* AH (2026-06-01): strip the YouTube chrome so the brand-page video cards read as clean product-box-style
+   tiles (user: "similar to the energreen product boxes ... remove the watch video, views, and white box
+   in the top left"). Hidden on BOTH brand pages: the channel tag (the white box top-left), the view
+   count + "Watch video" button (video-foot), and the Mulch Mule description — so both pages now show just
+   thumbnail (with the play button + duration) + category + title. The whole card still opens the popup. */
+[data-soe=videos] [data-soe=video-channel],
+[data-soe=videos] [data-soe=video-foot],
+[data-soe=videos] [data-soe=video-desc]{display:none !important;}
