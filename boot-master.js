@@ -1726,10 +1726,10 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   /* [youtube id, model (cat label), title — a nicely shortened version of the actual YouTube title] */
   var EG_VIDEOS=[
     [`zcWSN413YhQ`,`RoboEVO`,`RoboEVO Introduction`],
-    [`2PPnzpcxD24`,`RoboEVO`,`RoboEVO demo with bucket attachment`],
-    [`Tv20xFAmHWg`,`RoboEVO`,`RoboEVO demo with flail mower`],
-    [`P-ti-5qiec0`,`RoboMIDI`,`RoboMIDI demo with cutting head 155`],
-    [`jDmJwzqVDRE`,`RoboMIDI`,`RoboMIDI demo with forestry mulcher head`]
+    [`2PPnzpcxD24`,`RoboEVO`,`RoboEVO Demo with Bucket Attachment`],
+    [`Tv20xFAmHWg`,`RoboEVO`,`RoboEVO Demo with Flail Mower`],
+    [`P-ti-5qiec0`,`RoboMIDI`,`RoboMIDI Demo with Cutting Head 155`],
+    [`jDmJwzqVDRE`,`RoboMIDI`,`RoboMIDI Demo with Forestry Mulcher Head`]
   ];
   function buildEnergreenVideos(){
     if(path!==`/remote-controlled-mowers`)return;
