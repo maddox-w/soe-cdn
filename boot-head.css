@@ -856,3 +856,11 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 @media (max-width:600px){#hs-lineup [data-soe=rc-units-grid]{grid-template-columns:1fr !important;}}
 
 #hs-hero [data-soe=p-hero-subline]{color:#fff !important;}
+
+/* HydroSpade detail-page hero product renders */
+#hs-truck-hero [data-soe=ru-hero-visual]{background-color:var(--steel-100) !important;background-image:url("hydrospade-truck.png") !important;background-repeat:no-repeat !important;background-position:center !important;background-size:90% auto !important;}
+#hs-trailer-hero [data-soe=ru-hero-visual]{background-color:var(--steel-100) !important;background-image:url("hydrospade-trailer.png") !important;background-repeat:no-repeat !important;background-position:center !important;background-size:92% auto !important;}
+
+/* HydroSpade detail pages: neutralize the Robo amber sub-headline + hero bottom bar */
+[data-soe-page=hydrospade] [data-soe=ru-hero-sub]{color:#fff !important;}
+[data-soe-page=hydrospade] [data-soe=ru-hero]{border-bottom-color:var(--hs-navy) !important;}

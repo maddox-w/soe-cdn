@@ -1167,8 +1167,8 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       [`Spreaders`,`/brands`]
     ]},
     {brand:`Hydroexcavation`, href:`/brands`, items:[
-      [`HydroSpade Trucks`,`/brands`],
-      [`HydroSpade Trailers`,`/brands`],
+      [`HydroSpade Trucks`,`/hydrospade-trucks`],
+      [`HydroSpade Trailers`,`/hydrospade-trailers`],
       [`View All HydroSpade`,`/hydrospade`]
     ]}
   ];
