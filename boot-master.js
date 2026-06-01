@@ -2030,3 +2030,19 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     setTimeout(runAll,1200);
   });
 })();
+
+/* === boot-fixes-v2nn === Product unit cards fully clickable (robust JS fallback for the CSS stretched-link). */
+(function(){
+  function wire(){
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=rc-unit-card]`),function(card){
+      if(card.getAttribute(`data-soe-clickwired`)===`1`)return;
+      var a=card.querySelector(`a[data-soe=btn]`); var href=a?a.getAttribute(`href`):``;
+      if(!href||href===`#`)return;
+      card.setAttribute(`data-soe-clickwired`,`1`);
+      card.style.cursor=`pointer`;
+      card.addEventListener(`click`,function(e){ if(e.defaultPrevented)return; window.location.href=href; });
+    });
+  }
+  if(document.readyState===`loading`)document.addEventListener(`DOMContentLoaded`,wire); else wire();
+  setTimeout(wire,800);
+})();

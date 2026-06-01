@@ -885,3 +885,6 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 /* HydroSpade inquiry-form eyebrow sits on the near-black form panel -> bright accent blue (navy is invisible there). */
 [data-soe-page=hydrospade] [data-soe=ru-form-head] [data-soe=eyebrow]{color:#4a90d9 !important;}
 [data-soe-page=hydrospade] [data-soe=ru-form-head] [data-soe=eyebrow]::before,[data-soe-page=hydrospade] [data-soe=ru-form-head] [data-soe=eyebrow]::after{background:#4a90d9 !important;}
+
+/* ru-specs heading: the base reset [data-soe] h2{margin:0} out-specifies the margin -> force the gap below the eyebrow (all product pages). */
+[data-soe=ru-specs-h2]{margin-top:24px !important;}
