@@ -2186,6 +2186,13 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     var n,hits=[];
     while((n=w.nextNode()))hits.push(n);
     hits.forEach(function(t){ t.nodeValue=t.nodeValue.replace(RX,`Hydro-Spade`); });
+    /* <head>: SEO <title> + meta titles/descriptions (browser tab + crawlers). URLs use lowercase
+       slugs so the capital-S regex never touches og:url/canonical; the .com lookahead keeps the domain. */
+    if(document.title && document.title.indexOf(`HydroSpade`)!==-1) document.title=document.title.replace(RX,`Hydro-Spade`);
+    Array.prototype.forEach.call(document.querySelectorAll(`meta[content]`),function(m){
+      var c=m.getAttribute(`content`)||``;
+      if(c.indexOf(`HydroSpade`)!==-1) m.setAttribute(`content`,c.replace(RX,`Hydro-Spade`));
+    });
   }
   ready(function(){
     hyphenate();
