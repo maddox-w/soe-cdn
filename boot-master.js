@@ -1621,6 +1621,10 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
         `Quick and easy cleanup using water-pressure wand with convenient rear access door, 6" drain valve, and blower filtration.`]}
     };
 
+    /* "See It In Action" feature thumbnail per brand box (Concept 2). One representative video per brand;
+       brands without a video yet get a navy "coming soon" placeholder. Click reuses the v2jj lightbox. */
+    var brandVideo={ "Mulch Mule":`X8TkDU5Vllo`, "Energreen":`yHaA7LCPtWY` };
+
     Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=brand-card]`),function(card){
       var h3=card.querySelector(`[data-soe=brand-card-h3]`);
       var name=h3?h3.textContent.trim():``;
@@ -1643,6 +1647,25 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       /* Drop the original one-line description that sat under "Made in X" (user: remove it). */
       var desc=card.querySelector(`[data-soe=brand-card-desc-l]`);
       if(desc && desc.parentNode)desc.parentNode.removeChild(desc);
+
+      /* "See It In Action" header + feature thumbnail */
+      if(!card.querySelector(`[data-soe=brand-sia]`)){
+        var vid=brandVideo[name]||brandVideo[name.replace(/-/g,``)];
+        var sia=document.createElement(`div`); sia.setAttribute(`data-soe`,`brand-sia`);
+        var sh=document.createElement(`div`); sh.setAttribute(`data-soe`,`brand-sia-head`); sh.textContent=`See It In Action`; sia.appendChild(sh);
+        var thumb;
+        if(vid){
+          thumb=document.createElement(`a`); thumb.setAttribute(`data-soe`,`brand-sia-thumb`); thumb.setAttribute(`data-soe-video`,vid); thumb.href=`#`;
+          thumb.style.backgroundImage=`url(https://i.ytimg.com/vi/`+vid+`/hqdefault.jpg)`;
+          var p1=document.createElement(`span`); p1.setAttribute(`data-soe`,`brand-sia-play`); thumb.appendChild(p1);
+        }else{
+          thumb=document.createElement(`div`); thumb.setAttribute(`data-soe`,`brand-sia-thumb`); thumb.setAttribute(`data-soe-soon`,`1`);
+          var p2=document.createElement(`span`); p2.setAttribute(`data-soe`,`brand-sia-play`); thumb.appendChild(p2);
+          var sn=document.createElement(`span`); sn.setAttribute(`data-soe`,`brand-sia-soon`); sn.textContent=`Video coming soon`; thumb.appendChild(sn);
+        }
+        sia.appendChild(thumb);
+        (card.querySelector(`[data-soe=brand-card-info-top]`)||card).appendChild(sia);
+      }
     });
   }
 
