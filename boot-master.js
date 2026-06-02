@@ -2287,3 +2287,28 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   if(document.readyState===`loading`) document.addEventListener(`DOMContentLoaded`,run); else run();
   setTimeout(run,300); setTimeout(run,900);
 })();
+
+/* === boot-fixes-v2ss === Anti-flash for the whole reveal system. The reveal blocks add
+   data-soe-anim=reveal (opacity:0) from deferred JS, which runs AFTER first paint — so anything
+   already visible (above-the-fold, or ANY section when you reload while scrolled down) would paint,
+   then disappear, then fade back. This promotes any [data-soe-anim=reveal] element that is currently
+   within the viewport straight to in-view — and because this runs in the SAME synchronous tick the
+   other blocks hide them, the opacity:0 state never reaches the screen. Below-the-fold elements are
+   left alone (they still hide + animate on scroll). A short rAF loop + timeouts catch JS-injected
+   reveal elements (intro block, video cards) too. */
+(function(){
+  function promote(){
+    var h=window.innerHeight||document.documentElement.clientHeight||0;
+    var els=document.querySelectorAll(`[data-soe-anim=reveal]:not([data-soe-state=in-view])`);
+    for(var i=0;i<els.length;i++){
+      var r=els[i].getBoundingClientRect();
+      if(r.top<h && r.bottom>0) els[i].setAttribute(`data-soe-state`,`in-view`);  /* in view now -> show, never hide */
+    }
+  }
+  promote();
+  var n=0;
+  function loop(){ promote(); if(++n<10 && window.requestAnimationFrame) window.requestAnimationFrame(loop); }
+  if(window.requestAnimationFrame) window.requestAnimationFrame(loop);
+  if(document.readyState===`loading`) document.addEventListener(`DOMContentLoaded`,promote);
+  setTimeout(promote,250); setTimeout(promote,700); setTimeout(promote,1500);
+})();
