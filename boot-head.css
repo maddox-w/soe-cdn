@@ -888,3 +888,23 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 
 /* ru-specs heading: the base reset [data-soe] h2{margin:0} out-specifies the margin -> force the gap below the eyebrow (all product pages). */
 [data-soe=ru-specs-h2]{margin-top:24px !important;}
+
+
+/* ============================================================
+   HydroSpade tweaks (2026-06-02) — banner headline, Difference rework,
+   transparent product renders. Appended last -> later rules win.
+   ============================================================ */
+
+/* Banner headline: two stacked lines — "Simply Built." (white) / "Simply Better." (brand blue). */
+#hs-hero [data-soe=p-hero-h1] [data-soe=hs-built]{display:block !important;color:#fff !important;}
+#hs-hero [data-soe=p-hero-h1] [data-soe=hs-better]{display:block !important;color:#4a90d9 !important;}
+
+/* The Hydro-Spade Difference: hide the six feature cards; the head becomes a statement
+   block — a bold subhead (repurposed lede) + a paragraph (injected by boot-master v2oo). */
+#hs-difference [data-soe=feature-grid]{display:none !important;}
+#hs-difference [data-soe=difference-head-lede]{font-family:var(--font-display) !important;font-weight:700 !important;font-size:clamp(22px,2.4vw,28px) !important;line-height:1.25 !important;color:var(--ink) !important;margin:22px 0 0 !important;max-width:860px;}
+#hs-difference [data-soe=hs-diff-body]{font-family:var(--font-sans);font-size:18px;line-height:1.7;color:var(--steel-700);margin:18px 0 0;max-width:860px;}
+
+/* Detail-page hero renders sit directly on the dark hero (no light "box"). */
+#hs-truck-hero [data-soe=ru-hero-visual]{background-color:transparent !important;}
+#hs-trailer-hero [data-soe=ru-hero-visual]{background-color:transparent !important;}

@@ -2046,3 +2046,120 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   if(document.readyState===`loading`)document.addEventListener(`DOMContentLoaded`,wire); else wire();
   setTimeout(wire,800);
 })();
+
+/* === boot-fixes-v2oo === HydroSpade content tweaks (2026-06-02)
+   - Fix broken HydroSpade destination links (homepage brand-grid card + /brands "View HydroSpade" tile -> /hydrospade).
+   - Landing /hydrospade: banner headline "Simply Built." / "Simply Better." (white/blue, via CSS), drop the
+     "Mid-size, mobile…" subline, new lede; "The Hydro-Spade Difference" (hyphen) becomes a statement block
+     (six feature cards hidden via CSS) with a subhead + paragraph; lineup -> "Choose your equipment." + new
+     lede + hyphenated "Hydro-Spade Truck/Trailer".
+   - Truck /hydrospade-trucks + Trailer /hydrospade-trailers: hyphenated eyebrow/h1, new sub + lede + description,
+     "Spec Sheet (PDF)" CTA -> the hydrospade.com product-spec PDF (new tab), specs eyebrow "Technical Data"
+     (matching the Energreen Robos).
+   NOTE: the hero "View the Lineup" button is left as-is — the "Watch Video" relabel waits on the owner's video. */
+(function(){
+  function ready(fn){ if(document.readyState!==`loading`)fn(); else document.addEventListener(`DOMContentLoaded`,fn); }
+  var path=(location.pathname.replace(/\/+$/,``)||`/`).toLowerCase();
+
+  var TRUCK_PDF=`https://cdn.prod.website-files.com/63973ef8821dc83f55bb5a2f/63d2bf4bbc9686ddd8c051ef_Hydro-Spade-600%3A800%3A1200-Single-Axle-Truck-Product-Specs.pdf`;
+  var TRAILER_PDF=`https://cdn.prod.website-files.com/63973ef8821dc83f55bb5a2f/63d2bf4b7fe3f55ad55e1ed8_Hydro-Spade-400%3A600%3A800-Trailer-Product-Specs.pdf`;
+
+  function setText(sel,txt){ var el=document.querySelector(sel); if(el)el.textContent=txt; return el; }
+
+  /* ---- Repair HydroSpade destination links that still point at "#" (the page exists now) ---- */
+  function fixHydroSpadeLinks(){
+    /* Homepage "Explore Smart Outdoor Products" grid: the HydroSpade card <a> -> /hydrospade. */
+    Array.prototype.forEach.call(document.querySelectorAll(`a[data-soe=brand-card-h]`),function(a){
+      var n=a.querySelector(`[data-soe=brand-card-name]`);
+      if(n && n.textContent.trim()===`HydroSpade`) a.setAttribute(`href`,`/hydrospade`);
+    });
+    /* /brands tile: the HydroSpade "View HydroSpade" link -> /hydrospade (also makes the whole-card click work). */
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=brand-card]`),function(card){
+      var h3=card.querySelector(`[data-soe=brand-card-h3]`);
+      if(!h3 || h3.textContent.trim()!==`HydroSpade`)return;
+      var link=card.querySelector(`[data-soe=brand-card-link-large]`);
+      if(link)link.setAttribute(`href`,`/hydrospade`);
+    });
+  }
+
+  /* ---- Landing page (/hydrospade) ---- */
+  function fixLanding(){
+    if(path!==`/hydrospade`)return;
+    /* Two-colour headline; this also drops the old "Mid-size, mobile…" subline that lived in the h1. */
+    var h1=document.querySelector(`#hs-hero [data-soe=p-hero-h1]`);
+    if(h1)h1.innerHTML=`<span data-soe="hs-built">Simply Built.</span><span data-soe="hs-better">Simply Better.</span>`;
+    setText(`#hs-hero [data-soe=p-hero-lede]`,`Designed with your work in mind — Super versatile. Easy to operate. Easy to maintain.`);
+
+    /* The Hydro-Spade Difference: hyphen + statement subhead + paragraph (cards hidden via CSS). */
+    setText(`#hs-difference [data-soe=difference-head-h2]`,`The Hydro-Spade Difference`);
+    var lede=document.querySelector(`#hs-difference [data-soe=difference-head-lede]`);
+    if(lede){
+      lede.textContent=`Maneuver tighter. Carry more. Run quieter.`;
+      if(lede.parentNode && !lede.parentNode.querySelector(`[data-soe=hs-diff-body]`)){
+        var p=document.createElement(`p`);
+        p.setAttribute(`data-soe`,`hs-diff-body`);
+        p.textContent=`Hydro-Spades are engineered to perform where the job gets difficult — delivering enhanced maneuverability, ability to operate in tight urban areas, maximized payload, super easy and protected operations, from the first load to the final quick and easy cleanup.`;
+        lede.parentNode.insertBefore(p,lede.nextSibling);
+      }
+    }
+
+    /* Lineup -> "Choose your equipment." + new lede + hyphenated product names. */
+    setText(`#hs-lineup [data-soe=rc-units-h2]`,`Choose your equipment.`);
+    setText(`#hs-lineup [data-soe=rc-units-lede]`,`Get the job done, whatever the scale. Choose your equipment category. Then select from a variety of size and power options to build the perfect unit to tackle the work ahead.`);
+    Array.prototype.forEach.call(document.querySelectorAll(`#hs-lineup [data-soe=rc-unit-name]`),function(n){
+      var t=n.textContent.trim();
+      if(t===`HydroSpade Truck`)n.textContent=`Hydro-Spade Truck`;
+      else if(t===`HydroSpade Trailer`)n.textContent=`Hydro-Spade Trailer`;
+    });
+  }
+
+  /* ---- Detail-page spec CTA: "Full Specs at HydroSpade.com" -> "Spec Sheet (PDF)" opening the real PDF ---- */
+  function fixSpecCta(href){
+    var a=document.querySelector(`[data-soe=ru-hero-ctas] a[data-soe=btn][data-soe-variant=inverse-outline]`);
+    if(!a)return;
+    a.textContent=`Spec Sheet (PDF)`;
+    a.setAttribute(`href`,href);
+    a.setAttribute(`target`,`_blank`);
+    a.setAttribute(`rel`,`noopener`);
+  }
+  function setDesc(txt){
+    var el=document.querySelector(`[data-soe=ru-desc] [data-soe=ru-desc-inner]`);
+    if(el)el.innerHTML=`<p>`+txt+`</p>`;
+  }
+
+  /* ---- Truck (/hydrospade-trucks) ---- */
+  function fixTruck(){
+    if(path!==`/hydrospade-trucks`)return;
+    setText(`#hs-truck-hero [data-soe=eyebrow]`,`Hydro-Spade Trucks`);
+    setText(`#hs-truck-hero [data-soe=ru-hero-h1]`,`Hydro-Spade Truck`);
+    setText(`#hs-truck-hero [data-soe=ru-hero-sub]`,`Non CDL Hydro Vac Truck`);
+    setText(`#hs-truck-hero [data-soe=ru-hero-lede]`,`When it comes to specifying a hydro excavator, buyers tend to overlook the one question that matters most: chassis class. A unit mounted on a Class 5/6 non-CDL chassis opens the operator pool to anyone with a standard license, which changes scheduling math more than any spec on the data sheet. The tradeoff is payload ceiling, so the right move is matching tank size to the actual job mix instead of buying the biggest truck the yard can fit.`);
+    fixSpecCta(TRUCK_PDF);
+    setDesc(`The Hydro-Spade truck pairs a 600 to 1200 gallon debris tank with a 5.5 to 10.5 GPM at 3,500 to 2,900 PSI water system, sized for residential potholing, utility daylighting, and tight-radius work where a full-size vac truck cannot maneuver. Position the nozzle anywhere with a 6-way articulating boom and simple hydraulic controls keep training short and diagnostics straightforward, with no computer modules between the operator and the work.`);
+    setText(`[data-soe=ru-specs-head] [data-soe=eyebrow]`,`Technical Data`);
+  }
+
+  /* ---- Trailer (/hydrospade-trailers) ---- */
+  function fixTrailer(){
+    if(path!==`/hydrospade-trailers`)return;
+    setText(`#hs-trailer-hero [data-soe=eyebrow]`,`Hydro-Spade Trailers`);
+    setText(`#hs-trailer-hero [data-soe=ru-hero-h1]`,`Hydro-Spade Trailer`);
+    setText(`#hs-trailer-hero [data-soe=ru-hero-sub]`,`Hydro-vac trailer`);
+    setText(`#hs-trailer-hero [data-soe=ru-hero-lede]`,`Hydro excavation trailers get specified on debris tank size, but the number that actually governs a shift is water flow against pressure. A 4.5+ GPM, 2,900+ PSI water system cuts soil fast enough to keep a two-person crew productive without overwhelming a 600-gallon spoils tank — the balance point that keeps an operation moving instead of chasing a vac or dump site every other potholing job.`);
+    fixSpecCta(TRAILER_PDF);
+    setDesc(`The Hydro-Spade trailer pairs that 4.5+ GPM / 2,900+ PSI water system with a 6-way articulating boom and simple hydraulic controls, so a single operator can daylight utilities, expose laterals, or set poles without a CDL or a dedicated truck. This trailer tows behind a 3/4-ton or 1-ton pickup and fits residential streets, easements, and tight job sites where a full vac truck cannot stage.`);
+    setText(`[data-soe=ru-specs-head] [data-soe=eyebrow]`,`Technical Data`);
+  }
+
+  function runAll(){
+    try{ fixHydroSpadeLinks(); }catch(e){}
+    try{ fixLanding(); }catch(e){}
+    try{ fixTruck(); }catch(e){}
+    try{ fixTrailer(); }catch(e){}
+  }
+  ready(function(){
+    runAll();
+    /* re-run once the JS-built chrome (footer/brand cards) + any late DOM settles */
+    setTimeout(runAll,500);
+  });
+})();
