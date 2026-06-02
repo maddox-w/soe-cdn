@@ -919,3 +919,9 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
    cards (Energreen /remote-controlled-mowers + HydroSpade). The base [data-soe] h3{margin:0} reset
    (0,0,1,1) out-specifies rc-unit-name's intended margin:0 0 16px (0,0,1,0), collapsing the gap to 0. */
 [data-soe=rc-unit-name]{margin-bottom:20px !important;}
+
+/* Accessibility: honour prefers-reduced-motion for the whole scroll-reveal system (original + v2qq).
+   The base reveal rule (opacity:0 + translateY) lives in boot-head.js; !important neutralises it here. */
+@media (prefers-reduced-motion: reduce){
+  [data-soe-anim=reveal]{opacity:1 !important;transform:none !important;transition:none !important;}
+}

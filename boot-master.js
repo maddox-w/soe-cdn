@@ -2199,3 +2199,38 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     setTimeout(hyphenate,300); setTimeout(hyphenate,800); setTimeout(hyphenate,1500);
   });
 })();
+
+/* === boot-fixes-v2qq === Consistent scroll-reveal for the NEWER page sections that the original
+   reveal lists (v2c/v2d/v2g) never covered — Energreen brand + Robo unit pages + HydroSpade
+   landing/truck/trailer. Every page now reveals the same way. Reuses the EXISTING primitive:
+   set data-soe-anim="reveal" (boot-head.js base CSS = opacity:0 + translateY(16px), .7s ease) and
+   an IntersectionObserver flips data-soe-state="in-view" with the SAME threshold/rootMargin/70ms
+   stagger as the original blocks. All targets sit below the fold, so the pre-reveal hidden state is
+   never visible (no FOUC). prefers-reduced-motion is neutralised site-wide in boot-head.css. */
+(function(){
+  var SEL=[
+    `[data-soe=rc-units-head]`,   /* Energreen + HydroSpade "lineup / choose your equipment" head */
+    `[data-soe=rc-unit-card]`,    /* unit + lineup cards (staggered) */
+    `[data-soe=ru-desc-inner]`,   /* unit + HydroSpade product description */
+    `[data-soe=ru-specs-head]`,   /* spec section head */
+    `[data-soe=ru-spec-card]`,    /* spec cards (staggered) */
+    `[data-soe=ru-form-head]`     /* inquiry-form head */
+  ].join(`,`);
+  function run(){
+    var all=document.querySelectorAll(SEL);
+    if(!all.length)return;
+    var fresh=Array.prototype.filter.call(all,function(n){return !n.getAttribute(`data-soe-rev`);});
+    if(!fresh.length)return;
+    fresh.forEach(function(n){ n.setAttribute(`data-soe-rev`,`1`); n.setAttribute(`data-soe-anim`,`reveal`); });
+    if(typeof IntersectionObserver===`undefined`){ fresh.forEach(function(n){n.setAttribute(`data-soe-state`,`in-view`);}); return; }
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e,idx){
+        if(e.isIntersecting){ var t=e.target; setTimeout(function(){t.setAttribute(`data-soe-state`,`in-view`);},idx*70); io.unobserve(t); }
+      });
+    },{threshold:0.12,rootMargin:`0px 0px -40px 0px`});
+    fresh.forEach(function(n){io.observe(n);});
+  }
+  run();
+  if(document.readyState===`loading`) document.addEventListener(`DOMContentLoaded`,run);
+  setTimeout(run,700);
+})();
