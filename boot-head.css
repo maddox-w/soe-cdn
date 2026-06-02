@@ -908,3 +908,13 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 /* Detail-page hero renders sit directly on the dark hero (no light "box"). */
 #hs-truck-hero [data-soe=ru-hero-visual]{background-color:transparent !important;}
 #hs-trailer-hero [data-soe=ru-hero-visual]{background-color:transparent !important;}
+
+/* Tighten the now card-free Difference section + the lineup below it (kill the dead 48px head-margin
+   that used to separate the head from the six cards; trim the oversized section padding). */
+#hs-difference{padding-top:64px !important;padding-bottom:56px !important;}
+#hs-difference [data-soe=difference-head]{margin-bottom:0 !important;}
+[data-soe-page=hydrospade] [data-soe=rc-units]{padding-top:64px !important;padding-bottom:80px !important;}
+
+/* Lineup card: breathing room between the product name and the "Find out more" button
+   (the base [data-soe] h3{margin:0} reset out-specifies rc-unit-name's intended margin). */
+#hs-lineup [data-soe=rc-unit-name]{margin-bottom:20px !important;}
