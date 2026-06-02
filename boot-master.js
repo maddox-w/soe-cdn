@@ -1626,12 +1626,12 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     var brandVideo={ "Mulch Mule":`X8TkDU5Vllo`, "Energreen":`yHaA7LCPtWY` };
     /* Per-brand logo (replaces the text name) + brand color (themes the "See It In Action" header + play
        button per the owner's "match the brand color" note). Logos are trimmed-to-content + hosted in
-       soe-cdn; bg-image relative URLs resolve against boot-head.css. Colors sampled from each logo, EXCEPT
-       Energreen (its yellow is illegible on white -> owner asked to use the brand-page button green) and
-       Mulch Mule (unspecified -> the same button green via fallback); both omitted here so they fall back
-       to var(--jd-green). Mulch Mule logo = the official mulchmule.com mark (same as the trailer/hero). */
+       soe-cdn; bg-image relative URLs resolve against boot-head.css. Colors = each brand's own accent:
+       Hydro-Spade navy + Metec/Brinemasters sampled from their logos; ENERGREEN = #F5A524 (the gold
+       "Request Info"/"Contact Us" button color on its brand page /remote-controlled-mowers = --safety-amber;
+       owner: match those buttons — NOT the /brands green). Mulch Mule unspecified -> var(--jd-green) fallback. */
     var brandKey={ "Hydro-Spade":`hydrospade`, "HydroSpade":`hydrospade`, "Energreen":`energreen`, "Metec":`metec`, "Brinemasters":`brinemasters`, "Mulch Mule":`mulchmule` };
-    var brandColor={ hydrospade:`#003473`, metec:`#0A5737`, brinemasters:`#3B7DAC` };
+    var brandColor={ hydrospade:`#003473`, energreen:`#F5A524`, metec:`#0A5737`, brinemasters:`#3B7DAC` };
 
     Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=brand-card]`),function(card){
       var h3=card.querySelector(`[data-soe=brand-card-h3]`);
