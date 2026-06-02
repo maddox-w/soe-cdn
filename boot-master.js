@@ -1624,12 +1624,30 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     /* "See It In Action" feature thumbnail per brand box (Concept 2). One representative video per brand;
        brands without a video yet get a navy "coming soon" placeholder. Click reuses the v2jj lightbox. */
     var brandVideo={ "Mulch Mule":`X8TkDU5Vllo`, "Energreen":`yHaA7LCPtWY` };
+    /* Per-brand logo (replaces the text name) + brand color (themes the "See It In Action" header + play
+       button per the owner's "match the brand color" note). Logos are trimmed-to-content + hosted in
+       soe-cdn; bg-image relative URLs resolve against boot-head.css. Colors sampled from each logo, EXCEPT
+       Energreen (its yellow is illegible on white -> owner asked to use the brand-page button green) and
+       Mulch Mule (unspecified -> the same button green via fallback); both omitted here so they fall back
+       to var(--jd-green). Mulch Mule logo = the official mulchmule.com mark (same as the trailer/hero). */
+    var brandKey={ "Hydro-Spade":`hydrospade`, "HydroSpade":`hydrospade`, "Energreen":`energreen`, "Metec":`metec`, "Brinemasters":`brinemasters`, "Mulch Mule":`mulchmule` };
+    var brandColor={ hydrospade:`#003473`, metec:`#0A5737`, brinemasters:`#3B7DAC` };
 
     Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=brand-card]`),function(card){
       var h3=card.querySelector(`[data-soe=brand-card-h3]`);
       var name=h3?h3.textContent.trim():``;
       var origin=card.querySelector(`[data-soe=brand-card-origin-line]`);
       if(origin){var b=origin.querySelector(`b`); if(b)origin.innerHTML=`Made in `+b.outerHTML;}
+
+      /* Brand color (themes the SIA block) + logo (swap the text name for the brand logo). */
+      var bkey=brandKey[name]||brandKey[name.replace(/-/g,``)]||``;
+      if(brandColor[bkey]) card.style.setProperty(`--brand`, brandColor[bkey]);
+      if(bkey && h3 && !h3.querySelector(`[data-soe=brand-card-logo]`)){
+        var sr=document.createElement(`span`); sr.textContent=name;
+        sr.style.cssText=`position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;`;
+        var logo=document.createElement(`span`); logo.setAttribute(`data-soe`,`brand-card-logo`); logo.setAttribute(`data-brand`,bkey); logo.setAttribute(`role`,`img`); logo.setAttribute(`aria-label`,name);
+        h3.textContent=``; h3.appendChild(sr); h3.appendChild(logo);
+      }
       var specs=card.querySelector(`[data-soe=brand-card-specs]`);
       if(specs && specs.parentNode)specs.parentNode.removeChild(specs);
       var data=whyData[name]||whyData[name.replace(/-/g,``)];

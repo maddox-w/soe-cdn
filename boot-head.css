@@ -976,20 +976,31 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 }
 
 /* /brands "See It In Action" feature thumbnail per brand box (Concept 2). Reuses the v2jj lightbox
-   (click a [data-soe-video] thumb -> in-page YouTube popup). Site JD-green style guide — green play
-   button (matches [data-soe=video-play] in the galleries) + green eyebrow. Brands without a video get
-   a "coming soon" placeholder (same dashed structure as the Hydro-Spade landing slot, in the green theme). */
+   (click a [data-soe-video] thumb -> in-page YouTube popup). Header + play button are themed to EACH
+   brand's own color via --brand (set per-card in fixBrandsPage, sampled from the brand logo), with the
+   site JD-green as fallback (e.g. Mulch Mule, no logo/color yet). Brands without a video get a "coming
+   soon" placeholder (same dashed structure as the Hydro-Spade landing slot). */
 [data-soe-page=brands] [data-soe=brand-sia]{margin-top:22px;}
-[data-soe-page=brands] [data-soe=brand-sia-head]{font-family:var(--font-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--jd-green);font-weight:700;margin:0 0 11px;display:flex;align-items:center;gap:10px;}
-[data-soe-page=brands] [data-soe=brand-sia-head]::before{content:"";width:24px;height:2px;background:var(--jd-green);}
+[data-soe-page=brands] [data-soe=brand-sia-head]{font-family:var(--font-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--brand,var(--jd-green));font-weight:700;margin:0 0 11px;display:flex;align-items:center;gap:10px;}
+[data-soe-page=brands] [data-soe=brand-sia-head]::before{content:"";width:24px;height:2px;background:var(--brand,var(--jd-green));}
 [data-soe-page=brands] [data-soe=brand-sia-thumb]{position:relative;display:block;width:268px;max-width:100%;aspect-ratio:16 / 9;border-radius:10px;overflow:hidden;background:#0E1110 center/cover no-repeat;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.16);transition:transform .25s ease,box-shadow .25s ease;}
 [data-soe-page=brands] [data-soe=brand-sia-thumb]:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.24);}
-[data-soe-page=brands] [data-soe=brand-sia-play]{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;background:var(--jd-green);display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s;}
-[data-soe-page=brands] [data-soe=brand-sia-thumb]:hover [data-soe=brand-sia-play]{background:var(--jd-green-dark);transform:translate(-50%,-50%) scale(1.07);}
+[data-soe-page=brands] [data-soe=brand-sia-play]{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;background:var(--brand,var(--jd-green));display:flex;align-items:center;justify-content:center;transition:filter .2s,transform .2s;}
+[data-soe-page=brands] [data-soe=brand-sia-thumb]:hover [data-soe=brand-sia-play]{filter:brightness(.9);transform:translate(-50%,-50%) scale(1.07);}
 [data-soe-page=brands] [data-soe=brand-sia-play]::after{content:"";border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent #fff;margin-left:3px;}
 /* coming-soon placeholder variant */
 [data-soe-page=brands] [data-soe=brand-sia-thumb][data-soe-soon]{background:#F6F7F5;border:2px dashed #C7CEC6;box-shadow:none;cursor:default;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;}
 [data-soe-page=brands] [data-soe=brand-sia-thumb][data-soe-soon]:hover{transform:none;box-shadow:none;}
-[data-soe-page=brands] [data-soe=brand-sia-thumb][data-soe-soon] [data-soe=brand-sia-play]{position:static;transform:none;width:46px;height:46px;background:var(--jd-green);}
+[data-soe-page=brands] [data-soe=brand-sia-thumb][data-soe-soon] [data-soe=brand-sia-play]{position:static;transform:none;width:46px;height:46px;background:var(--brand,var(--jd-green));}
 [data-soe-page=brands] [data-soe=brand-sia-thumb][data-soe-soon] [data-soe=brand-sia-play]::after{margin-left:3px;}
 [data-soe-page=brands] [data-soe=brand-sia-soon]{font-family:var(--font-sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6B746A;}
+
+/* Brand logo replaces the text name (data-soe=brand-card-logo inside the h3). Logos are trimmed-to-content
+   PNGs in soe-cdn; relative url() resolves against boot-head.css's location. Fixed box + contain so the
+   differing logo aspect ratios all fit and left-align. */
+[data-soe-page=brands] [data-soe=brand-card-logo]{display:block;height:52px;width:300px;max-width:100%;background-repeat:no-repeat;background-position:left center;background-size:contain;}
+[data-soe-page=brands] [data-soe=brand-card-logo][data-brand=hydrospade]{background-image:url(brand-logo-hydrospade.png);}
+[data-soe-page=brands] [data-soe=brand-card-logo][data-brand=energreen]{background-image:url(brand-logo-energreen.png);}
+[data-soe-page=brands] [data-soe=brand-card-logo][data-brand=metec]{background-image:url(brand-logo-metec.png);}
+[data-soe-page=brands] [data-soe=brand-card-logo][data-brand=brinemasters]{background-image:url(brand-logo-brinemasters.png);}
+[data-soe-page=brands] [data-soe=brand-card-logo][data-brand=mulchmule]{background-image:url(brand-logo-mulchmule.png);}
