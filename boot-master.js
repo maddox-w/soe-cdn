@@ -2249,8 +2249,8 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     var target=parseInt((el.textContent||``).replace(/[^0-9]/g,``),10);
     if(!target)return;
     if(reduce){ el.textContent=String(target); return; }
-    var dur=1600, t0=null;
-    function ease(p){ return 1-Math.pow(1-p,3); }   /* easeOutCubic */
+    var dur=1900, t0=null;
+    function ease(p){ return p>=1?1:1-Math.pow(2,-10*p); }   /* easeOutExpo — fast ramp, pronounced slow-down into 1968 */
     function frame(ts){
       if(t0===null)t0=ts;
       var p=(ts-t0)/dur; if(p>1)p=1;

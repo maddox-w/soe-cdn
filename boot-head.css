@@ -932,3 +932,8 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 @media (prefers-reduced-motion: reduce){
   [data-soe-anim=reveal]{opacity:1 !important;transform:none !important;transition:none !important;}
 }
+
+/* Homepage "1968" count-up: reserve a constant 4-digit width with tabular figures so the number's
+   width never changes during the count — keeps the adjacent "Backed by Brown Equipment…" text from
+   shifting. (1968 is always the widest value; 4 tabular digits == its width.) */
+[data-soe=intro-heritage-year]{min-width:4ch;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;text-align:left;}
