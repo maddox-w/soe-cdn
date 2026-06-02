@@ -955,3 +955,6 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
    Brinemakers/TruckFill in a 2nd row with a big empty gap under the short columns ("screwed up"). */
 [data-soe=nav-dropdown][data-soe-menu=mega]{width:min(1200px, calc(100vw - 28px)) !important;display:grid !important;grid-template-columns:repeat(7, minmax(0, 1fr)) !important;column-gap:22px !important;row-gap:0 !important;align-items:start !important;}
 [data-soe=nav-dropdown][data-soe-menu=mega] [data-soe=nav-mega-col]{min-width:0 !important;}
+/* Uniform header height so 1-line vs 2-line titles ("R-C Mowers" vs "Landscape Material Handler")
+   keep their underlines + first items aligned across all columns. */
+[data-soe=nav-dropdown][data-soe-menu=mega] [data-soe=nav-mega-col-h]{min-height:48px !important;}
