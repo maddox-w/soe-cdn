@@ -950,3 +950,8 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 #hs-videos [data-soe=hs-video-ph-play]{width:62px;height:62px;border-radius:50%;background:#003473;display:flex;align-items:center;justify-content:center;}
 #hs-videos [data-soe=hs-video-ph-play]::after{content:"";border-style:solid;border-width:10px 0 10px 17px;border-color:transparent transparent transparent #fff;margin-left:4px;}
 #hs-videos [data-soe=hs-video-ph] span{font-family:var(--font-sans);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#6B746A;}
+
+/* Equipment mega-menu: lay the 7 type-columns in ONE aligned row (CSS grid). flex-wrap was stranding
+   Brinemakers/TruckFill in a 2nd row with a big empty gap under the short columns ("screwed up"). */
+[data-soe=nav-dropdown][data-soe-menu=mega]{width:min(1200px, calc(100vw - 28px)) !important;display:grid !important;grid-template-columns:repeat(7, minmax(0, 1fr)) !important;column-gap:22px !important;row-gap:0 !important;align-items:start !important;}
+[data-soe=nav-dropdown][data-soe-menu=mega] [data-soe=nav-mega-col]{min-width:0 !important;}
