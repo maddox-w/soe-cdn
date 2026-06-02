@@ -915,6 +915,7 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 #hs-difference [data-soe=difference-head]{margin-bottom:0 !important;}
 [data-soe-page=hydrospade] [data-soe=rc-units]{padding-top:64px !important;padding-bottom:80px !important;}
 
-/* Lineup card: breathing room between the product name and the "Find out more" button
-   (the base [data-soe] h3{margin:0} reset out-specifies rc-unit-name's intended margin). */
-#hs-lineup [data-soe=rc-unit-name]{margin-bottom:20px !important;}
+/* Lineup card: breathing room between the product name and the "Find out more" button — ALL lineup
+   cards (Energreen /remote-controlled-mowers + HydroSpade). The base [data-soe] h3{margin:0} reset
+   (0,0,1,1) out-specifies rc-unit-name's intended margin:0 0 16px (0,0,1,0), collapsing the gap to 0. */
+[data-soe=rc-unit-name]{margin-bottom:20px !important;}
