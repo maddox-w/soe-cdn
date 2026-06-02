@@ -1479,7 +1479,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     Array.prototype.forEach.call(document.querySelectorAll(`select`),function(sel){
       if(!Array.prototype.some.call(sel.options,function(o){return o.value===`mulch-mule`;})) return;
       if(Array.prototype.some.call(sel.options,function(o){return o.value===`hydrospade`;})) return;
-      var opt=document.createElement(`option`); opt.value=`hydrospade`; opt.textContent=`HydroSpade`;
+      var opt=document.createElement(`option`); opt.value=`hydrospade`; opt.textContent=`Hydro-Spade`;
       var other=Array.prototype.filter.call(sel.options,function(o){return o.value===`other`;})[0];
       if(other) sel.insertBefore(opt,other); else sel.appendChild(opt);
     });
@@ -1578,7 +1578,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     if(path!==`/`)return;
     var map={"Energreen":"eg-hero-logo-bg-sm","Brinemasters":"bm-hero-logo-bg-sm","Metec":"mt-hero-logo-bg-sm","HydroSpade":"hs-hero-logo-bg-sm"};
     Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=hero-stage] [data-soe=hero-brand-tag]`),function(tag){
-      var cls=map[(tag.textContent||``).trim()];
+      var _t=(tag.textContent||``).trim(); var cls=map[_t]||map[_t.replace(/-/g,``)];
       if(cls && !tag.classList.contains(cls)){ tag.classList.add(cls); tag.textContent=``; }
     });
   }
@@ -1630,7 +1630,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       if(origin){var b=origin.querySelector(`b`); if(b)origin.innerHTML=`Made in `+b.outerHTML;}
       var specs=card.querySelector(`[data-soe=brand-card-specs]`);
       if(specs && specs.parentNode)specs.parentNode.removeChild(specs);
-      var data=whyData[name];
+      var data=whyData[name]||whyData[name.replace(/-/g,``)];
       if(data && !card.querySelector(`.brand-why`)){
         var why=document.createElement(`div`); why.className=`brand-why`; why.setAttribute(`data-soe`,`brand-why`);
         var hd=document.createElement(`div`); hd.className=`brand-why-head`; hd.textContent=data.head; why.appendChild(hd);
@@ -1930,7 +1930,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     if(path!==`/`)return;
     var MAP={ "mulch mule":`X8TkDU5Vllo`, "energreen":`yHaA7LCPtWY` };
     /* Brands with a live brand page — point their "Explore <Brand>" CTA at it (others stay '#'). */
-    var EXPLORE={ "mulch mule":`/mulch-mule`, "energreen":`/remote-controlled-mowers`, "hydrospade":`/hydrospade` };
+    var EXPLORE={ "mulch mule":`/mulch-mule`, "energreen":`/remote-controlled-mowers`, "hydrospade":`/hydrospade`, "hydro-spade":`/hydrospade` };
     /* Each slide's hero-ctas = an "Explore <Brand>" button + ONE secondary CTA (a "Watch Demo" or a
        "View Specs" that an earlier block relabels to "Watch Video"). For Mulch Mule + Energreen the
        secondary becomes the real Watch Video; for every other brand it's a placeholder and is removed
@@ -2071,12 +2071,12 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     /* Homepage "Explore Smart Outdoor Products" grid: the HydroSpade card <a> -> /hydrospade. */
     Array.prototype.forEach.call(document.querySelectorAll(`a[data-soe=brand-card-h]`),function(a){
       var n=a.querySelector(`[data-soe=brand-card-name]`);
-      if(n && n.textContent.trim()===`HydroSpade`) a.setAttribute(`href`,`/hydrospade`);
+      if(n && n.textContent.trim().replace(/-/g,``)===`HydroSpade`) a.setAttribute(`href`,`/hydrospade`);
     });
     /* /brands tile: the HydroSpade "View HydroSpade" link -> /hydrospade (also makes the whole-card click work). */
     Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=brand-card]`),function(card){
       var h3=card.querySelector(`[data-soe=brand-card-h3]`);
-      if(!h3 || h3.textContent.trim()!==`HydroSpade`)return;
+      if(!h3 || h3.textContent.trim().replace(/-/g,``)!==`HydroSpade`)return;
       var link=card.querySelector(`[data-soe=brand-card-link-large]`);
       if(link)link.setAttribute(`href`,`/hydrospade`);
     });
@@ -2161,5 +2161,34 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     runAll();
     /* re-run once the JS-built chrome (footer/brand cards) + any late DOM settles */
     setTimeout(runAll,500);
+  });
+})();
+
+/* === boot-fixes-v2pp === Brand spelling: the product name shows as "Hydro-Spade" (hyphen) in ALL
+   visible text — nav menus, footer, breadcrumbs, the front-page banner/cards + "Explore" button,
+   lineup/detail headings, and the request-quote dropdown. The domain "HydroSpade.com" and every
+   /hydrospade* URL stay one word: the text walk skips "HydroSpade" when it is immediately followed
+   by ".com", and only ever touches TEXT nodes (never hrefs/attributes/slugs). Runs in the same defer
+   tick right after the JS-built chrome, plus a few re-runs for the rotator's cloned hero slides.
+   Idempotent — "Hydro-Spade" contains no "HydroSpade", so it never double-hyphenates. The brand
+   match logic above (wireHomeWatch / fixHydroSpadeLinks / fixBrandsPage / tagHomeBrandLogos) was made
+   hyphen-tolerant so link-wiring + logos keep working whichever spelling is present when they run. */
+(function(){
+  function ready(fn){ if(document.readyState!==`loading`)fn(); else document.addEventListener(`DOMContentLoaded`,fn); }
+  var RX=/HydroSpade(?!\.com)/g;
+  function skipParent(name){ return name===`SCRIPT`||name===`STYLE`||name===`NOSCRIPT`||name===`TEXTAREA`; }
+  function hyphenate(){
+    if(!document.body)return;
+    var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode:function(node){
+      if(node.parentNode && skipParent(node.parentNode.nodeName))return NodeFilter.FILTER_REJECT;
+      return (node.nodeValue && node.nodeValue.indexOf(`HydroSpade`)!==-1)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP;
+    }});
+    var n,hits=[];
+    while((n=w.nextNode()))hits.push(n);
+    hits.forEach(function(t){ t.nodeValue=t.nodeValue.replace(RX,`Hydro-Spade`); });
+  }
+  ready(function(){
+    hyphenate();
+    setTimeout(hyphenate,300); setTimeout(hyphenate,800); setTimeout(hyphenate,1500);
   });
 })();
