@@ -2125,13 +2125,14 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       }
     }
 
-    /* "See it in action" placeholder section so the owner can see the slot that's still open (videos pending). */
+    /* "See it in action" placeholder section so the owner can see the slot that's still open (videos pending).
+       Carries a bold amber "OPEN — AWAITING VIDEO" flag (data-soe=hs-open-flag) so the open item is unmistakable on review. */
     if(!document.querySelector(`#hs-videos`)){
       var lineup=document.querySelector(`#hs-lineup`);
       if(lineup && lineup.parentNode){
         var sec=document.createElement(`section`);
         sec.setAttribute(`data-soe`,`videos`); sec.id=`hs-videos`;
-        sec.innerHTML=`<div data-soe="videos-head"><span data-soe="eyebrow">See it in action</span><h2 data-soe="videos-h2">Watch the Hydro-Spade work</h2><p data-soe="videos-lede">Field walkthroughs and demos are coming soon.</p></div><div data-soe="hs-video-ph"><span data-soe="hs-video-ph-play"></span><span>Video coming soon</span></div>`;
+        sec.innerHTML=`<div data-soe="videos-head" data-soe-state="in-view"><span data-soe="hs-open-flag">Open — awaiting video</span><span data-soe="eyebrow" data-soe-state="in-view">See it in action</span><h2 data-soe="videos-h2">Watch the Hydro-Spade work</h2><p data-soe="videos-lede">Field walkthroughs and demos are coming soon.</p></div><div data-soe="hs-video-ph"><span data-soe="hs-video-ph-play"></span><span>Video coming soon</span></div>`;
         lineup.parentNode.insertBefore(sec, lineup.nextSibling);
       }
     }

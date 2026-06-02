@@ -950,6 +950,13 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 #hs-videos [data-soe=hs-video-ph-play]{width:62px;height:62px;border-radius:50%;background:#003473;display:flex;align-items:center;justify-content:center;}
 #hs-videos [data-soe=hs-video-ph-play]::after{content:"";border-style:solid;border-width:10px 0 10px 17px;border-color:transparent transparent transparent #fff;margin-left:4px;}
 #hs-videos [data-soe=hs-video-ph] span{font-family:var(--font-sans);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#6B746A;}
+/* Bold "open item" flag so the owner can see this section is still pending (video not yet supplied).
+   Brand navy #003473 (matches the play button / page theme), white text + status dot. */
+#hs-videos [data-soe=hs-open-flag]{display:flex;width:-moz-fit-content;width:fit-content;align-items:center;margin:0 auto 16px;padding:7px 16px;border-radius:999px;background:#003473;color:#fff;font-family:var(--font-sans);font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;}
+#hs-videos [data-soe=hs-open-flag]::before{content:"";width:8px;height:8px;border-radius:50%;background:#fff;margin-right:9px;}
+/* Show the "See it in action" eyebrow on THIS section (the global [data-soe=videos-head] [data-soe=eyebrow]
+   rule hides it for the homepage, whose h2 already reads "See it in action."). Navy on hydrospade via line ~827. */
+#hs-videos [data-soe=videos-head] [data-soe=eyebrow]{display:inline-flex !important;}
 
 /* Equipment mega-menu: lay the 7 type-columns in ONE aligned row (CSS grid). flex-wrap was stranding
    Brinemakers/TruckFill in a 2nd row with a big empty gap under the short columns ("screwed up"). */
