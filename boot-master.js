@@ -721,6 +721,8 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     bannerCopy[`Brinemasters`]=`The Smarter Way To Brine.`;
     bannerCopy[`Energreen`]=`The Safest Seat Is The One You`+APOS+`re Not In.`;
     bannerCopy[`Metec`]=`The Attachment Your Tractor Deserves.`;
+    bannerCopy[`HydroSpade`]=`Designed With Your Work In Mind.`;
+    bannerCopy[`Hydro-Spade`]=`Designed With Your Work In Mind.`;
     document.querySelectorAll(`[data-soe=brand-card-name]`).forEach(function(name){
       var card=name.closest(`[data-soe=brand-card-h]`);
       if(!card)return;
@@ -1137,39 +1139,37 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   document.head.appendChild(styleEl);
 
   /* ---------- Menu data ---------- */
+  /* Equipment mega-menu organised by EQUIPMENT TYPE (what customers search for), not by brand. */
   var equipMenu = [
-    {brand:`Mulch Mule`, href:`/mulch-mule`, items:[
-      [`Mulch Mule MM1`,`/mulch-mule`],
-      [`Mulch Mule MM2`,`/mulch-mule`],
-      [`Wireless Remote Kit`,`/mulch-mule`],
-      [`Billy Goat Kit`,`/mulch-mule`],
-      [`Extension Conveyor`,`/mulch-mule`],
-      [`Contractor Package`,`/mulch-mule`]
+    {brand:`Landscape Material Handler`, href:`/mulch-mule`, items:[
+      [`Mulch Mule`,`/mulch-mule`]
     ]},
-    {brand:`Brinemasters`, href:`/brands`, items:[
-      [`BM-14X Brine Maker`,`/brands`],
-      [`BM-6 Brine Maker`,`/brands`],
-      [`BM-3 Brine Maker`,`/brands`],
-      [`Truck Fill Stations`,`/brands`],
-      [`Salinity Control`,`/brands`]
+    {brand:`R-C Mowers`, href:`/remote-controlled-mowers`, items:[
+      [`RoboECO`,`/roboeco`]
     ]},
-    {brand:`Energreen`, href:`/remote-controlled-mowers`, items:[
+    {brand:`R-C Skid Steers`, href:`/remote-controlled-mowers`, items:[
       [`RoboCOMPACT`,`/robocompact`],
-      [`RoboECO`,`/roboeco`],
       [`RoboEVO`,`/roboevo`],
       [`RoboMIDI`,`/robomidi`]
     ]},
-    {brand:`Metec`, href:`/brands`, items:[
+    {brand:`Compact Tractor Attachments`, href:`/brands`, items:[
       [`Snow Blowers`,`/brands`],
       [`Angle Plows`,`/brands`],
       [`V-Plows`,`/brands`],
       [`Sweepers`,`/brands`],
       [`Spreaders`,`/brands`]
     ]},
-    {brand:`Hydroexcavation`, href:`/brands`, items:[
-      [`HydroSpade Trucks`,`/hydrospade-trucks`],
-      [`HydroSpade Trailers`,`/hydrospade-trailers`],
-      [`View All HydroSpade`,`/hydrospade`]
+    {brand:`Hydroexcavation`, href:`/hydrospade`, items:[
+      [`Non CDL Hydro Vac Truck`,`/hydrospade-trucks`],
+      [`Hydro-Vac Trailer`,`/hydrospade-trailers`]
+    ]},
+    {brand:`Brinemakers`, href:`/brands`, items:[
+      [`BM-14X Brine Maker`,`/brands`],
+      [`BM-6 Brine Maker`,`/brands`],
+      [`BM-3 Brine Maker`,`/brands`]
+    ]},
+    {brand:`TruckFill`, href:`/brands`, items:[
+      [`Truck Fill Stations`,`/brands`]
     ]}
   ];
 
@@ -1614,13 +1614,11 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
         `Engineered and built in-house: design, prototyping, CNC machining, turning and milling, plasma cutting, forming, welding, finishing, assembly, and testing — all under one roof increasing quality and speed to meet your needs.`,
         `Broad compatibility: custom fabrication and forming build mounts to standard hitch interfaces, with one-off builds for non-standard machines.`,
         `Durability: professional welding and specialized coatings protect against wear, corrosion, and weather for a longer service life.`]},
-      "HydroSpade":{head:`Simply Built. Simply Better.`,intro:`Here's why the Hydro-Spade trailer is designed with your work in mind.`,items:[
-        `Enhanced Maneuverability — the Hydro-Spade trailer delivers in tight spots, urban projects, and difficult turnaround situations.`,
-        `Maximize Payload — a specialized balanced weight distribution design allows balance-sensitive trucks to maximize payload.`,
-        `Reduce Noise — an enclosed blower compartment helps minimize blower noise.`,
-        `Enjoy Easy Operations — conveniently located hydraulic controls plus a wireless handheld controller for boom functions.`,
-        `Protect Your Equipment — positive shut-off protection and filter with spun-bonded filter cartridges provide great protection for the blower unit.`,
-        `Quick and Easy Cleanup — using a water-pressure wand with convenient rear access door, 6" drain valve, and blower filtration.`]}
+      "HydroSpade":{head:`Simply Built. Simply Better.`,intro:`Here's why the Hydro-Spade line is designed with your work in mind.`,items:[
+        `The Non-CDL truck is sized for residential potholing, utility daylighting, and tight-radius work where a full-size vac truck cannot maneuver and a unit mounted on a Class 5/6 non-CDL chassis opens the operator pool to anyone with a standard license, which changes scheduling math more than any spec on the data sheet.`,
+        `Easy operations including a 6-way articulating boom and simple hydraulic controls to keep training short and diagnostics straightforward, with no computer modules between the operator and the work.`,
+        `The trailer tows behind a 3/4-ton or 1-ton pickup and fits residential streets, easements, and tight job sites where a full vac truck cannot stage.`,
+        `Quick and easy cleanup using water-pressure wand with convenient rear access door, 6" drain valve, and blower filtration.`]}
     };
 
     Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=brand-card]`),function(card){
@@ -2094,7 +2092,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     setText(`#hs-difference [data-soe=difference-head-h2]`,`The Hydro-Spade Difference`);
     var lede=document.querySelector(`#hs-difference [data-soe=difference-head-lede]`);
     if(lede){
-      lede.textContent=`Maneuver tighter. Carry more. Run quieter.`;
+      /* "Maneuver tighter. Carry more. Run quieter." subhead removed per owner (hidden via CSS); keep the paragraph. */
       if(lede.parentNode && !lede.parentNode.querySelector(`[data-soe=hs-diff-body]`)){
         var p=document.createElement(`p`);
         p.setAttribute(`data-soe`,`hs-diff-body`);
@@ -2111,6 +2109,32 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       if(t===`HydroSpade Truck`)n.textContent=`Hydro-Spade Truck`;
       else if(t===`HydroSpade Trailer`)n.textContent=`Hydro-Spade Trailer`;
     });
+
+    /* Hero CTAs: "View the Lineup" -> "Watch Video" (scrolls to the See-it-in-action section) +
+       a "Contact Us" primary button, matching the other brand pages' hero CTA set. */
+    var ctas=document.querySelector(`#hs-hero [data-soe=p-hero-ctas]`);
+    if(ctas){
+      var watch=ctas.querySelector(`a[data-soe=btn][data-soe-variant=inverse-outline]`);
+      if(watch){ watch.textContent=`Watch Video`; watch.setAttribute(`href`,`#hs-videos`); }
+      if(!ctas.querySelector(`a[data-soe-hs-contact]`)){
+        var contact=document.createElement(`a`);
+        contact.setAttribute(`data-soe`,`btn`); contact.setAttribute(`data-soe-variant`,`primary`);
+        contact.setAttribute(`data-soe-size`,`lg`); contact.setAttribute(`data-soe-hs-contact`,`1`);
+        contact.setAttribute(`href`,`/request-quote`); contact.textContent=`Contact Us`;
+        ctas.appendChild(contact);
+      }
+    }
+
+    /* "See it in action" placeholder section so the owner can see the slot that's still open (videos pending). */
+    if(!document.querySelector(`#hs-videos`)){
+      var lineup=document.querySelector(`#hs-lineup`);
+      if(lineup && lineup.parentNode){
+        var sec=document.createElement(`section`);
+        sec.setAttribute(`data-soe`,`videos`); sec.id=`hs-videos`;
+        sec.innerHTML=`<div data-soe="videos-head"><span data-soe="eyebrow">See it in action</span><h2 data-soe="videos-h2">Watch the Hydro-Spade work</h2><p data-soe="videos-lede">Field walkthroughs and demos are coming soon.</p></div><div data-soe="hs-video-ph"><span data-soe="hs-video-ph-play"></span><span>Video coming soon</span></div>`;
+        lineup.parentNode.insertBefore(sec, lineup.nextSibling);
+      }
+    }
   }
 
   /* ---- Detail-page spec CTA: "Full Specs at HydroSpade.com" -> "Spec Sheet (PDF)" opening the real PDF ---- */
@@ -2144,7 +2168,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     if(path!==`/hydrospade-trailers`)return;
     setText(`#hs-trailer-hero [data-soe=eyebrow]`,`Hydro-Spade Trailers`);
     setText(`#hs-trailer-hero [data-soe=ru-hero-h1]`,`Hydro-Spade Trailer`);
-    setText(`#hs-trailer-hero [data-soe=ru-hero-sub]`,`Hydro-vac trailer`);
+    setText(`#hs-trailer-hero [data-soe=ru-hero-sub]`,`Hydro-Vac Trailer`);
     setText(`#hs-trailer-hero [data-soe=ru-hero-lede]`,`Hydro excavation trailers get specified on debris tank size, but the number that actually governs a shift is water flow against pressure. A 4.5+ GPM, 2,900+ PSI water system cuts soil fast enough to keep a two-person crew productive without overwhelming a 600-gallon spoils tank — the balance point that keeps an operation moving instead of chasing a vac or dump site every other potholing job.`);
     fixSpecCta(TRAILER_PDF);
     setDesc(`The Hydro-Spade trailer pairs that 4.5+ GPM / 2,900+ PSI water system with a 6-way articulating boom and simple hydraulic controls, so a single operator can daylight utilities, expose laterals, or set poles without a CDL or a dedicated truck. This trailer tows behind a 3/4-ton or 1-ton pickup and fits residential streets, easements, and tight job sites where a full vac truck cannot stage.`);

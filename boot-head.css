@@ -861,8 +861,8 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 #hs-truck-hero [data-soe=ru-hero-visual]{background-color:var(--steel-100) !important;background-image:url("hydrospade-truck.png") !important;background-repeat:no-repeat !important;background-position:center !important;background-size:90% auto !important;}
 #hs-trailer-hero [data-soe=ru-hero-visual]{background-color:var(--steel-100) !important;background-image:url("hydrospade-trailer.png") !important;background-repeat:no-repeat !important;background-position:center !important;background-size:92% auto !important;}
 
-/* HydroSpade detail pages: neutralize the Robo amber sub-headline + hero bottom bar */
-[data-soe-page=hydrospade] [data-soe=ru-hero-sub]{color:#fff !important;}
+/* HydroSpade detail pages: sub-headline in the brand navy (button/logo blue, per owner) + hero bottom bar */
+[data-soe-page=hydrospade] [data-soe=ru-hero-sub]{color:#003473 !important;}
 [data-soe-page=hydrospade] [data-soe=ru-hero]{border-bottom-color:var(--hs-navy) !important;}
 
 /* HydroSpade lineup cards: visible navy "Find out more" + guaranteed whole-card click + navy hover; detail spec titles navy */
@@ -897,7 +897,7 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 
 /* Banner headline: two stacked lines — "Simply Built." (white) / "Simply Better." (brand blue). */
 #hs-hero [data-soe=p-hero-h1] [data-soe=hs-built]{display:block !important;color:#fff !important;}
-#hs-hero [data-soe=p-hero-h1] [data-soe=hs-better]{display:block !important;color:#4a90d9 !important;}
+#hs-hero [data-soe=p-hero-h1] [data-soe=hs-better]{display:block !important;color:#003473 !important;}
 
 /* The Hydro-Spade Difference: hide the six feature cards; the head becomes a statement
    block — a bold subhead (repurposed lede) + a paragraph (injected by boot-master v2oo). */
@@ -937,3 +937,16 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
    width never changes during the count — keeps the adjacent "Backed by Brown Equipment…" text from
    shifting. (1968 is always the widest value; 4 tabular digits == its width.) */
 [data-soe=intro-heritage-year]{min-width:4ch;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;text-align:left;}
+
+/* HydroSpade Difference: remove the "Maneuver tighter. Carry more. Run quieter." subhead (owner) — keep h2 + paragraph. */
+#hs-difference [data-soe=difference-head-lede]{display:none !important;}
+
+/* HydroSpade landing "See it in action" — placeholder section (video walkthroughs pending; owner to provide). */
+#hs-videos{background:#fff;padding:72px var(--gutter);}
+#hs-videos [data-soe=videos-head]{max-width:760px;margin:0 auto 32px;text-align:center;}
+#hs-videos [data-soe=videos-h2]{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,3.2vw,42px);line-height:1.05;letter-spacing:-.02em;color:var(--ink);margin:12px 0 0;}
+#hs-videos [data-soe=videos-lede]{font-family:var(--font-sans);font-size:17px;line-height:1.6;color:var(--steel-700);margin:14px 0 0;}
+#hs-videos [data-soe=hs-video-ph]{max-width:900px;margin:0 auto;aspect-ratio:16 / 9;border:2px dashed #C7CEC6;background:#F6F7F5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
+#hs-videos [data-soe=hs-video-ph-play]{width:62px;height:62px;border-radius:50%;background:#003473;display:flex;align-items:center;justify-content:center;}
+#hs-videos [data-soe=hs-video-ph-play]::after{content:"";border-style:solid;border-width:10px 0 10px 17px;border-color:transparent transparent transparent #fff;margin-left:4px;}
+#hs-videos [data-soe=hs-video-ph] span{font-family:var(--font-sans);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#6B746A;}
