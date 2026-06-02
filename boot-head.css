@@ -958,3 +958,12 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 /* Uniform header height so 1-line vs 2-line titles ("R-C Mowers" vs "Landscape Material Handler")
    keep their underlines + first items aligned across all columns. */
 [data-soe=nav-dropdown][data-soe-menu=mega] [data-soe=nav-mega-col-h]{min-height:48px !important;}
+
+/* Nav hamburger fix: the two-state header shows the hamburger ≤991px, but boot-head.js's
+   @media(min-width:721px) left the drawer at display:none through 721–991px — so the hamburger did
+   nothing in that range. Re-enable the drawer wherever the hamburger shows, and hide the now-orphaned
+   logo divider (nav-brand border-right) since there are no inline nav-links beside it at this width. */
+@media screen and (max-width:991px){
+  [data-soe=nav-drawer]{display:block !important;}
+  [data-soe=nav-brand]{border-right:0 !important;}
+}
