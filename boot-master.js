@@ -2234,3 +2234,56 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   if(document.readyState===`loading`) document.addEventListener(`DOMContentLoaded`,run);
   setTimeout(run,700);
 })();
+
+/* === boot-fixes-v2rr === Homepage intro flourish: (1) count the "1968" heritage year up when it
+   scrolls into view, (2) a staggered reveal of the enriched block (lead -> heritage -> button), which
+   the original lists never covered (it's injected at runtime). Homepage only; reduced-motion safe. */
+(function(){
+  var path=(location.pathname.replace(/\/+$/,``)||`/`);
+  if(path!==`/`)return;
+  var reduce=!!(window.matchMedia && window.matchMedia(`(prefers-reduced-motion: reduce)`).matches);
+
+  function countUp(el){
+    if(el.getAttribute(`data-soe-counted`))return;
+    el.setAttribute(`data-soe-counted`,`1`);
+    var target=parseInt((el.textContent||``).replace(/[^0-9]/g,``),10);
+    if(!target)return;
+    if(reduce){ el.textContent=String(target); return; }
+    var dur=1600, t0=null;
+    function ease(p){ return 1-Math.pow(1-p,3); }   /* easeOutCubic */
+    function frame(ts){
+      if(t0===null)t0=ts;
+      var p=(ts-t0)/dur; if(p>1)p=1;
+      el.textContent=String(Math.round(target*ease(p)));
+      if(p<1)requestAnimationFrame(frame); else el.textContent=String(target);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function run(){
+    /* 1) count-up the heritage year */
+    var year=document.querySelector(`[data-soe=intro-heritage-year]`);
+    if(year && !year.getAttribute(`data-soe-cwired`)){
+      year.setAttribute(`data-soe-cwired`,`1`);
+      if(!reduce && typeof IntersectionObserver!==`undefined`){
+        /* Leave "1968" showing (fail-safe: worst case shows the real year, never a stuck "0").
+           countUp's first frame resets to 0 and ramps — and on a hidden tab rAF is paused, so it
+           simply stays "1968" until the tab is visible, then animates. */
+        var cio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){countUp(e.target);cio.unobserve(e.target);}});},{threshold:0.45});
+        cio.observe(year);
+      }
+    }
+    /* 2) reveal the enriched block (intro-tagline already reveals via v2d) */
+    var nodes=document.querySelectorAll(`[data-soe=intro-lead],[data-soe=intro-heritage],[data-soe=intro-cta-wrap]`);
+    var fresh=Array.prototype.filter.call(nodes,function(n){return !n.getAttribute(`data-soe-rev`);});
+    if(!fresh.length)return;
+    fresh.forEach(function(n){ n.setAttribute(`data-soe-rev`,`1`); n.setAttribute(`data-soe-anim`,`reveal`); });
+    if(typeof IntersectionObserver===`undefined`){ fresh.forEach(function(n){n.setAttribute(`data-soe-state`,`in-view`);}); return; }
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e,idx){ if(e.isIntersecting){ var t=e.target; setTimeout(function(){t.setAttribute(`data-soe-state`,`in-view`);},idx*70); io.unobserve(t); } });
+    },{threshold:0.12,rootMargin:`0px 0px -40px 0px`});
+    fresh.forEach(function(n){io.observe(n);});
+  }
+  if(document.readyState===`loading`) document.addEventListener(`DOMContentLoaded`,run); else run();
+  setTimeout(run,300); setTimeout(run,900);
+})();
