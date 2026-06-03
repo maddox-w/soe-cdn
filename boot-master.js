@@ -2256,7 +2256,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       if(lineup && lineup.parentNode){
         var sec=document.createElement(`section`);
         sec.setAttribute(`data-soe`,`videos`); sec.id=`hs-videos`;
-        sec.innerHTML=`<div data-soe="videos-head" data-soe-state="in-view"><span data-soe="hs-open-flag">Open — awaiting video</span><span data-soe="eyebrow" data-soe-state="in-view">See it in action</span><h2 data-soe="videos-h2">Watch the Hydro-Spade work</h2><p data-soe="videos-lede">Field walkthroughs and demos are coming soon.</p></div><div data-soe="hs-video-ph"><span data-soe="hs-video-ph-play"></span><span>Video coming soon</span></div>`;
+        sec.innerHTML=`<div data-soe="videos-head" data-soe-state="in-view"><span data-soe="hs-open-flag">Video coming soon</span><span data-soe="eyebrow" data-soe-state="in-view">See it in action</span><h2 data-soe="videos-h2">Watch the Hydro-Spade work</h2><p data-soe="videos-lede">Field walkthroughs and demos are coming soon.</p></div><div data-soe="hs-video-ph"><span data-soe="hs-video-ph-play"></span><span>Video coming soon</span></div>`;
         lineup.parentNode.insertBefore(sec, lineup.nextSibling);
       }
     }
