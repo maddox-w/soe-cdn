@@ -1146,6 +1146,14 @@ html[data-soe-curtain=up] #soe-curtain{transform:translateY(-100%);transition:tr
 html[data-soe-curtain=off] #soe-curtain{transform:translateY(-100%);visibility:hidden;animation:none;}
 @keyframes soeCurtainAuto{from{transform:translateY(0);}to{transform:translateY(-100%);visibility:hidden;}}
 
+/* EXIT transition ("closing the door") — on an internal link click, v2uu parks the panel above the
+   viewport (close-armed) then descends it to cover the page (closing) before navigating, so the browser's
+   white page-swap is masked and flows straight into the next page's entrance swipe-up. Same z-index 48 as
+   the entrance (below the header), so the dark header reads as a persistent frame across the navigation.
+   ease-OUT settle (the time-mirror of the ease-in entrance) so the close and the next open meet softly. */
+html[data-soe-curtain=close-armed] #soe-curtain{transform:translateY(-100%);transition:none;animation:none;visibility:visible;}
+html[data-soe-curtain=closing] #soe-curtain{transform:translateY(0);transition:transform .46s cubic-bezier(.3,0,.3,1);animation:none;visibility:visible;}
+
 /* HOLD — keep an above-the-fold reveal hidden behind the curtain until v2tt releases it. opacity AND
    transform are !important at specificity (0,2,1) so they beat BOTH the in-view rules and the v2hh
    anti-FOUC force-show (opacity:1 / transform:none !important at 0,2,0) that keeps hero/intro text

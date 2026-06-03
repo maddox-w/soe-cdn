@@ -2513,6 +2513,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   var done=false;
   function finish(){
     if(done) return; done=true;
+    if(window.__soeNavigating){ return; }   /* an exit transition (v2uu) now owns the curtain — don't yank it */
     for(var j=0;j<holds.length;j++){ try{ holds[j].removeAttribute('data-soe-curtain-hold'); holds[j].removeAttribute('data-soe-curtain-flow'); }catch(e){} }
     setState('off'); dropCurtain();
   }
@@ -2547,4 +2548,75 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
      deferred boot-master tag readyState is already 'interactive' here (runs now); this guard keeps the
      above-the-fold flow-in working even if the tag ever loses its defer. */
   if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', run); } else { run(); }
+})();
+
+/* === boot-fixes-v2uu === Page EXIT transition ("closing the door"). On an internal link click, descend
+   the white curtain from above to cover the current page, THEN navigate — so the browser's blank/white
+   page-swap is hidden behind it and flows straight into the next page's entrance swipe-up (v2tt). The
+   curtain is z-index 48 (below the sticky header), matching the entrance, so the dark header reads as a
+   persistent frame across the navigation. Skipped under reduced-motion. ROBUST: only same-origin,
+   unmodified, normal-target left-clicks are intercepted; new tab / hash / downloads / external /
+   mailto:tel: / [data-soe-no-transition] navigate natively, and ANY failure falls back to a plain
+   navigation so a link can never be trapped. */
+(function(){
+  var html=document.documentElement;
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  function targetHref(a, e){
+    if(!a || e.defaultPrevented) return null;
+    if(e.button && e.button!==0) return null;
+    if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey) return null;      /* let new-tab / new-window through */
+    var tgt=a.getAttribute('target'); if(tgt && tgt!=='_self') return null;
+    if(a.hasAttribute('download')) return null;
+    if(/(^|\s)external(\s|$)/i.test(a.getAttribute('rel')||'')) return null;
+    if(a.hasAttribute('data-soe-no-transition')) return null;
+    var raw=a.getAttribute('href'); if(!raw || raw.charAt(0)==='#') return null;
+    var url; try{ url=new URL(a.href, location.href); }catch(_e){ return null; }
+    if(url.origin!==location.origin) return null;                    /* external site */
+    if(url.protocol!=='http:' && url.protocol!=='https:') return null; /* mailto:, tel:, etc. */
+    if(url.pathname===location.pathname && url.search===location.search) return null; /* same doc / hash only */
+    return url.href;
+  }
+
+  function curtainEl(){
+    var c=document.getElementById('soe-curtain');
+    if(!c){ c=document.createElement('div'); c.id='soe-curtain'; c.setAttribute('aria-hidden','true'); (document.body||html).appendChild(c); }
+    return c;
+  }
+
+  var going=false;
+  function closeAndGo(href){
+    if(going) return; going=true; window.__soeNavigating=true;
+    var nav=function(){ if(nav.done) return; nav.done=true; location.href=href; };
+    try{
+      var d=document.querySelector('[data-soe=nav-drawer][data-soe-state=open]');   /* drop an open drawer first */
+      if(d){ d.removeAttribute('data-soe-state'); try{ document.body.style.overflow=''; }catch(_e){} }
+      var c=curtainEl();
+      html.setAttribute('data-soe-curtain','close-armed');   /* park above the viewport, no transition */
+      void c.offsetWidth;                                    /* commit the start position */
+      if(window.requestAnimationFrame){ requestAnimationFrame(function(){ html.setAttribute('data-soe-curtain','closing'); }); }
+      else { html.setAttribute('data-soe-curtain','closing'); }
+      c.addEventListener('transitionend', function(ev){ if(ev.propertyName==='transform') nav(); });
+      setTimeout(nav, 620);   /* fail-safe: navigate even if transitionend never fires */
+    }catch(_e){ nav(); }
+  }
+
+  document.addEventListener('click', function(e){
+    var a=(e.target && e.target.closest) ? e.target.closest('a[href]') : null;
+    if(!a) return;
+    var href=targetHref(a, e);
+    if(!href) return;
+    e.preventDefault();
+    closeAndGo(href);
+  });
+
+  /* bfcache: returning to a page that was covered on the way out — lift the curtain back off. */
+  window.addEventListener('pageshow', function(ev){
+    if(!ev || !ev.persisted) return;
+    going=false; window.__soeNavigating=false;
+    var c=document.getElementById('soe-curtain');
+    if(!c) return;
+    html.setAttribute('data-soe-curtain','up');
+    setTimeout(function(){ try{ if(c.parentNode) c.parentNode.removeChild(c); }catch(_e){} html.setAttribute('data-soe-curtain','off'); }, 850);
+  });
 })();
