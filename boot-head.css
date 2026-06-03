@@ -1018,25 +1018,21 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
    Mirrors the /brands treatment, scoped to [data-soe-page=home] + the lineup grid; thumb fills the card.
    Logos reuse the same trimmed brand-logo-*.png assets (relative url() pins to this CSS @sha). --- */
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-name]{min-height:36px;display:flex;align-items:center;}
-[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo]{display:block;height:32px;width:188px;max-width:80%;background-repeat:no-repeat;background-position:left center;background-size:contain;}
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo]{display:block;height:28px;width:172px;max-width:78%;background-repeat:no-repeat;background-position:left center;background-size:contain;}
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=hydrospade]{background-image:url(brand-logo-hydrospade.png);}
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=energreen]{background-image:url(brand-logo-energreen.png);}
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=metec]{background-image:url(brand-logo-metec.png);}
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=brinemasters]{background-image:url(brand-logo-brinemasters.png);}
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=mulchmule]{background-image:url(brand-logo-mulchmule.png);}
-[data-soe-page=home] [data-soe=brand-sia]{margin-top:16px;}
-[data-soe-page=home] [data-soe=brand-sia-head]{font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brand,var(--jd-green));font-weight:700;margin:0 0 9px;display:flex;align-items:center;gap:9px;}
-[data-soe-page=home] [data-soe=brand-sia-head]::before{content:"";width:20px;height:2px;background:var(--brand,var(--jd-green));}
-[data-soe-page=home] [data-soe=brand-sia-thumb]{position:relative;display:block;width:100%;aspect-ratio:16 / 9;border-radius:10px;overflow:hidden;background:#0E1110 center/cover no-repeat;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.16);transition:transform .25s ease,box-shadow .25s ease;}
-[data-soe-page=home] [data-soe=brand-sia-thumb]:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.24);}
-[data-soe-page=home] [data-soe=brand-sia-play]{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:50px;height:50px;border-radius:50%;background:var(--brand,var(--jd-green));display:flex;align-items:center;justify-content:center;transition:filter .2s,transform .2s;}
-[data-soe-page=home] [data-soe=brand-sia-thumb]:hover [data-soe=brand-sia-play]{filter:brightness(.92);transform:translate(-50%,-50%) scale(1.07);}
-[data-soe-page=home] [data-soe=brand-sia-play]::after{content:"";border-style:solid;border-width:8px 0 8px 14px;border-color:transparent transparent transparent #fff;margin-left:3px;}
-[data-soe-page=home] [data-soe=brand-sia-thumb][data-soe-soon]{background:#F6F7F5;border:2px dashed #C7CEC6;box-shadow:none;cursor:default;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;}
-[data-soe-page=home] [data-soe=brand-sia-thumb][data-soe-soon]:hover{transform:none;box-shadow:none;}
-[data-soe-page=home] [data-soe=brand-sia-thumb][data-soe-soon] [data-soe=brand-sia-play]{position:static;transform:none;width:42px;height:42px;background:#AEB6AC;}
-[data-soe-page=home] [data-soe=brand-sia-thumb][data-soe-soon] [data-soe=brand-sia-play]::after{margin-left:3px;}
-[data-soe-page=home] [data-soe=brand-sia-soon]{font-family:var(--font-sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6B746A;}
+/* Concept A — the card's own photo is the video surface (play badge + "Watch" label); the rest of the
+   card still links to the brand page. No separate thumbnail, so the box stays compact + high-quality. */
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-visual][data-soe-video]{position:relative;cursor:pointer;}
+[data-soe-page=home] [data-soe=brand-card-vgrad]{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 42%,rgba(0,0,0,.34));pointer-events:none;}
+[data-soe-page=home] [data-soe=brand-card-play]{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;background:var(--brand,var(--jd-green));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.32);transition:transform .2s ease,filter .2s ease;pointer-events:none;}
+[data-soe-page=home] [data-soe=brand-card-play]::after{content:"";border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent #fff;margin-left:3px;}
+[data-soe-page=home] [data-soe=brand-card-visual][data-soe-video]:hover [data-soe=brand-card-play]{transform:translate(-50%,-50%) scale(1.08);filter:brightness(.96);}
+[data-soe-page=home] [data-soe=brand-card-vwatch]{position:absolute;left:13px;bottom:11px;display:flex;align-items:center;gap:7px;color:#fff;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;text-shadow:0 1px 5px rgba(0,0,0,.55);pointer-events:none;}
+[data-soe-page=home] [data-soe=brand-card-vwatch]::before{content:"";border-style:solid;border-width:4px 0 4px 7px;border-color:transparent transparent transparent #fff;}
 
 /* --- Mulch Mule feature-box "Watch Video" button (clean white button, Energreen-style) --- */
 [data-soe=mm-feat-video]{display:inline-flex;align-items:center;gap:9px;margin-top:14px;padding:9px 17px;background:#fff;border:1.5px solid #D5DBD3;border-radius:8px;color:var(--ink);font-family:var(--font-sans);font-size:13px;font-weight:600;letter-spacing:.01em;text-decoration:none;cursor:pointer;transition:border-color .18s,box-shadow .18s,transform .18s,color .18s;}

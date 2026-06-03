@@ -1676,7 +1676,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
         var thumb;
         if(vid){
           thumb=document.createElement(`a`); thumb.setAttribute(`data-soe`,`brand-sia-thumb`); thumb.setAttribute(`data-soe-video`,vid); thumb.href=`#`;
-          thumb.style.backgroundImage=`url(https://i.ytimg.com/vi/`+vid+`/hqdefault.jpg)`;
+          thumb.style.backgroundImage=`url(https://i.ytimg.com/vi/`+vid+`/maxresdefault.jpg)`;
           var p1=document.createElement(`span`); p1.setAttribute(`data-soe`,`brand-sia-play`); thumb.appendChild(p1);
         }else{
           thumb=document.createElement(`div`); thumb.setAttribute(`data-soe`,`brand-sia-thumb`); thumb.setAttribute(`data-soe-soon`,`1`);
@@ -1713,23 +1713,20 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
         var logo=document.createElement(`span`); logo.setAttribute(`data-soe`,`brand-card-logo`); logo.setAttribute(`data-brand`,bkey); logo.setAttribute(`role`,`img`); logo.setAttribute(`aria-label`,name);
         nm.textContent=``; nm.appendChild(sr); nm.appendChild(logo);
       }
-      /* feature video thumbnail (or "Coming Soon") */
-      if(!card.querySelector(`[data-soe=brand-sia]`)){
-        var vid=brandVideo[name]||brandVideo[name.replace(/-/g,``)];
-        var sia=document.createElement(`div`); sia.setAttribute(`data-soe`,`brand-sia`);
-        var sh=document.createElement(`div`); sh.setAttribute(`data-soe`,`brand-sia-head`); sh.textContent=`See It In Action`; sia.appendChild(sh);
-        var thumb;
-        if(vid){
-          thumb=document.createElement(`span`); thumb.setAttribute(`data-soe`,`brand-sia-thumb`); thumb.setAttribute(`data-soe-video`,vid); thumb.setAttribute(`role`,`button`); thumb.setAttribute(`tabindex`,`0`); thumb.setAttribute(`aria-label`,`Play `+name+` video`);
-          thumb.style.backgroundImage=`url(https://i.ytimg.com/vi/`+vid+`/hqdefault.jpg)`;
-          var p1=document.createElement(`span`); p1.setAttribute(`data-soe`,`brand-sia-play`); thumb.appendChild(p1);
-        }else{
-          thumb=document.createElement(`span`); thumb.setAttribute(`data-soe`,`brand-sia-thumb`); thumb.setAttribute(`data-soe-soon`,`1`);
-          var p2=document.createElement(`span`); p2.setAttribute(`data-soe`,`brand-sia-play`); thumb.appendChild(p2);
-          var sn=document.createElement(`span`); sn.setAttribute(`data-soe`,`brand-sia-soon`); sn.textContent=`Coming Soon`; thumb.appendChild(sn);
-        }
-        sia.appendChild(thumb);
-        (card.querySelector(`[data-soe=brand-card-body]`)||card).appendChild(sia);
+      /* drop the earlier big "See It In Action" thumbnail block if a prior run added it */
+      var oldSia=card.querySelector(`[data-soe=brand-sia]`); if(oldSia&&oldSia.parentNode)oldSia.parentNode.removeChild(oldSia);
+      /* Concept A: the card's own photo IS the video surface (play badge + "Watch" label). The visual
+         gets data-soe-video so the v2jj capture handler opens the lightbox + stops the card nav; the rest
+         of the card still links to the brand page. Brands without a video are left as plain photos. */
+      var vid=brandVideo[name]||brandVideo[name.replace(/-/g,``)];
+      var vis=card.querySelector(`[data-soe=brand-card-visual]`);
+      if(vid && vis && !vis.querySelector(`[data-soe=brand-card-play]`)){
+        vis.setAttribute(`data-soe-video`,vid);
+        vis.setAttribute(`role`,`button`); vis.setAttribute(`aria-label`,`Play `+name+` video`);
+        var grad=document.createElement(`span`); grad.setAttribute(`data-soe`,`brand-card-vgrad`);
+        var play=document.createElement(`span`); play.setAttribute(`data-soe`,`brand-card-play`);
+        var watch=document.createElement(`span`); watch.setAttribute(`data-soe`,`brand-card-vwatch`); watch.textContent=`Watch video`;
+        vis.appendChild(grad); vis.appendChild(play); vis.appendChild(watch);
       }
     });
   }
@@ -1874,7 +1871,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     var meta=VIDEO_META[v[0]]||{};
     var a=document.createElement(`a`); a.setAttribute(`data-soe`,`video-card`); a.setAttribute(`data-soe-video`,v[0]); a.setAttribute(`data-soe-state`,`in-view`); a.href=`#`;
     var thumb=document.createElement(`div`); thumb.setAttribute(`data-soe`,`video-thumb`);
-    thumb.style.backgroundImage=`url(https://i.ytimg.com/vi/`+v[0]+`/hqdefault.jpg)`;
+    thumb.style.backgroundImage=`url(https://i.ytimg.com/vi/`+v[0]+`/maxresdefault.jpg)`;
     var ch=document.createElement(`span`); ch.setAttribute(`data-soe`,`video-channel`); ch.textContent=channel;
     var play=document.createElement(`div`); play.setAttribute(`data-soe`,`video-play`);
     thumb.appendChild(ch); thumb.appendChild(play);
