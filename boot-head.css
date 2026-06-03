@@ -536,7 +536,7 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe=intro-heritage-text]{font-family:var(--font-sans);font-size:14px;line-height:1.5;color:var(--steel-700);}
 [data-soe=intro-heritage-text] strong{color:var(--ink);font-weight:700;}
 [data-soe=intro-cta-wrap]{margin:44px auto 0;text-align:center;}
-[data-soe=intro-cta-arr]{font-size:1.05em;line-height:1;}
+[data-soe=intro-cta-arr]{font-size:1.05em;line-height:1;margin-left:.45em;}
 @media (max-width:860px){[data-soe=intro-body]{flex-direction:column;gap:30px;max-width:620px;text-align:center;}[data-soe=intro-heritage]{justify-content:center;}}
 @media (max-width:600px){[data-soe=intro-heritage]{flex-direction:column;gap:10px;text-align:center;}[data-soe=intro-heritage-text]{text-align:center;}}
 
