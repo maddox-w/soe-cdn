@@ -1003,7 +1003,7 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe-page=brands] [data-soe=brand-card-logo][data-brand=energreen]{background-image:url(brand-logo-energreen.png);}
 [data-soe-page=brands] [data-soe=brand-card-logo][data-brand=metec]{background-image:url(brand-logo-metec.png);}
 [data-soe-page=brands] [data-soe=brand-card-logo][data-brand=brinemasters]{background-image:url(brand-logo-brinemasters.png);}
-[data-soe-page=brands] [data-soe=brand-card-logo][data-brand=mulchmule]{background-image:url(brand-logo-mulchmule.png);}
+[data-soe-page=brands] [data-soe=brand-card-logo][data-brand=mulchmule]{background-image:url(brand-logo-mulchmule.png);height:70px;}
 
 /* ============================================================================
    2026-06-03 content batch — homepage lineup boxes (logo + feature video),
@@ -1023,7 +1023,7 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=energreen]{background-image:url(brand-logo-energreen.png);}
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=metec]{background-image:url(brand-logo-metec.png);}
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=brinemasters]{background-image:url(brand-logo-brinemasters.png);}
-[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=mulchmule]{background-image:url(brand-logo-mulchmule.png);}
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=mulchmule]{background-image:url(brand-logo-mulchmule.png);height:40px;}
 /* Concept A — the card's own photo is the video surface (play badge + "Watch" label); the rest of the
    card still links to the brand page. No separate thumbnail, so the box stays compact + high-quality. */
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-visual][data-soe-video]{position:relative;cursor:pointer;}
