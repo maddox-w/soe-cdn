@@ -796,7 +796,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       var iLead=document.createElement(`div`); iLead.setAttribute(`data-soe`,`intro-lead`);
       iLead.innerHTML=`<p>We help contractors work <strong>safer, faster, and leaner</strong> — so they can do more with less, attract and retain quality crews, and grow their bottom line.</p><p>We represent a carefully curated lineup of contractor-focused equipment designed to solve the real challenges crews face in the field every day. From compact tractor attachments and hydro-excavation equipment to brine makers, material handling, and slope mowers, every line we carry earns its place by helping our customers work smarter — not harder.</p>`;
       var iHer=document.createElement(`div`); iHer.setAttribute(`data-soe`,`intro-heritage`);
-      iHer.innerHTML=`<div data-soe="intro-heritage-year">1968</div><div data-soe="intro-heritage-text"><strong>Backed by Brown Equipment Company.</strong> In business since 1968 — trusted by contractors across the Midwest.</div>`;
+      iHer.innerHTML=`<div data-soe="intro-heritage-year">1968</div><div data-soe="intro-heritage-text"><strong>Backed by our parent <a data-soe="intro-heritage-link" href="https://brownequipment.net/" target="_blank" rel="noopener">Brown Equipment Company</a>.</strong> In business since 1968 — trusted by contractors across the Midwest for 58+ years.</div>`;
       var iCtaW=document.createElement(`div`); iCtaW.setAttribute(`data-soe`,`intro-cta-wrap`);
       var iCta=document.createElement(`a`); iCta.setAttribute(`data-soe`,`btn`); iCta.setAttribute(`data-soe-variant`,`primary`); iCta.setAttribute(`data-soe-size`,`lg`); iCta.href=`#`;
       iCta.innerHTML=`Explore the lineup <span data-soe="intro-cta-arr" aria-hidden="true">↓</span>`;
@@ -1197,7 +1197,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     [`Equipment Consultants`,`#`],
     [`Service Network`,`#`],
     [`Contact`,`#`],
-    [`New Application`,`#`]
+    [`New Customer Setup`,`/new-customer-setup`]
   ];
 
   /* ---------- Header nav restructure ---------- */
@@ -1343,7 +1343,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
         [`Equipment Consultants`,`#`],
         [`Service Network`,`#`],
         [`Contact`,`#`],
-        [`New Application`,`#`]
+        [`New Customer Setup`,`/new-customer-setup`]
       ]}
     ];
 
@@ -1499,6 +1499,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     else if(p===`/hydrospade-trucks`)trail=[[`Home`,`/`],[`Our Brands`,`/brands`],[`HydroSpade`,`/hydrospade`],[`Trucks`,null]];
     else if(p===`/hydrospade-trailers`)trail=[[`Home`,`/`],[`Our Brands`,`/brands`],[`HydroSpade`,`/hydrospade`],[`Trailers`,null]];
     else if(p===`/brands`)trail=[[`Home`,`/`],[`Our Brands`,null]];
+    else if(p===`/new-customer-setup`)trail=[[`Home`,`/`],[`New Customer Setup`,null]];
     else return;
     box.innerHTML=``;
     trail.forEach(function(it,idx){
@@ -1555,6 +1556,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     else if(path===`/mulch-mule`)p=`mulch-mule`;
     else if(path===`/remote-controlled-mowers`)p=`energreen`;
     else if(path===`/hydrospade`||path===`/hydrospade-trucks`||path===`/hydrospade-trailers`)p=`hydrospade`;
+    else if(path===`/new-customer-setup`)p=`newcustomer`;
     document.documentElement.setAttribute(`data-soe-page`,p);
   }
 
@@ -1687,10 +1689,76 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     });
   }
 
+  /* Homepage lineup grid (the 5 [data-soe=brand-card-h] boxes): same treatment as the /brands cards —
+     swap the text name for the brand logo and add a "See It In Action" feature thumbnail per box (click
+     opens the v2jj lightbox). Brands without a video yet show a "Coming Soon" placeholder. Energreen uses
+     the RoboEVO Introduction clip (zcWSN413YhQ, "the one with the eyeball") per the owner; Mulch Mule uses
+     the Todd Pugh intro (X8TkDU5Vllo). Each card is an <a>, so the thumb is a NON-anchor [data-soe-video]
+     span — the capture-phase lightbox handler in v2jj preventDefaults + stopPropagations the card nav. */
+  function fixHomeBrandBoxes(){
+    if(path!==`/`)return;
+    var brandVideo={ "Mulch Mule":`X8TkDU5Vllo`, "Energreen":`zcWSN413YhQ` };
+    var brandKey={ "Hydro-Spade":`hydrospade`,"HydroSpade":`hydrospade`,"Energreen":`energreen`,"Metec":`metec`,"Brinemasters":`brinemasters`,"Mulch Mule":`mulchmule` };
+    var brandColor={ hydrospade:`#003473`, energreen:`#F5A524`, metec:`#0A5737`, brinemasters:`#3B7DAC` };
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=brand-card-h]`),function(card){
+      var nm=card.querySelector(`[data-soe=brand-card-name]`);
+      var name=nm?nm.textContent.trim():``;
+      if(!name)return;
+      var bkey=brandKey[name]||brandKey[name.replace(/-/g,``)]||``;
+      if(brandColor[bkey]) card.style.setProperty(`--brand`, brandColor[bkey]);
+      /* logo replaces the text name (same mechanism + assets as fixBrandsPage) */
+      if(bkey && nm && !nm.querySelector(`[data-soe=brand-card-logo]`)){
+        var sr=document.createElement(`span`); sr.textContent=name;
+        sr.style.cssText=`position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;`;
+        var logo=document.createElement(`span`); logo.setAttribute(`data-soe`,`brand-card-logo`); logo.setAttribute(`data-brand`,bkey); logo.setAttribute(`role`,`img`); logo.setAttribute(`aria-label`,name);
+        nm.textContent=``; nm.appendChild(sr); nm.appendChild(logo);
+      }
+      /* feature video thumbnail (or "Coming Soon") */
+      if(!card.querySelector(`[data-soe=brand-sia]`)){
+        var vid=brandVideo[name]||brandVideo[name.replace(/-/g,``)];
+        var sia=document.createElement(`div`); sia.setAttribute(`data-soe`,`brand-sia`);
+        var sh=document.createElement(`div`); sh.setAttribute(`data-soe`,`brand-sia-head`); sh.textContent=`See It In Action`; sia.appendChild(sh);
+        var thumb;
+        if(vid){
+          thumb=document.createElement(`span`); thumb.setAttribute(`data-soe`,`brand-sia-thumb`); thumb.setAttribute(`data-soe-video`,vid); thumb.setAttribute(`role`,`button`); thumb.setAttribute(`tabindex`,`0`); thumb.setAttribute(`aria-label`,`Play `+name+` video`);
+          thumb.style.backgroundImage=`url(https://i.ytimg.com/vi/`+vid+`/hqdefault.jpg)`;
+          var p1=document.createElement(`span`); p1.setAttribute(`data-soe`,`brand-sia-play`); thumb.appendChild(p1);
+        }else{
+          thumb=document.createElement(`span`); thumb.setAttribute(`data-soe`,`brand-sia-thumb`); thumb.setAttribute(`data-soe-soon`,`1`);
+          var p2=document.createElement(`span`); p2.setAttribute(`data-soe`,`brand-sia-play`); thumb.appendChild(p2);
+          var sn=document.createElement(`span`); sn.setAttribute(`data-soe`,`brand-sia-soon`); sn.textContent=`Coming Soon`; thumb.appendChild(sn);
+        }
+        sia.appendChild(thumb);
+        (card.querySelector(`[data-soe=brand-card-body]`)||card).appendChild(sia);
+      }
+    });
+  }
+
+  /* /new-customer-setup form polish (the Designer-baked defaults can't all be set via the form widget):
+     clear Webflow's default "Example text" placeholders (the reference leaves those blank), and set the
+     file-upload hint text + accepted file types to match the reference ("Click to upload PDF, JPG, or PNG"). */
+  function fixNewCustomerForm(){
+    if(path!==`/new-customer-setup`)return;
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=ncs-input]`),function(i){
+      if((i.getAttribute(`placeholder`)||``)===`Example text`)i.setAttribute(`placeholder`,``);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=ncs-form] .w-file-upload-input`),function(i){
+      i.setAttribute(`accept`,`.pdf,.jpg,.jpeg,.png`);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=ncs-form] .w-file-upload-label .w-inline-block`),function(d){
+      if(/Upload File/i.test(d.textContent||``))d.textContent=`Click to upload PDF, JPG, or PNG`;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=ncs-form] .w-file-upload-info`),function(d){
+      d.textContent=`Max 8 MB`;
+    });
+  }
+
   function runAll(){
     try{setPageAttr();}catch(e){}
     try{swapMunicipalities();}catch(e){}
     try{tagHomeBrandLogos();}catch(e){}
+    try{fixHomeBrandBoxes();}catch(e){}
+    try{fixNewCustomerForm();}catch(e){}
     try{fixEnergreenPage();}catch(e){}
     try{fixBrandsPage();}catch(e){}
   }
@@ -1698,6 +1766,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     runAll();
     /* the hero rotator clones the slides at DOMContentLoaded — re-tag after, so the logo class survives */
     setTimeout(tagHomeBrandLogos,300);
+    setTimeout(fixHomeBrandBoxes,300);
     setTimeout(swapMunicipalities,400);
   });
 })();
@@ -1869,11 +1938,33 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     });
   }
 
+  /* Mulch Mule feature grid: add a clean white "Watch Video" button inside 4 specific feature boxes,
+     each opening its demo clip in the v2jj lightbox. Matched by the feature-visual bg class (robust to
+     copy edits). Curbside chute -> Toro Grandstand Multi Force; Automatic tarp system -> Tarping System
+     Demonstration; Billy Goat leaf attachment -> Billy Goat Leaf Vacuum; Remote control -> Wireless Remote. */
+  var MM_FEAT_VID={ "mm-feat-bg-curb":`OyG0qaK-4ww`, "mm-feat-bg-tarp":`fz9OyWLYVOM`, "mm-feat-bg-billy":`FW9pK3_SAd4`, "mm-feat-bg-remote":`_L5xSj604UM` };
+  function addMulchMuleFeatureVideos(){
+    if(path!==`/mulch-mule`)return;
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=feature]`),function(art){
+      if(art.querySelector(`[data-soe=mm-feat-video]`))return;
+      var vis=art.querySelector(`[data-soe=feature-visual]`); if(!vis)return;
+      var vid=``;
+      Object.keys(MM_FEAT_VID).forEach(function(k){ if(vis.classList.contains(k))vid=MM_FEAT_VID[k]; });
+      if(!vid)return;
+      var btn=document.createElement(`a`); btn.setAttribute(`data-soe`,`mm-feat-video`); btn.setAttribute(`data-soe-video`,vid); btn.href=`#`;
+      var ico=document.createElement(`span`); ico.setAttribute(`data-soe`,`mm-feat-video-ico`); ico.setAttribute(`aria-hidden`,`true`);
+      var lbl=document.createElement(`span`); lbl.textContent=`Watch Video`;
+      btn.appendChild(ico); btn.appendChild(lbl);
+      (art.querySelector(`[data-soe=feature-body]`)||art).appendChild(btn);
+    });
+  }
+
   ready(function(){
     try{ initLightbox(); }catch(e){}
     try{ polishMM(); }catch(e){}
     try{ buildMulchMuleVideos(); }catch(e){}
     try{ wireMulchMuleHero(); }catch(e){}
+    try{ addMulchMuleFeatureVideos(); }catch(e){}
     try{ wireEnergreenHero(); }catch(e){}
     try{ buildEnergreenVideos(); }catch(e){}
   });

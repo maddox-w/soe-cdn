@@ -1004,3 +1004,101 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe-page=brands] [data-soe=brand-card-logo][data-brand=metec]{background-image:url(brand-logo-metec.png);}
 [data-soe-page=brands] [data-soe=brand-card-logo][data-brand=brinemasters]{background-image:url(brand-logo-brinemasters.png);}
 [data-soe-page=brands] [data-soe=brand-card-logo][data-brand=mulchmule]{background-image:url(brand-logo-mulchmule.png);}
+
+/* ============================================================================
+   2026-06-03 content batch — homepage lineup boxes (logo + feature video),
+   Mulch Mule feature "Watch Video" buttons, homepage heritage link.
+   ============================================================================ */
+
+/* --- Brown Equipment link inside the homepage "1968" heritage line --- */
+[data-soe=intro-heritage-text] a[data-soe=intro-heritage-link]{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px;transition:color .15s;}
+[data-soe=intro-heritage-text] a[data-soe=intro-heritage-link]:hover{color:var(--jd-green);}
+
+/* --- Homepage lineup boxes: brand logo replaces the text name + a "See It In Action" feature thumbnail.
+   Mirrors the /brands treatment, scoped to [data-soe-page=home] + the lineup grid; thumb fills the card.
+   Logos reuse the same trimmed brand-logo-*.png assets (relative url() pins to this CSS @sha). --- */
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-name]{min-height:36px;display:flex;align-items:center;}
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo]{display:block;height:32px;width:188px;max-width:80%;background-repeat:no-repeat;background-position:left center;background-size:contain;}
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=hydrospade]{background-image:url(brand-logo-hydrospade.png);}
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=energreen]{background-image:url(brand-logo-energreen.png);}
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=metec]{background-image:url(brand-logo-metec.png);}
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=brinemasters]{background-image:url(brand-logo-brinemasters.png);}
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=mulchmule]{background-image:url(brand-logo-mulchmule.png);}
+[data-soe-page=home] [data-soe=brand-sia]{margin-top:16px;}
+[data-soe-page=home] [data-soe=brand-sia-head]{font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brand,var(--jd-green));font-weight:700;margin:0 0 9px;display:flex;align-items:center;gap:9px;}
+[data-soe-page=home] [data-soe=brand-sia-head]::before{content:"";width:20px;height:2px;background:var(--brand,var(--jd-green));}
+[data-soe-page=home] [data-soe=brand-sia-thumb]{position:relative;display:block;width:100%;aspect-ratio:16 / 9;border-radius:10px;overflow:hidden;background:#0E1110 center/cover no-repeat;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.16);transition:transform .25s ease,box-shadow .25s ease;}
+[data-soe-page=home] [data-soe=brand-sia-thumb]:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.24);}
+[data-soe-page=home] [data-soe=brand-sia-play]{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:50px;height:50px;border-radius:50%;background:var(--brand,var(--jd-green));display:flex;align-items:center;justify-content:center;transition:filter .2s,transform .2s;}
+[data-soe-page=home] [data-soe=brand-sia-thumb]:hover [data-soe=brand-sia-play]{filter:brightness(.92);transform:translate(-50%,-50%) scale(1.07);}
+[data-soe-page=home] [data-soe=brand-sia-play]::after{content:"";border-style:solid;border-width:8px 0 8px 14px;border-color:transparent transparent transparent #fff;margin-left:3px;}
+[data-soe-page=home] [data-soe=brand-sia-thumb][data-soe-soon]{background:#F6F7F5;border:2px dashed #C7CEC6;box-shadow:none;cursor:default;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;}
+[data-soe-page=home] [data-soe=brand-sia-thumb][data-soe-soon]:hover{transform:none;box-shadow:none;}
+[data-soe-page=home] [data-soe=brand-sia-thumb][data-soe-soon] [data-soe=brand-sia-play]{position:static;transform:none;width:42px;height:42px;background:#AEB6AC;}
+[data-soe-page=home] [data-soe=brand-sia-thumb][data-soe-soon] [data-soe=brand-sia-play]::after{margin-left:3px;}
+[data-soe-page=home] [data-soe=brand-sia-soon]{font-family:var(--font-sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6B746A;}
+
+/* --- Mulch Mule feature-box "Watch Video" button (clean white button, Energreen-style) --- */
+[data-soe=mm-feat-video]{display:inline-flex;align-items:center;gap:9px;margin-top:14px;padding:9px 17px;background:#fff;border:1.5px solid #D5DBD3;border-radius:8px;color:var(--ink);font-family:var(--font-sans);font-size:13px;font-weight:600;letter-spacing:.01em;text-decoration:none;cursor:pointer;transition:border-color .18s,box-shadow .18s,transform .18s,color .18s;}
+[data-soe=mm-feat-video]:hover{border-color:var(--jd-green);color:var(--jd-green);box-shadow:0 6px 18px rgba(0,0,0,.10);transform:translateY(-1px);}
+[data-soe=mm-feat-video-ico]{width:22px;height:22px;border-radius:50%;background:var(--jd-green);display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;transition:transform .18s;}
+[data-soe=mm-feat-video]:hover [data-soe=mm-feat-video-ico]{transform:scale(1.08);}
+[data-soe=mm-feat-video-ico]::after{content:"";border-style:solid;border-width:5px 0 5px 8px;border-color:transparent transparent transparent #fff;margin-left:2px;}
+
+/* ============================================================================
+   /new-customer-setup — account-opening form page. Native Webflow form, SOE-styled
+   (dark ink hero w/ green underline like the Energreen unit pages; amber submit).
+   Scoped to [data-soe-page=newcustomer] (set by setPageAttr in boot-master.js).
+   ============================================================================ */
+[data-soe-page=newcustomer] [data-soe=ncs-hero]{background:var(--ink);color:var(--paper);padding:60px var(--gutter) 70px;border-bottom:8px solid var(--jd-green);}
+[data-soe-page=newcustomer] [data-soe=ncs-hero-inner]{max-width:1180px;margin:0 auto;}
+[data-soe-page=newcustomer] [data-soe=ncs-eyebrow]{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--jd-green-mid);margin-bottom:18px;}
+[data-soe-page=newcustomer] [data-soe=ncs-eyebrow]::before{content:"";width:26px;height:2px;background:var(--jd-green-mid);}
+[data-soe-page=newcustomer] [data-soe=ncs-hero-h1]{font-family:var(--font-display);font-weight:800;font-size:clamp(34px,4.6vw,60px);line-height:1.02;letter-spacing:-.03em;margin:0;color:var(--paper);max-width:17ch;}
+[data-soe-page=newcustomer] [data-soe=ncs-hero-lede]{font-family:var(--font-sans);font-size:18px;line-height:1.6;color:var(--steel-300);max-width:640px;margin:22px 0 0;}
+
+[data-soe-page=newcustomer] [data-soe=ncs-section]{background:var(--steel-50);padding:60px var(--gutter) 96px;}
+[data-soe-page=newcustomer] [data-soe=ncs-card]{background:var(--paper);max-width:760px;margin:-56px auto 0;padding:44px clamp(22px,4vw,52px) 48px;border:1px solid var(--steel-200);border-radius:14px;box-shadow:0 24px 60px rgba(14,17,16,.10);}
+[data-soe-page=newcustomer] [data-soe=ncs-step]{font-family:var(--font-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin:0 0 28px;}
+[data-soe-page=newcustomer] [data-soe=ncs-step-k]{color:var(--jd-green);}
+[data-soe-page=newcustomer] [data-soe=ncs-step-time]{color:var(--steel-700);font-weight:600;margin-left:.4em;}
+
+[data-soe-page=newcustomer] [data-soe=ncs-row]{display:grid;grid-template-columns:1fr 1fr;gap:18px 22px;}
+[data-soe-page=newcustomer] [data-soe=ncs-field]{display:flex;flex-direction:column;margin-bottom:18px;}
+[data-soe-page=newcustomer] [data-soe=ncs-row] [data-soe=ncs-field]{margin-bottom:0;}
+[data-soe-page=newcustomer] [data-soe=ncs-label]{font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);margin:0 0 8px;display:block;}
+[data-soe-page=newcustomer] [data-soe=ncs-req]{color:var(--safety-amber);margin-left:2px;}
+[data-soe-page=newcustomer] [data-soe=ncs-opt]{color:var(--steel-700);font-weight:500;text-transform:none;letter-spacing:0;}
+
+[data-soe-page=newcustomer] [data-soe=ncs-input]{width:100%;font-family:var(--font-sans);font-size:15px;color:var(--ink);background:var(--paper);border:1.5px solid var(--steel-300);border-radius:9px;padding:12px 14px;line-height:1.4;transition:border-color .15s,box-shadow .15s;margin:0;min-height:46px;}
+[data-soe-page=newcustomer] [data-soe=ncs-input]::placeholder{color:var(--steel-700);opacity:.6;}
+[data-soe-page=newcustomer] [data-soe=ncs-input]:focus{border-color:var(--jd-green);box-shadow:0 0 0 3px rgba(54,124,43,.14);outline:none;}
+
+[data-soe-page=newcustomer] [data-soe=ncs-check]{display:flex;align-items:center;gap:10px;margin:0 0 20px;cursor:pointer;}
+[data-soe-page=newcustomer] [data-soe=ncs-check] .w-checkbox-input{width:18px;height:18px;margin:0 2px 0 0;border-radius:4px;border:1.5px solid var(--steel-300);}
+[data-soe-page=newcustomer] [data-soe=ncs-check] .w-checkbox-input.w--redirected-checked{background-color:var(--jd-green);border-color:var(--jd-green);}
+[data-soe-page=newcustomer] [data-soe=ncs-check-label]{font-family:var(--font-sans);font-size:14px;color:var(--steel-700);margin:0;}
+
+[data-soe-page=newcustomer] [data-soe=ncs-radios]{display:flex;gap:26px;align-items:center;}
+[data-soe-page=newcustomer] [data-soe=ncs-radio]{display:flex;align-items:center;gap:8px;margin:0;cursor:pointer;}
+[data-soe-page=newcustomer] [data-soe=ncs-radio] .w-radio-input{width:18px;height:18px;margin:0 2px 0 0;border:1.5px solid var(--steel-300);}
+[data-soe-page=newcustomer] [data-soe=ncs-radio] .w-radio-input.w--redirected-checked{background-color:var(--jd-green);border-color:var(--jd-green);box-shadow:inset 0 0 0 3px var(--paper);}
+[data-soe-page=newcustomer] [data-soe=ncs-radio-label]{font-family:var(--font-sans);font-size:15px;color:var(--ink);margin:0;}
+
+[data-soe-page=newcustomer] .w-file-upload{margin:0;}
+[data-soe-page=newcustomer] .w-file-upload-default{margin:0;}
+[data-soe-page=newcustomer] .w-file-upload-label{display:flex;align-items:center;gap:10px;width:100%;background:var(--paper);border:1.5px dashed var(--steel-300);border-radius:9px;padding:13px 14px;color:var(--steel-700);font-family:var(--font-sans);font-size:14px;font-weight:500;cursor:pointer;transition:border-color .15s,background .15s;margin:0;}
+[data-soe-page=newcustomer] .w-file-upload-label:hover{border-color:var(--jd-green);background:rgba(54,124,43,.03);}
+[data-soe-page=newcustomer] .w-file-upload-info{font-family:var(--font-sans);font-size:12px;color:var(--steel-700);opacity:.7;margin:6px 0 0;}
+
+[data-soe-page=newcustomer] [data-soe=ncs-submit]{appearance:none;-webkit-appearance:none;margin:10px 0 0;background:var(--safety-amber);color:var(--black);font-family:var(--font-sans);font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border:none;border-radius:9px;padding:16px 32px;cursor:pointer;transition:filter .15s,transform .15s;}
+[data-soe-page=newcustomer] [data-soe=ncs-submit]:hover{filter:brightness(.94);transform:translateY(-1px);}
+
+[data-soe-page=newcustomer] .w-form-done{background:rgba(54,124,43,.08);border:1px solid var(--jd-green);border-radius:10px;padding:20px 22px;font-family:var(--font-sans);font-size:15px;color:var(--ink);margin-top:14px;}
+[data-soe-page=newcustomer] .w-form-fail{margin-top:14px;border-radius:10px;}
+
+@media (max-width:600px){
+  [data-soe-page=newcustomer] [data-soe=ncs-row]{grid-template-columns:1fr;gap:0;}
+  [data-soe-page=newcustomer] [data-soe=ncs-row] [data-soe=ncs-field]{margin-bottom:18px;}
+  [data-soe-page=newcustomer] [data-soe=ncs-card]{margin-top:-36px;}
+}
