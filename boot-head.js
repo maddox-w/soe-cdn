@@ -162,7 +162,7 @@
       }
       var brand = t.closest('[data-soe=nav-brand]');
       if (brand && t.tagName !== 'A' && !t.closest('a')) {
-        location.href = '/';
+        (window.__soeCloseAndGo || function(u){ location.href = u; })('/');   /* logo -> home, via the close-the-door transition when available */
         return;
       }
       var drawerLink = t.closest('[data-soe=nav-drawer] a');

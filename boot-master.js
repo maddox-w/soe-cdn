@@ -674,7 +674,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
         var inA=(t.closest?t.closest(`a`):null);
         if(t.tagName === `A`)return;
         if(inA)return;
-        location.href=`/`;
+        (window.__soeCloseAndGo||function(u){location.href=u;})(`/`);
       });
     }
 
@@ -687,7 +687,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
         if(t.tagName === `A`)return;
         if(inA)return;
         var href=link.getAttribute(`href`);
-        location.href=(href?href:`/brands`);
+        (window.__soeCloseAndGo||function(u){location.href=u;})(href?href:`/brands`);
       });
     });
 
@@ -2174,7 +2174,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       if(!href||href===`#`)return;
       card.setAttribute(`data-soe-clickwired`,`1`);
       card.style.cursor=`pointer`;
-      card.addEventListener(`click`,function(e){ if(e.defaultPrevented)return; window.location.href=href; });
+      card.addEventListener(`click`,function(e){ if(e.defaultPrevented)return; (window.__soeCloseAndGo||function(u){location.href=u;})(href); });
     });
   }
   if(document.readyState===`loading`)document.addEventListener(`DOMContentLoaded`,wire); else wire();
@@ -2600,6 +2600,10 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       setTimeout(nav, 620);   /* fail-safe: navigate even if transitionend never fires */
     }catch(_e){ nav(); }
   }
+  /* Expose the transition so the imperative navigations below (logo / cards, which call location.href
+     directly instead of relying on an <a>) route through the same close-the-door animation. Defined only
+     when NOT reduced-motion (we return early above), so those call sites fall back to a plain nav. */
+  window.__soeCloseAndGo = closeAndGo;
 
   document.addEventListener('click', function(e){
     var a=(e.target && e.target.closest) ? e.target.closest('a[href]') : null;
