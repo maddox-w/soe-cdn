@@ -1044,6 +1044,12 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe=mm-feat-video-ico]{width:22px;height:22px;border-radius:50%;background:var(--jd-green);display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;transition:transform .18s;}
 [data-soe=mm-feat-video]:hover [data-soe=mm-feat-video-ico]{transform:scale(1.08);}
 [data-soe=mm-feat-video-ico]::after{content:"";border-style:solid;border-width:5px 0 5px 8px;border-color:transparent transparent transparent #fff;margin-left:2px;}
+/* Pin the MM feature "Watch Video" buttons to the bottom of their cards so they line up evenly across a
+   row (cards stretch to equal height; without this each button floats right under text of varying length). */
+[data-soe-page=mulch-mule] [data-soe=feature]{display:flex;flex-direction:column;}
+[data-soe-page=mulch-mule] [data-soe=feature-visual]{flex:0 0 auto;}
+[data-soe-page=mulch-mule] [data-soe=feature-body]{display:flex;flex-direction:column;flex:1 1 auto;}
+[data-soe-page=mulch-mule] [data-soe=mm-feat-video]{margin-top:auto;align-self:flex-start;}
 
 /* ============================================================================
    /new-customer-setup — account-opening form page. Native Webflow form, SOE-styled
@@ -1063,9 +1069,9 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe-page=newcustomer] [data-soe=ncs-step-k]{color:var(--jd-green);}
 [data-soe-page=newcustomer] [data-soe=ncs-step-time]{color:var(--steel-700);font-weight:600;margin-left:.4em;}
 
-[data-soe-page=newcustomer] [data-soe=ncs-row]{display:grid;grid-template-columns:1fr 1fr;gap:18px 22px;}
-[data-soe-page=newcustomer] [data-soe=ncs-field]{display:flex;flex-direction:column;margin-bottom:18px;}
-[data-soe-page=newcustomer] [data-soe=ncs-row] [data-soe=ncs-field]{margin-bottom:0;}
+[data-soe-page=newcustomer] [data-soe=ncs-form]{display:flex;flex-direction:column;gap:20px;}
+[data-soe-page=newcustomer] [data-soe=ncs-row]{display:grid;grid-template-columns:1fr 1fr;gap:20px 22px;align-items:start;}
+[data-soe-page=newcustomer] [data-soe=ncs-field]{display:flex;flex-direction:column;margin:0;}
 [data-soe-page=newcustomer] [data-soe=ncs-label]{font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);margin:0 0 8px;display:block;}
 [data-soe-page=newcustomer] [data-soe=ncs-req]{color:var(--safety-amber);margin-left:2px;}
 [data-soe-page=newcustomer] [data-soe=ncs-opt]{color:var(--steel-700);font-weight:500;text-transform:none;letter-spacing:0;}
@@ -1074,7 +1080,7 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe-page=newcustomer] [data-soe=ncs-input]::placeholder{color:var(--steel-700);opacity:.6;}
 [data-soe-page=newcustomer] [data-soe=ncs-input]:focus{border-color:var(--jd-green);box-shadow:0 0 0 3px rgba(54,124,43,.14);outline:none;}
 
-[data-soe-page=newcustomer] [data-soe=ncs-check]{display:flex;align-items:center;gap:10px;margin:0 0 20px;cursor:pointer;}
+[data-soe-page=newcustomer] [data-soe=ncs-check]{display:flex;align-items:center;gap:10px;margin:0;cursor:pointer;}
 [data-soe-page=newcustomer] [data-soe=ncs-check] .w-checkbox-input{width:18px;height:18px;margin:0 2px 0 0;border-radius:4px;border:1.5px solid var(--steel-300);}
 [data-soe-page=newcustomer] [data-soe=ncs-check] .w-checkbox-input.w--redirected-checked{background-color:var(--jd-green);border-color:var(--jd-green);}
 [data-soe-page=newcustomer] [data-soe=ncs-check-label]{font-family:var(--font-sans);font-size:14px;color:var(--steel-700);margin:0;}
@@ -1091,14 +1097,14 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe-page=newcustomer] .w-file-upload-label:hover{border-color:var(--jd-green);background:rgba(54,124,43,.03);}
 [data-soe-page=newcustomer] .w-file-upload-info{font-family:var(--font-sans);font-size:12px;color:var(--steel-700);opacity:.7;margin:6px 0 0;}
 
-[data-soe-page=newcustomer] [data-soe=ncs-submit]{appearance:none;-webkit-appearance:none;margin:10px 0 0;background:var(--safety-amber);color:var(--black);font-family:var(--font-sans);font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border:none;border-radius:9px;padding:16px 32px;cursor:pointer;transition:filter .15s,transform .15s;}
+[data-soe-page=newcustomer] [data-soe=ncs-submit]{appearance:none;-webkit-appearance:none;margin:4px 0 0;align-self:center;min-width:280px;background:var(--safety-amber);color:var(--black);font-family:var(--font-sans);font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border:none;border-radius:9px;padding:16px 32px;cursor:pointer;transition:filter .15s,transform .15s;}
 [data-soe-page=newcustomer] [data-soe=ncs-submit]:hover{filter:brightness(.94);transform:translateY(-1px);}
 
 [data-soe-page=newcustomer] .w-form-done{background:rgba(54,124,43,.08);border:1px solid var(--jd-green);border-radius:10px;padding:20px 22px;font-family:var(--font-sans);font-size:15px;color:var(--ink);margin-top:14px;}
 [data-soe-page=newcustomer] .w-form-fail{margin-top:14px;border-radius:10px;}
 
 @media (max-width:600px){
-  [data-soe-page=newcustomer] [data-soe=ncs-row]{grid-template-columns:1fr;gap:0;}
-  [data-soe-page=newcustomer] [data-soe=ncs-row] [data-soe=ncs-field]{margin-bottom:18px;}
+  [data-soe-page=newcustomer] [data-soe=ncs-row]{grid-template-columns:1fr;gap:20px;}
   [data-soe-page=newcustomer] [data-soe=ncs-card]{margin-top:-36px;}
+  [data-soe-page=newcustomer] [data-soe=ncs-submit]{width:100%;min-width:0;}
 }
