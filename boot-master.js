@@ -2614,6 +2614,31 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     closeAndGo(href);
   });
 
+  /* FUTURE-PROOFING — a Navigation API safety net (Chrome/Edge). Catches ANY same-origin forward
+     navigation that the click / __soeCloseAndGo paths above didn't already start (e.g. a future raw
+     location.href someone forgets to route, or a JS nav from new code) and runs it through the close-the-
+     door transition too. The click + __soeCloseAndGo paths remain the baseline for browsers without the
+     Navigation API. Heavily guarded so it only ever cancels a plain push to another in-site page:
+     - skips if we already started the close (window.__soeNavigating)
+     - only navigationType 'push' (NOT 'replace' redirects like the /robo* -> /remote-controlled-mowers
+       one, NOT 'traverse' back/forward)
+     - skips hash changes, downloads, form submits, non-cancelable navs, cross-origin, and same-doc. */
+  if(window.navigation && navigation.addEventListener){
+    navigation.addEventListener('navigate', function(e){
+      try{
+        if(window.__soeNavigating) return;
+        if(e.navigationType!=='push') return;
+        if(!e.cancelable || e.hashChange || e.downloadRequest!=null || e.formData) return;
+        var d=e.destination && e.destination.url; if(!d) return;
+        var u; try{ u=new URL(d); }catch(_e){ return; }
+        if(u.origin!==location.origin) return;
+        if(u.pathname===location.pathname && u.search===location.search) return;
+        e.preventDefault();
+        closeAndGo(d);
+      }catch(_e){}
+    });
+  }
+
   /* bfcache: returning to a page that was covered on the way out — lift the curtain back off. */
   window.addEventListener('pageshow', function(ev){
     if(!ev || !ev.persisted) return;
