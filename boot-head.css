@@ -1031,12 +1031,12 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 /* Concept A — the card's own photo is the video surface (play badge + "Watch" label); the rest of the
    card still links to the brand page. No separate thumbnail, so the box stays compact + high-quality. */
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-visual][data-soe-video]{position:relative;cursor:pointer;}
-[data-soe-page=home] [data-soe=brand-card-vgrad]{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 42%,rgba(0,0,0,.34));pointer-events:none;}
-[data-soe-page=home] [data-soe=brand-card-play]{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(0,0,0,.40);transition:transform .2s ease,box-shadow .2s ease;pointer-events:none;}
-[data-soe-page=home] [data-soe=brand-card-play]::after{content:"";border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent var(--brand,var(--jd-green));margin-left:3px;}
-[data-soe-page=home] [data-soe=brand-card-visual][data-soe-video]:hover [data-soe=brand-card-play]{transform:translate(-50%,-50%) scale(1.08);box-shadow:0 10px 26px rgba(0,0,0,.46);}
-[data-soe-page=home] [data-soe=brand-card-vwatch]{position:absolute;left:13px;bottom:11px;display:flex;align-items:center;gap:7px;color:#fff;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;text-shadow:0 1px 5px rgba(0,0,0,.55);pointer-events:none;}
-[data-soe-page=home] [data-soe=brand-card-vwatch]::before{content:"";border-style:solid;border-width:4px 0 4px 7px;border-color:transparent transparent transparent #fff;}
+[data-soe-page=home] [data-soe=brand-card-vgrad]{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 38%,rgba(0,0,0,.46));pointer-events:none;transition:background .2s ease;}
+/* No centered circle — the bold "WATCH VIDEO" corner label is the affordance; deepen the scrim a touch on hover. */
+[data-soe-page=home] [data-soe=brand-card-visual][data-soe-video]:hover [data-soe=brand-card-vgrad]{background:linear-gradient(180deg,rgba(0,0,0,.04) 20%,rgba(0,0,0,.56));}
+[data-soe-page=home] [data-soe=brand-card-visual][data-soe-video]:hover [data-soe=brand-card-vwatch]{transform:translateX(3px);}
+[data-soe-page=home] [data-soe=brand-card-vwatch]{position:absolute;left:18px;bottom:16px;display:flex;align-items:center;gap:9px;color:#fff;font-family:var(--font-mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.6),0 2px 12px rgba(0,0,0,.4);pointer-events:none;transition:transform .18s ease;}
+[data-soe-page=home] [data-soe=brand-card-vwatch]::before{content:"";border-style:solid;border-width:6px 0 6px 10px;border-color:transparent transparent transparent #fff;filter:drop-shadow(0 1px 3px rgba(0,0,0,.55));}
 
 /* --- Mulch Mule feature-box "Watch Video" button (clean white button, Energreen-style) --- */
 [data-soe=mm-feat-video]{display:inline-flex;align-items:center;gap:9px;margin-top:14px;padding:9px 17px;background:#fff;border:1.5px solid #D5DBD3;border-radius:8px;color:var(--ink);font-family:var(--font-sans);font-size:13px;font-weight:600;letter-spacing:.01em;text-decoration:none;cursor:pointer;transition:border-color .18s,box-shadow .18s,transform .18s,color .18s;}

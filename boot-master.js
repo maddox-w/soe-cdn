@@ -1689,15 +1689,15 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     });
   }
 
-  /* Homepage lineup grid (the 5 [data-soe=brand-card-h] boxes): same treatment as the /brands cards —
-     swap the text name for the brand logo and add a "See It In Action" feature thumbnail per box (click
-     opens the v2jj lightbox). Brands without a video yet show a "Coming Soon" placeholder. Energreen uses
-     the RoboEVO Introduction clip (zcWSN413YhQ, "the one with the eyeball") per the owner; Mulch Mule uses
-     the Todd Pugh intro (X8TkDU5Vllo). Each card is an <a>, so the thumb is a NON-anchor [data-soe-video]
-     span — the capture-phase lightbox handler in v2jj preventDefaults + stopPropagations the card nav. */
+  /* Homepage lineup grid (the 5 [data-soe=brand-card-h] boxes): swap the text name for the brand logo and
+     turn the card's own photo into the video surface — a darkening scrim + a bold white "WATCH VIDEO"
+     corner label, with the whole photo clickable. Brands without a video are left as plain photos. Energreen
+     uses the SAME clip as its brand-page Watch Video button (yHaA7LCPtWY) so all three Energreen "Watch
+     Video" spots match; Mulch Mule uses the Todd Pugh intro (X8TkDU5Vllo). Each card is an <a>, so the photo
+     carries a NON-anchor [data-soe-video] — the v2jj capture handler preventDefaults + stops the card nav. */
   function fixHomeBrandBoxes(){
     if(path!==`/`)return;
-    var brandVideo={ "Mulch Mule":`X8TkDU5Vllo`, "Energreen":`zcWSN413YhQ` };
+    var brandVideo={ "Mulch Mule":`X8TkDU5Vllo`, "Energreen":`yHaA7LCPtWY` };
     var brandKey={ "Hydro-Spade":`hydrospade`,"HydroSpade":`hydrospade`,"Energreen":`energreen`,"Metec":`metec`,"Brinemasters":`brinemasters`,"Mulch Mule":`mulchmule` };
     var brandColor={ hydrospade:`#003473`, energreen:`#F5A524`, metec:`#0A5737`, brinemasters:`#3B7DAC` };
     Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=brand-card-h]`),function(card){
@@ -1715,18 +1715,17 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       }
       /* drop the earlier big "See It In Action" thumbnail block if a prior run added it */
       var oldSia=card.querySelector(`[data-soe=brand-sia]`); if(oldSia&&oldSia.parentNode)oldSia.parentNode.removeChild(oldSia);
-      /* Concept A: the card's own photo IS the video surface (play badge + "Watch" label). The visual
-         gets data-soe-video so the v2jj capture handler opens the lightbox + stops the card nav; the rest
-         of the card still links to the brand page. Brands without a video are left as plain photos. */
+      /* Concept A: the card's own photo IS the video surface — a darkening scrim + a bold "WATCH VIDEO"
+         corner label (no centered circle). The visual gets data-soe-video so the v2jj capture handler opens
+         the lightbox + stops the card nav; the rest of the card still links to the brand page. */
       var vid=brandVideo[name]||brandVideo[name.replace(/-/g,``)];
       var vis=card.querySelector(`[data-soe=brand-card-visual]`);
-      if(vid && vis && !vis.querySelector(`[data-soe=brand-card-play]`)){
+      if(vid && vis && !vis.querySelector(`[data-soe=brand-card-vwatch]`)){
         vis.setAttribute(`data-soe-video`,vid);
         vis.setAttribute(`role`,`button`); vis.setAttribute(`aria-label`,`Play `+name+` video`);
         var grad=document.createElement(`span`); grad.setAttribute(`data-soe`,`brand-card-vgrad`);
-        var play=document.createElement(`span`); play.setAttribute(`data-soe`,`brand-card-play`);
         var watch=document.createElement(`span`); watch.setAttribute(`data-soe`,`brand-card-vwatch`); watch.textContent=`Watch video`;
-        vis.appendChild(grad); vis.appendChild(play); vis.appendChild(watch);
+        vis.appendChild(grad); vis.appendChild(watch);
       }
     });
   }
