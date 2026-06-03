@@ -777,6 +777,10 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe-page=brands] [data-soe=brand-card-vmeta]{display:none !important;}
 @media (max-width:720px){
   [data-soe-page=brands] [data-soe=brand-card-visual-l]{display:block !important;height:200px !important;min-height:200px !important;flex:0 0 200px !important;}
+  /* center the brand logo on mobile to match the centered card text. Keep the base fixed width (a 100%
+     width collapses a bg-image span to 0); center the box via margin:auto + the image via background-position.
+     !important because the base brands logo rule sits later in the file. */
+  [data-soe-page=brands] [data-soe=brand-card-logo]{margin-left:auto !important;margin-right:auto !important;background-position:center center !important;}
 }
 
 /* (AF) Homepage "Explore Smart Outdoor Products" lineup grid — same order as everywhere else:
@@ -1018,12 +1022,12 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
    Mirrors the /brands treatment, scoped to [data-soe-page=home] + the lineup grid; thumb fills the card.
    Logos reuse the same trimmed brand-logo-*.png assets (relative url() pins to this CSS @sha). --- */
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-name]{min-height:36px;display:flex;align-items:center;}
-[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo]{display:block;height:28px;width:172px;max-width:78%;background-repeat:no-repeat;background-position:left center;background-size:contain;}
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo]{display:block;height:34px;width:204px;max-width:84%;background-repeat:no-repeat;background-position:left center;background-size:contain;}
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=hydrospade]{background-image:url(brand-logo-hydrospade.png);}
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=energreen]{background-image:url(brand-logo-energreen.png);}
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=metec]{background-image:url(brand-logo-metec.png);}
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=brinemasters]{background-image:url(brand-logo-brinemasters.png);}
-[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=mulchmule]{background-image:url(brand-logo-mulchmule.png);height:40px;}
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=mulchmule]{background-image:url(brand-logo-mulchmule.png);height:48px;}
 /* Concept A — the card's own photo is the video surface (play badge + "Watch" label); the rest of the
    card still links to the brand page. No separate thumbnail, so the box stays compact + high-quality. */
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-visual][data-soe-video]{position:relative;cursor:pointer;}
