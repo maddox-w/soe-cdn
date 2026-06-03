@@ -2488,6 +2488,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
    - FAIL-SAFES: a hard timer here PLUS the pure-CSS animations in boot-head.css guarantee the curtain
      can never stay stuck and held content can never stay hidden, even if anything below throws. */
 (function(){
+  function run(){
   var html=document.documentElement;
   var curtain=document.getElementById('soe-curtain');
   function setState(s){ try{ html.setAttribute('data-soe-curtain',s); }catch(e){} }
@@ -2541,4 +2542,9 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
 
   /* bfcache restore mid-animation: never leave anything covering or hidden. */
   window.addEventListener('pageshow', function(ev){ if(ev && ev.persisted){ clearTimeout(hardFailsafe); finish(); } });
+  }
+  /* Run after the DOM is parsed so the reveal blocks above have added data-soe-anim=reveal. With the
+     deferred boot-master tag readyState is already 'interactive' here (runs now); this guard keeps the
+     above-the-fold flow-in working even if the tag ever loses its defer. */
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', run); } else { run(); }
 })();
