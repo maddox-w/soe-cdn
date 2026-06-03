@@ -2473,3 +2473,72 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   if(document.readyState===`loading`) document.addEventListener(`DOMContentLoaded`,promote);
   setTimeout(promote,250); setTimeout(promote,700); setTimeout(promote,1500);
 })();
+
+/* === boot-fixes-v2tt === Page-load curtain reveal. A white panel (created pre-paint in boot-head.js,
+   z-index 48, BENEATH the sticky header) holds over the page; this block beats on it, swipes it up
+   (data-soe-curtain=up -> CSS transition in boot-head.css), then releases the above-the-fold
+   scroll-reveals one at a time so they flow in with the site's standard 70ms fade-up cascade.
+   - Runs LAST, so the reveal blocks (initAnimReveal / v2qq …) that add data-soe-anim=reveal have already
+     run synchronously at this deferred-script's exec time (readyState is no longer "loading").
+   - Above-the-fold reveals are pinned hidden with a per-element data-soe-curtain-hold marker — decoupled
+     from the in-view that the observers/v2ss/revealHero keep setting behind the curtain — and released
+     individually (staggered) so the cascade survives.
+   - prefers-reduced-motion: no curtain is ever created (boot-head.js skips it); this just drops the
+     attribute and returns.
+   - FAIL-SAFES: a hard timer here PLUS the pure-CSS animations in boot-head.css guarantee the curtain
+     can never stay stuck and held content can never stay hidden, even if anything below throws. */
+(function(){
+  var html=document.documentElement;
+  var curtain=document.getElementById('soe-curtain');
+  function setState(s){ try{ html.setAttribute('data-soe-curtain',s); }catch(e){} }
+  function dropCurtain(){ try{ if(curtain&&curtain.parentNode){ curtain.parentNode.removeChild(curtain); } }catch(e){} curtain=null; }
+
+  /* No curtain (reduced-motion, JS-disabled head, or an older boot-head.js) -> nothing to drive. */
+  if(!curtain){ return; }
+  var reduce=!!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  if(reduce){ setState('off'); dropCurtain(); return; }
+
+  /* Pin the reveals that are in (or just under) the viewport — these flow in after the swipe. */
+  var holds=[];
+  try{
+    var vh=window.innerHeight||html.clientHeight||0;
+    var all=document.querySelectorAll('[data-soe-anim=reveal]');
+    for(var i=0;i<all.length;i++){
+      var r=all[i].getBoundingClientRect();
+      if(r.top < vh*0.98 && r.bottom > 0){ all[i].setAttribute('data-soe-curtain-hold',''); holds.push(all[i]); }
+    }
+  }catch(e){}
+
+  var done=false;
+  function finish(){
+    if(done) return; done=true;
+    for(var j=0;j<holds.length;j++){ try{ holds[j].removeAttribute('data-soe-curtain-hold'); holds[j].removeAttribute('data-soe-curtain-flow'); }catch(e){} }
+    setState('off'); dropCurtain();
+  }
+
+  /* Bulletproof timer registered FIRST: whatever happens below, the page is fully revealed and the
+     curtain is gone by 2.6s. */
+  var hardFailsafe=setTimeout(finish, 2600);
+
+  function flowIn(){
+    /* Arm a transition on every hold while it is STILL hidden (a transition is the one cascade level
+       that can ease over v2hh's transition:none / opacity:1 !important), reflow to commit it, then drop
+       each hold a beat apart so they rise in with the site's 70ms stagger. */
+    for(var a=0;a<holds.length;a++){ try{ holds[a].setAttribute('data-soe-curtain-flow',''); }catch(e){} }
+    try{ void html.offsetWidth; }catch(e){}
+    for(var j=0;j<holds.length;j++){
+      (function(el,idx){ setTimeout(function(){ try{ el.removeAttribute('data-soe-curtain-hold'); }catch(e){} }, idx*70); })(holds[j], j);
+    }
+    var tail=Math.max(0,holds.length-1)*70;
+    setTimeout(function(){ for(var m=0;m<holds.length;m++){ try{ holds[m].removeAttribute('data-soe-curtain-flow'); }catch(e){} } }, tail+1000);  /* hand back to v2hh / in-view */
+    setTimeout(finish, tail+1150);
+  }
+
+  try{
+    setTimeout(function(){ setState('up'); }, 180);   /* beat on the white, then swipe up */
+    setTimeout(flowIn, 780);                          /* begin the flow-in while the panel is ~75% gone */
+  }catch(e){ finish(); }
+
+  /* bfcache restore mid-animation: never leave anything covering or hidden. */
+  window.addEventListener('pageshow', function(ev){ if(ev && ev.persisted){ clearTimeout(hardFailsafe); finish(); } });
+})();
