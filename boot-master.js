@@ -1734,22 +1734,17 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     });
   }
 
-  /* /new-customer-setup form polish (the Designer-baked defaults can't all be set via the form widget):
-     clear Webflow's default "Example text" placeholders (the reference leaves those blank), and set the
-     file-upload hint text + accepted file types to match the reference ("Click to upload PDF, JPG, or PNG"). */
+  /* /new-customer-setup form polish: clear Webflow's default "Example text" placeholders (the reference
+     leaves those blank). NOTE: this form intentionally collects NO documents — the W-9 / tax-exempt cert
+     are requested at follow-up, not uploaded, so nothing sensitive is stored on Webflow. Safety net below
+     strips any file-upload field if one ever reappears in the DOM. */
   function fixNewCustomerForm(){
     if(path!==`/new-customer-setup`)return;
     Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=ncs-input]`),function(i){
       if((i.getAttribute(`placeholder`)||``)===`Example text`)i.setAttribute(`placeholder`,``);
     });
-    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=ncs-form] .w-file-upload-input`),function(i){
-      i.setAttribute(`accept`,`.pdf,.jpg,.jpeg,.png`);
-    });
-    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=ncs-form] .w-file-upload-label .w-inline-block`),function(d){
-      if(/Upload File/i.test(d.textContent||``))d.textContent=`Click to upload PDF, JPG, or PNG`;
-    });
-    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=ncs-form] .w-file-upload-info`),function(d){
-      d.textContent=`Max 8 MB`;
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=ncs-form] .w-file-upload`),function(w){
+      var field=w.closest(`[data-soe=ncs-field]`); if(field&&field.parentNode)field.parentNode.removeChild(field); else if(w.parentNode)w.parentNode.removeChild(w);
     });
   }
 
