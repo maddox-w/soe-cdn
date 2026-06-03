@@ -1930,6 +1930,17 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     });
   }
 
+  /* Mulch Mule brand page: the nav-cta + hero "Request Info" CTAs were pointed at mulchmule.com/quote/
+     (off-site). Point every quote CTA at our own /request-quote instead so leads stay on the SOE site.
+     (The separate informational "Visit MulchMule.com" link is left alone.) */
+  function fixMulchMuleQuoteLinks(){
+    if(path!==`/mulch-mule`)return;
+    Array.prototype.forEach.call(document.querySelectorAll(`a[href*="mulchmule.com/quote"]`),function(a){
+      a.setAttribute(`href`,`/request-quote`);
+      a.removeAttribute(`target`); a.removeAttribute(`rel`);
+    });
+  }
+
   /* Mulch Mule feature grid: add a clean white "Watch Video" button inside 4 specific feature boxes,
      each opening its demo clip in the v2jj lightbox. Matched by the feature-visual bg class (robust to
      copy edits). Curbside chute -> Toro Grandstand Multi Force; Automatic tarp system -> Tarping System
@@ -1956,6 +1967,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     try{ polishMM(); }catch(e){}
     try{ buildMulchMuleVideos(); }catch(e){}
     try{ wireMulchMuleHero(); }catch(e){}
+    try{ fixMulchMuleQuoteLinks(); }catch(e){}
     try{ addMulchMuleFeatureVideos(); }catch(e){}
     try{ wireEnergreenHero(); }catch(e){}
     try{ buildEnergreenVideos(); }catch(e){}
