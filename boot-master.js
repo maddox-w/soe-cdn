@@ -1715,17 +1715,18 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       }
       /* drop the earlier big "See It In Action" thumbnail block if a prior run added it */
       var oldSia=card.querySelector(`[data-soe=brand-sia]`); if(oldSia&&oldSia.parentNode)oldSia.parentNode.removeChild(oldSia);
-      /* Concept A: the card's own photo IS the video surface — a darkening scrim + a bold "WATCH VIDEO"
-         corner label (no centered circle). The visual gets data-soe-video so the v2jj capture handler opens
-         the lightbox + stops the card nav; the rest of the card still links to the brand page. */
+      /* Concept A: the card's own photo IS the video surface — a darkening scrim + a centered white play
+         circle + a bold "WATCH VIDEO" corner label. The visual gets data-soe-video so the v2jj capture
+         handler opens the lightbox + stops the card nav; the rest of the card still links to the brand page. */
       var vid=brandVideo[name]||brandVideo[name.replace(/-/g,``)];
       var vis=card.querySelector(`[data-soe=brand-card-visual]`);
       if(vid && vis && !vis.querySelector(`[data-soe=brand-card-vwatch]`)){
         vis.setAttribute(`data-soe-video`,vid);
         vis.setAttribute(`role`,`button`); vis.setAttribute(`aria-label`,`Play `+name+` video`);
         var grad=document.createElement(`span`); grad.setAttribute(`data-soe`,`brand-card-vgrad`);
+        var play=document.createElement(`span`); play.setAttribute(`data-soe`,`brand-card-play`);
         var watch=document.createElement(`span`); watch.setAttribute(`data-soe`,`brand-card-vwatch`); watch.textContent=`Watch video`;
-        vis.appendChild(grad); vis.appendChild(watch);
+        vis.appendChild(grad); vis.appendChild(play); vis.appendChild(watch);
       }
     });
   }
