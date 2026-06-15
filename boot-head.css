@@ -301,8 +301,8 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 
 /* HydroSpade — 5th brand: hero slide + brand card backgrounds (Webflow asset) */
 [data-soe=hero-slide]:nth-child(5) [data-soe=hero-bg]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/69fb51e0d9cb1b93999e31ab_Hydro-Spade-card-banner2.jpg) !important;background-size:cover !important;background-position:center center !important;background-repeat:no-repeat !important;}
-[data-soe=brand-grid] a:nth-child(5) [data-soe=brand-card-visual]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/69fb4ac9be94d735d041c9f4_Hydro-Spade-card-banner.jpg) !important;background-position:center center !important;background-size:cover !important;background-repeat:no-repeat !important;}
-[data-soe=brands-list-grid] article:nth-child(5) [data-soe=brand-card-visual-l]{background-image:url(https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/69fb4ac9be94d735d041c9f4_Hydro-Spade-card-banner.jpg) !important;background-position:center center !important;}
+[data-soe=brand-grid] a:nth-child(5) [data-soe=brand-card-visual]{background-image:url("hydrospade-trailer-roadside.jpg") !important;background-position:center center !important;background-size:cover !important;background-repeat:no-repeat !important;}
+[data-soe=brands-list-grid] article:nth-child(5) [data-soe=brand-card-visual-l]{background-image:url("hydrospade-trailer-roadside.jpg") !important;background-position:center center !important;}
 
 /* mobile nav-cta tweak (2026-05-08): match hamburger level + size */
 @media (max-width:720px){[data-soe=nav-cta]{align-self:center !important;height:36px !important;padding:0 16px !important;font-size:11px !important;letter-spacing:.08em !important;margin-right:8px !important;display:inline-flex !important;align-items:center !important;}}
@@ -825,7 +825,7 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe-page=hydrospade]{--hs-navy:#003473;--hs-navy-dark:#00264f;}
 
 /* Hero (#hs-hero): HydroSpade photo + left navy gradient + white logo */
-#hs-hero [data-soe=hero-bg]{background-image:linear-gradient(90deg,rgba(0,26,52,.9) 0%,rgba(0,26,52,.6) 45%,rgba(0,26,52,.12) 100%),url("hydrospade-hero.jpg") !important;background-size:cover !important;background-position:center right !important;}
+#hs-hero [data-soe=hero-bg]{background-image:linear-gradient(90deg,rgba(0,26,52,.9) 0%,rgba(0,26,52,.6) 45%,rgba(0,26,52,.12) 100%),url("hydrospade-hero-truck.jpg") !important;background-size:cover !important;background-position:center right !important;}
 #hs-hero [data-soe=p-hero-mark-logo]{display:inline-block;width:188px;height:80px;background-image:url("hydrospade-logo-white.svg") !important;background-repeat:no-repeat;background-position:left center;background-size:contain;}
 #hs-hero [data-soe=p-hero-mark-meta]{color:#fff;font-weight:600;letter-spacing:.04em;}
 
@@ -859,14 +859,14 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 /* The Lineup — 2 product cards (#hs-lineup) */
 #hs-lineup [data-soe=rc-units-grid]{display:grid !important;grid-template-columns:repeat(2,1fr) !important;gap:28px !important;max-width:900px;margin-left:auto;margin-right:auto;}
 #hs-lineup [data-soe=rc-unit-visual]{background-color:var(--steel-100) !important;background-repeat:no-repeat !important;background-position:center !important;background-size:82% auto !important;}
-#hs-lineup [data-soe=rc-unit-card]:nth-child(1) [data-soe=rc-unit-visual]{background-image:url("hydrospade-truck.png") !important;}
+#hs-lineup [data-soe=rc-unit-card]:nth-child(1) [data-soe=rc-unit-visual]{background-image:url("hydrospade-truck-current.png") !important;}
 #hs-lineup [data-soe=rc-unit-card]:nth-child(2) [data-soe=rc-unit-visual]{background-image:url("hydrospade-trailer.png") !important;}
 @media (max-width:600px){#hs-lineup [data-soe=rc-units-grid]{grid-template-columns:1fr !important;}}
 
 #hs-hero [data-soe=p-hero-subline]{color:#fff !important;}
 
 /* HydroSpade detail-page hero product renders */
-#hs-truck-hero [data-soe=ru-hero-visual]{background-color:var(--steel-100) !important;background-image:url("hydrospade-truck.png") !important;background-repeat:no-repeat !important;background-position:center !important;background-size:90% auto !important;}
+#hs-truck-hero [data-soe=ru-hero-visual]{background-color:var(--steel-100) !important;background-image:url("hydrospade-truck-current.png") !important;background-repeat:no-repeat !important;background-position:center !important;background-size:90% auto !important;}
 #hs-trailer-hero [data-soe=ru-hero-visual]{background-color:var(--steel-100) !important;background-image:url("hydrospade-trailer.png") !important;background-repeat:no-repeat !important;background-position:center !important;background-size:92% auto !important;}
 
 /* HydroSpade detail pages: sub-headline in the brand navy (button/logo blue, per owner) + hero bottom bar */
@@ -991,6 +991,8 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 [data-soe-page=brands] [data-soe=brand-sia]{margin-top:22px;}
 [data-soe-page=brands] [data-soe=brand-sia-head]{font-family:var(--font-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--brand,var(--jd-green));font-weight:700;margin:0 0 11px;display:flex;align-items:center;gap:10px;}
 [data-soe-page=brands] [data-soe=brand-sia-head]::before{content:"";width:24px;height:2px;background:var(--brand,var(--jd-green));}
+[data-soe-page=brands] [data-soe=brand-sia-grid]{display:flex;flex-wrap:wrap;gap:12px;align-items:stretch;}
+[data-soe-page=brands] [data-soe=brand-sia-grid][data-soe-multi] [data-soe=brand-sia-thumb]{width:auto;flex:1 1 0;min-width:120px;}
 [data-soe-page=brands] [data-soe=brand-sia-thumb]{position:relative;display:block;width:268px;max-width:100%;aspect-ratio:16 / 9;border-radius:10px;overflow:hidden;background:#0E1110 center/cover no-repeat;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.16);transition:transform .25s ease,box-shadow .25s ease;}
 [data-soe-page=brands] [data-soe=brand-sia-thumb]:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.24);}
 [data-soe-page=brands] [data-soe=brand-sia-play]{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;background:var(--brand,var(--jd-green));display:flex;align-items:center;justify-content:center;transition:filter .2s,transform .2s;}

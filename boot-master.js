@@ -1617,7 +1617,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
         `Broad compatibility: custom fabrication and forming build mounts to standard hitch interfaces, with one-off builds for non-standard machines.`,
         `Durability: professional welding and specialized coatings protect against wear, corrosion, and weather for a longer service life.`]},
       "HydroSpade":{head:`Simply Built. Simply Better.`,intro:`Here's why the Hydro-Spade line is designed with your work in mind.`,items:[
-        `The Non-CDL truck is sized for residential potholing, utility daylighting, and tight-radius work where a full-size vac truck cannot maneuver and a unit mounted on a Class 5/6 non-CDL chassis opens the operator pool to anyone with a standard license, which changes scheduling math more than any spec on the data sheet.`,
+        `The Non-CDL truck is sized for residential potholing, utility daylighting, and tight-radius work where a full-size vac truck cannot maneuver and a unit mounted on a Class 5/6 non-CDL chassis which expands your operator pool to anyone with a standard license resulting in reduced scheduling constraints and increased fleet utilization.`,
         `Easy operations including a 6-way articulating boom and simple hydraulic controls to keep training short and diagnostics straightforward, with no computer modules between the operator and the work.`,
         `The trailer tows behind a 3/4-ton or 1-ton pickup and fits residential streets, easements, and tight job sites where a full vac truck cannot stage.`,
         `Quick and easy cleanup using water-pressure wand with convenient rear access door, 6" drain valve, and blower filtration.`]}
@@ -1668,22 +1668,33 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       var desc=card.querySelector(`[data-soe=brand-card-desc-l]`);
       if(desc && desc.parentNode)desc.parentNode.removeChild(desc);
 
-      /* "See It In Action" header + feature thumbnail */
+      /* "See It In Action" header + feature thumbnail(s). Most brands get one slot (a video, or a
+         "coming soon" placeholder). Hydro-Spade gets TWO coming-soon holders — Truck + Trailer — a
+         reminder slot for the two feature videos the owner will supply (one per platform). */
       if(!card.querySelector(`[data-soe=brand-sia]`)){
         var vid=brandVideo[name]||brandVideo[name.replace(/-/g,``)];
         var sia=document.createElement(`div`); sia.setAttribute(`data-soe`,`brand-sia`);
         var sh=document.createElement(`div`); sh.setAttribute(`data-soe`,`brand-sia-head`); sh.textContent=`See It In Action`; sia.appendChild(sh);
-        var thumb;
-        if(vid){
-          thumb=document.createElement(`a`); thumb.setAttribute(`data-soe`,`brand-sia-thumb`); thumb.setAttribute(`data-soe-video`,vid); thumb.href=`#`;
-          thumb.style.backgroundImage=`url(https://i.ytimg.com/vi/`+vid+`/maxresdefault.jpg)`;
-          var p1=document.createElement(`span`); p1.setAttribute(`data-soe`,`brand-sia-play`); thumb.appendChild(p1);
-        }else{
-          thumb=document.createElement(`div`); thumb.setAttribute(`data-soe`,`brand-sia-thumb`); thumb.setAttribute(`data-soe-soon`,`1`);
-          var p2=document.createElement(`span`); p2.setAttribute(`data-soe`,`brand-sia-play`); thumb.appendChild(p2);
-          var sn=document.createElement(`span`); sn.setAttribute(`data-soe`,`brand-sia-soon`); sn.textContent=`Video coming soon`; thumb.appendChild(sn);
-        }
-        sia.appendChild(thumb);
+        var slots;
+        if(bkey===`hydrospade`) slots=[{soon:1,cap:`Truck`},{soon:1,cap:`Trailer`}];
+        else if(vid) slots=[{vid:vid}];
+        else slots=[{soon:1}];
+        var grid=document.createElement(`div`); grid.setAttribute(`data-soe`,`brand-sia-grid`);
+        if(slots.length>1)grid.setAttribute(`data-soe-multi`,`1`);
+        slots.forEach(function(s){
+          var thumb;
+          if(s.vid){
+            thumb=document.createElement(`a`); thumb.setAttribute(`data-soe`,`brand-sia-thumb`); thumb.setAttribute(`data-soe-video`,s.vid); thumb.href=`#`;
+            thumb.style.backgroundImage=`url(https://i.ytimg.com/vi/`+s.vid+`/maxresdefault.jpg)`;
+            var p1=document.createElement(`span`); p1.setAttribute(`data-soe`,`brand-sia-play`); thumb.appendChild(p1);
+          }else{
+            thumb=document.createElement(`div`); thumb.setAttribute(`data-soe`,`brand-sia-thumb`); thumb.setAttribute(`data-soe-soon`,`1`);
+            var p2=document.createElement(`span`); p2.setAttribute(`data-soe`,`brand-sia-play`); thumb.appendChild(p2);
+            var sn=document.createElement(`span`); sn.setAttribute(`data-soe`,`brand-sia-soon`); sn.textContent=s.cap?(s.cap+` — Video coming soon`):`Video coming soon`; thumb.appendChild(sn);
+          }
+          grid.appendChild(thumb);
+        });
+        sia.appendChild(grid);
         (card.querySelector(`[data-soe=brand-card-info-top]`)||card).appendChild(sia);
       }
     });
@@ -2232,7 +2243,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       if(lede.parentNode && !lede.parentNode.querySelector(`[data-soe=hs-diff-body]`)){
         var p=document.createElement(`p`);
         p.setAttribute(`data-soe`,`hs-diff-body`);
-        p.textContent=`Hydro-Spades are engineered to perform where the job gets difficult — delivering enhanced maneuverability, ability to operate in tight urban areas, maximized payload, super easy and protected operations, from the first load to the final quick and easy cleanup.`;
+        p.textContent=`Hydro-Spades are designed to perform for those difficult jobs — delivering enhanced maneuverability, ability to operate in tight urban areas, maximize your payload, and provide super easy and protected operations, from the first load to the final quick and easy cleanup.`;
         lede.parentNode.insertBefore(p,lede.nextSibling);
       }
     }
@@ -2251,7 +2262,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     var ctas=document.querySelector(`#hs-hero [data-soe=p-hero-ctas]`);
     if(ctas){
       var watch=ctas.querySelector(`a[data-soe=btn][data-soe-variant=inverse-outline]`);
-      if(watch){ watch.textContent=`Watch Video`; watch.setAttribute(`href`,`#hs-videos`); }
+      if(watch){ watch.textContent=`Video Coming Soon`; watch.setAttribute(`href`,`#hs-videos`); }
       if(!ctas.querySelector(`a[data-soe-hs-contact]`)){
         var contact=document.createElement(`a`);
         contact.setAttribute(`data-soe`,`btn`); contact.setAttribute(`data-soe-variant`,`primary`);
