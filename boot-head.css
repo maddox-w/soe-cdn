@@ -958,6 +958,8 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 #hs-videos [data-soe=hs-video-ph-play]{width:62px;height:62px;border-radius:50%;background:#003473;display:flex;align-items:center;justify-content:center;}
 #hs-videos [data-soe=hs-video-ph-play]::after{content:"";border-style:solid;border-width:10px 0 10px 17px;border-color:transparent transparent transparent #fff;margin-left:4px;}
 #hs-videos [data-soe=hs-video-ph] span{font-family:var(--font-sans);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#6B746A;}
+#hs-videos [data-soe=hs-video-grid]{max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;gap:18px;}
+#hs-videos [data-soe=hs-video-grid] [data-soe=hs-video-ph]{flex:1 1 0;min-width:240px;max-width:none;margin:0;}
 /* Bold "open item" flag so the owner can see this section is still pending (video not yet supplied).
    Brand navy #003473 (matches the play button / page theme), white text + status dot. */
 #hs-videos [data-soe=hs-open-flag]{display:flex;width:-moz-fit-content;width:fit-content;align-items:center;margin:0 auto 16px;padding:7px 16px;border-radius:999px;background:#003473;color:#fff;font-family:var(--font-sans);font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;}
