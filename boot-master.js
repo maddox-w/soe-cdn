@@ -5,7 +5,7 @@
   var amp = String.fromCharCode(38);
   var l = document.createElement(`link`);
   l.rel = `stylesheet`;
-  l.href = `https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800` + amp + `family=Inter:wght@300;400;500;600;700;800` + amp + `family=JetBrains+Mono:wght@400;500;600;700` + amp + `display=swap`;
+  l.href = `https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800` + amp + `family=Inter:wght@300;400;500;600;700;800` + amp + `display=swap`;
   document.head.appendChild(l);
 
   
@@ -486,10 +486,9 @@
        custom sequence so Brinemasters (DOM index 1 — weak photo) shows LAST. Only on the 5-brand
        homepage banner; the 3-slide Energreen #rc-hero falls through to plain sequential. */
     var order=[]; for(var k=0;k<newSlides.length;k++)order.push(k);
-    if(newSlides.length===5){
-      var bm=-1; newSlides.forEach(function(sl,idx){ if(/Brinemasters/i.test(sl.textContent||``))bm=idx; });
-      if(bm!==-1){ order=order.filter(function(x){return x!==bm;}); order.push(bm); }
-    }
+    /* Brinemasters retired (2026-06-21): drop its slide from the rotation entirely + hide it. */
+    var bm=-1; newSlides.forEach(function(sl,idx){ if(/Brinemasters/i.test(sl.textContent||``))bm=idx; });
+    if(bm!==-1){ order=order.filter(function(x){return x!==bm;}); newSlides[bm].style.display=`none`; }
 
     var i=0, pos=0;
     function go(n){
@@ -757,9 +756,8 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
           dd.setAttribute(`data-soe`,`nav-dropdown`);
           var items=[
             [`Mulch Mule`,`/mulch-mule`],
-            [`Brinemasters`,`/brands`],
             [`Energreen`,`/remote-controlled-mowers`],
-            [`Metec`,`/brands`]
+            [`Metec`,`/coming-soon`]
           ];
           items.forEach(function(it){
             var aa=document.createElement(`a`);
@@ -1086,7 +1084,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     `}`,
     `[data-soe=nav-mega-col-h]{`,
       `color:#7DB13C;`,
-      `font-family:"JetBrains Mono",ui-monospace,monospace;`,
+      `font-family:"Inter Tight","Inter",sans-serif;`,
       `font-size:11px;`,
       `letter-spacing:.18em;`,
       `text-transform:uppercase;`,
@@ -1152,7 +1150,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       [`RoboEVO`,`/roboevo`],
       [`RoboMIDI`,`/robomidi`]
     ]},
-    {brand:`Compact Tractor Attachments`, href:`/brands`, items:[
+    {brand:`Equipment Attachments & Implements`, href:`/brands`, items:[
       [`Snow Blowers`,`/brands`],
       [`Angle Plows`,`/brands`],
       [`V-Plows`,`/brands`],
@@ -1163,39 +1161,31 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       [`Non CDL Hydro Vac Truck`,`/hydrospade-trucks`],
       [`Hydro-Vac Trailer`,`/hydrospade-trailers`]
     ]},
-    {brand:`Brinemakers`, href:`/brands`, items:[
-      [`BM-14X Brine Maker`,`/brands`],
-      [`BM-6 Brine Maker`,`/brands`],
-      [`BM-3 Brine Maker`,`/brands`]
-    ]},
-    {brand:`TruckFill`, href:`/brands`, items:[
-      [`Truck Fill Stations`,`/brands`]
-    ]}
   ];
 
   var simpleMenus = {};
   simpleMenus[`Brands`] = [
     [`Mulch Mule`,`/mulch-mule`],
-    [`Brinemasters`,`/brands`],
     [`Energreen`,`/remote-controlled-mowers`],
-    [`Metec`,`/brands`],
+    [`Metec`,`/coming-soon`],
     [`HydroSpade`,`/hydrospade`],
     [`View All Brands`,`/brands`]
   ];
   simpleMenus[`Build & Quote`] = [
-    [`Compact Tractor Attachments`,`/request-quote`],
-    [`HydroSpade Trucks`,`/request-quote`],
-    [`HydroSpade Trailers`,`/request-quote`]
+    [`Equipment Attachments & Implements`,`/coming-soon`],
+    [`HydroSpade Trucks`,`/coming-soon`],
+    [`HydroSpade Trailers`,`/coming-soon`]
   ];
   simpleMenus[`Become a Dealer`] = [
-    [`Mulch Mule`,`#`],
-    [`Metec`,`#`],
-    [`HydroSpade`,`#`]
+    [`Mulch Mule`,`/coming-soon`],
+    [`Metec`,`/coming-soon`],
+    [`HydroSpade`,`/coming-soon`]
   ];
   simpleMenus[`Other`] = [
-    [`Our Story`,`#`],
-    [`Equipment Consultants`,`#`],
-    [`Service Network`,`#`],
+    [`Our Story`,`/coming-soon`],
+    [`Equipment Consultants`,`/coming-soon`],
+    [`Service Network`,`/coming-soon`],
+    [`Find a Dealer`,`/coming-soon`],
     [`Contact`,`#`],
     [`New Customer Setup`,`/new-customer-setup`]
   ];
@@ -1322,26 +1312,26 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     var newCols = [
       {head:`Equipment`, items:[
         [`Mulch Mule`,`/mulch-mule`],
-        [`Brinemasters`,`/brands`],
         [`Energreen`,`/remote-controlled-mowers`],
-        [`Metec`,`/brands`],
+        [`Metec`,`/coming-soon`],
         [`HydroSpade`,`/hydrospade`],
         [`View All Brands`,`/brands`]
       ]},
       {head:`Build & Quote`, items:[
-        [`Compact Tractor Attachments`,`/request-quote`],
-        [`HydroSpade Trucks`,`/request-quote`],
-        [`HydroSpade Trailers`,`/request-quote`]
+        [`Equipment Attachments & Implements`,`/coming-soon`],
+        [`HydroSpade Trucks`,`/coming-soon`],
+        [`HydroSpade Trailers`,`/coming-soon`]
       ]},
       {head:`Become a Dealer`, items:[
-        [`Mulch Mule`,`#`],
-        [`Metec`,`#`],
-        [`HydroSpade`,`#`]
+        [`Mulch Mule`,`/coming-soon`],
+        [`Metec`,`/coming-soon`],
+        [`HydroSpade`,`/coming-soon`]
       ]},
       {head:`Other`, items:[
-        [`Our Story`,`#`],
-        [`Equipment Consultants`,`#`],
-        [`Service Network`,`#`],
+        [`Our Story`,`/coming-soon`],
+        [`Equipment Consultants`,`/coming-soon`],
+        [`Service Network`,`/coming-soon`],
+        [`Find a Dealer`,`/coming-soon`],
         [`Contact`,`#`],
         [`New Customer Setup`,`/new-customer-setup`]
       ]}
@@ -1380,18 +1370,33 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     top.style.gridTemplateColumns = `1.4fr 1fr .9fr 1fr 1.1fr`;
 
     /* Wire up footer-bot Privacy / Terms / Sitemap to their dedicated pages */
-    var legalMap = {"Privacy":"/privacy", "Terms":"/terms", "Sitemap":"/sitemap"};
+    var legalMap = {"Sitemap":"/sitemap"};
+    var legalHide = {"Privacy":1, "Terms":1};
     Array.prototype.forEach.call(footer.querySelectorAll(`[data-soe=footer-legal] a`), function(a){
       var t = (a.textContent || ``).trim();
+      if (legalHide[t]){ a.style.display = `none`; return; }
       if (legalMap[t]) a.href = legalMap[t];
     });
 
     /* Wire footer social icons (f / in / yt / ig). LinkedIn is now live. */
-    var socialMap = {"in":"https://www.linkedin.com/company/smart-outdoor-equipment/"};
+    var socialMap = {
+      "f":"https://www.facebook.com/profile.php?id=61591186047309",
+      "in":"https://www.linkedin.com/company/smart-outdoor-equipment",
+      "yt":"https://www.youtube.com/@SmartOutdoorEquipment",
+      "ig":"https://www.instagram.com/smartoutdoorequipment/"
+    };
+    var socialWrap = footer.querySelector(`[data-soe=footer-social]`);
     Array.prototype.forEach.call(footer.querySelectorAll(`[data-soe=footer-social] a`), function(a){
       var t = (a.textContent || ``).trim().toLowerCase();
       if (socialMap[t]){ a.href = socialMap[t]; a.target = `_blank`; a.rel = `noopener`; }
     });
+    if (socialWrap && !socialWrap.querySelector(`[data-soe-social=tt]`)){
+      var tt = document.createElement(`a`);
+      tt.setAttribute(`data-soe-social`,`tt`);
+      tt.href = `https://www.tiktok.com/@smartoutdoorequipment`;
+      tt.target = `_blank`; tt.rel = `noopener`; tt.textContent = `tt`;
+      socialWrap.appendChild(tt);
+    }
   }
 
   /* ---------- Mobile drawer parity ---------- */
@@ -1588,10 +1593,21 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   /* Energreen page: "Seven remote-controlled units." -> a Mulch-Mule-style difference head + brand paragraph. */
   function fixEnergreenPage(){
     if(path!==`/remote-controlled-mowers`)return;
+    var rcUnits=document.querySelector(`[data-soe=rc-units]`);
     var h2=document.querySelector(`[data-soe=rc-units-h2]`);
-    if(h2)h2.textContent=`The Energreen Difference`;
     var lede=document.querySelector(`[data-soe=rc-units-lede]`);
-    if(lede)lede.textContent=`Robos are designed to prioritize well-being, simplify operation, and deliver versatile solutions for demanding applications. Radio-controlled mowers and skid steers keep your operator on flat ground while the machine works slopes up to 61° — zero rollover exposure, and clear of poison ivy, snakes, and other hazards. Quick-change attachments turn a Robo into a mulcher, mower, stump grinder, ditch cleaner, blower, or forestry head — so your carrier keeps you earning all year long.`;
+    /* (1) Inject a centered Energreen Difference section above the lineup (mirrors HydroSpade/Mulch Mule). */
+    if(rcUnits && rcUnits.parentNode && !document.querySelector(`[data-soe=difference][data-soe-built=eg]`)){
+      var sec=document.createElement(`section`); sec.setAttribute(`data-soe`,`difference`); sec.setAttribute(`data-soe-built`,`eg`);
+      var head=document.createElement(`div`); head.setAttribute(`data-soe`,`difference-head`); head.setAttribute(`data-soe-state`,`in-view`);
+      var dh=document.createElement(`h2`); dh.setAttribute(`data-soe`,`difference-head-h2`); dh.textContent=`The Energreen Difference`;
+      var dp=document.createElement(`p`); dp.setAttribute(`data-soe`,`difference-head-lede`); dp.textContent=`Robos are designed to prioritize well-being, simplify operation, and deliver versatile solutions for demanding applications. Radio-controlled mowers and skid steers keep your operator on flat ground while the machine works slopes up to 61° — zero rollover exposure, and clear of poison ivy, snakes, and other hazards. Quick-change attachments turn a Robo into a mulcher, mower, stump grinder, ditch cleaner, blower, or forestry head — so your carrier keeps you earning all year long.`;
+      head.appendChild(dh); head.appendChild(dp); sec.appendChild(head);
+      rcUnits.parentNode.insertBefore(sec, rcUnits);
+    }
+    /* (2) rc-units head -> Choose your equipment + the Robo browse copy (mirrors the HydroSpade lineup). */
+    if(h2)h2.textContent=`Choose your equipment.`;
+    if(lede)lede.textContent=`Robo is Energreen’s evolving range of remote-controlled mowers and skid steers designed to offer different solutions, meet different needs, and consequently increase productivity. Browse below to see the specifications behind each remote-controlled mower and skid steer, such as how they promote operator safety through their design and handling as well as their versatility for many job sites and applications.`;
   }
 
   /* /brands: declutter cards + inject the per-brand "why" block. */
@@ -2279,7 +2295,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       if(lineup && lineup.parentNode){
         var sec=document.createElement(`section`);
         sec.setAttribute(`data-soe`,`videos`); sec.id=`hs-videos`;
-        sec.innerHTML=`<div data-soe="videos-head" data-soe-state="in-view"><span data-soe="hs-open-flag">Video coming soon</span><span data-soe="eyebrow" data-soe-state="in-view">See it in action</span><h2 data-soe="videos-h2">Watch the Hydro-Spade work</h2><p data-soe="videos-lede">Feature videos for the truck and trailer are coming soon.</p></div><div data-soe="hs-video-grid"><div data-soe="hs-video-ph"><span data-soe="hs-video-ph-play"></span><span>Truck — Video coming soon</span></div><div data-soe="hs-video-ph"><span data-soe="hs-video-ph-play"></span><span>Trailer — Video coming soon</span></div></div>`;
+        sec.innerHTML=`<div data-soe="videos-head" data-soe-state="in-view"><h2 data-soe="videos-h2">See it in Action</h2><p data-soe="videos-lede">Feature videos for the truck and trailer are coming soon.</p></div><div data-soe="hs-video-grid"><div data-soe="hs-video-ph"><span data-soe="hs-video-ph-play"></span><span>Truck — Video coming soon</span></div><div data-soe="hs-video-ph"><span data-soe="hs-video-ph-play"></span><span>Trailer — Video coming soon</span></div></div>`;
         lineup.parentNode.insertBefore(sec, lineup.nextSibling);
       }
     }
@@ -2659,4 +2675,41 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     html.setAttribute('data-soe-curtain','up');
     setTimeout(function(){ try{ if(c.parentNode) c.parentNode.removeChild(c); }catch(_e){} html.setAttribute('data-soe-curtain','off'); }, 850);
   });
+})();
+
+
+/* === boot-fixes-v2vv === 2026-06-21 owner change-out
+   - Homepage rotating banner "Explore X" CTAs: Metec -> /coming-soon; HydroSpade -> /hydrospade (was #).
+   - "Explore Smart Outdoor Products" Metec card + /brands Metec tile -> /coming-soon (no Metec page yet).
+   - /brands dealer-strip: approved supporting tagline; "Apply for Dealership" + "Dealer Portal" -> /coming-soon.
+   (Brinemasters removal, image swaps, brand-page centering live in boot-head.css; nav/footer menu data above.) */
+(function(){
+  function ready(fn){ if(document.readyState!==`loading`)fn(); else document.addEventListener(`DOMContentLoaded`,fn); }
+  function run(){
+    /* (1) Rotating-banner "Explore X" CTAs */
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=hero-slide] a`),function(a){
+      var t=(a.textContent||``).trim();
+      if(t===`Explore Metec`)a.setAttribute(`href`,`/coming-soon`);
+      else if(t===`Explore Hydro-Spade`||t===`Explore HydroSpade`)a.setAttribute(`href`,`/hydrospade`);
+    });
+    /* (2) Homepage "Explore Smart Outdoor Products" Metec card -> coming soon */
+    Array.prototype.forEach.call(document.querySelectorAll(`a[data-soe=brand-card-h]`),function(a){
+      var n=a.querySelector(`[data-soe=brand-card-name]`);
+      if(n && n.textContent.trim()===`Metec`)a.setAttribute(`href`,`/coming-soon`);
+    });
+    /* (3) /brands Metec tile -> coming soon */
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=brand-card]`),function(card){
+      var h3=card.querySelector(`[data-soe=brand-card-h3]`);
+      if(!h3 || h3.textContent.trim()!==`Metec`)return;
+      var link=card.querySelector(`[data-soe=brand-card-link-large]`);
+      if(link)link.setAttribute(`href`,`/coming-soon`);
+    });
+    /* (4) /brands dealer-strip: approved tagline + both CTAs -> coming soon */
+    var dsh=document.querySelector(`[data-soe=dealer-strip-h2]`);
+    if(dsh)dsh.textContent=`Let's build better outdoors by working smarter, not harder. Together.`;
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=dealer-strip-ctas] a`),function(a){
+      a.setAttribute(`href`,`/coming-soon`);
+    });
+  }
+  ready(run); setTimeout(run,600); setTimeout(run,1500);
 })();
