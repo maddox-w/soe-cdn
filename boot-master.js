@@ -1186,7 +1186,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     [`Equipment Consultants`,`/coming-soon`],
     [`Service Network`,`/coming-soon`],
     [`Find a Dealer`,`/coming-soon`],
-    [`Contact`,`#`],
+    [`Contact`,`mailto:info@smartoutdoorequipment.com`],
     [`New Customer Setup`,`/new-customer-setup`]
   ];
 
@@ -1332,7 +1332,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
         [`Equipment Consultants`,`/coming-soon`],
         [`Service Network`,`/coming-soon`],
         [`Find a Dealer`,`/coming-soon`],
-        [`Contact`,`#`],
+        [`Contact`,`mailto:info@smartoutdoorequipment.com`],
         [`New Customer Setup`,`/new-customer-setup`]
       ]}
     ];
