@@ -1214,3 +1214,8 @@ html [data-soe-anim=reveal][data-soe-curtain-flow]{
 #hs-difference [data-soe=difference-head]{text-align:center !important;}
 #hs-difference [data-soe=hs-diff-body]{margin-left:auto !important;margin-right:auto !important;text-align:center !important;}
 #hs-videos [data-soe=videos-head]{margin-left:auto !important;margin-right:auto !important;text-align:center !important;}
+
+/* 6-21 follow-up: HydroSpade lineup cards — dark navy behind the transparent truck/trailer
+   renders so they pop (fixes the "washed out" look on the old light-gray card). */
+#hs-lineup [data-soe=rc-unit-visual]{background-color:#0e2647 !important;}
+#hs-lineup [data-soe=rc-unit-card]{border-color:#0e2647 !important;}
