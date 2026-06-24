@@ -1248,3 +1248,5 @@ html:not([data-soe-chrome=ready]) [data-soe=top-util-left]{visibility:hidden !im
 .cs-lede{animation-delay:.66s;}
 .cs-btn{animation-delay:.74s;}
 @media (prefers-reduced-motion:reduce){.cs-inner > *{animation:none;}}
+/* Mega-menu non-link status label (e.g. Brine Makers "Coming Soon") — italic, not clickable */
+[data-soe=nav-dropdown-item][data-soe-soon]{font-style:italic !important;cursor:default !important;pointer-events:none !important;}

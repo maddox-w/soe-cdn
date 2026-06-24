@@ -1173,7 +1173,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       [`Non CDL Hydro Vac Truck`,`/hydrospade-trucks`],
       [`Hydro-Vac Trailer`,`/hydrospade-trailers`]
     ]},
-    {brand:`Brine Makers`, href:`/coming-soon`, items:[[`Coming Soon`,`/coming-soon`]]}
+    {brand:`Brine Makers`, href:`/coming-soon`, items:[[`Coming Soon`,``]]}
   ];
 
   var simpleMenus = {};
@@ -1280,7 +1280,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
             var aa = document.createElement(`a`);
             aa.setAttribute(`data-soe`, `nav-dropdown-item`);
             aa.setAttribute(`data-soe-kind`, `mega`);
-            aa.href = it[1];
+            if(it[1]){ aa.href = it[1]; } else { aa.setAttribute(`data-soe-soon`,``); }  /* empty href = non-link italic label (e.g. "Coming Soon") */
             aa.textContent = it[0];
             c.appendChild(aa);
           });
