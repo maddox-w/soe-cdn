@@ -1235,8 +1235,16 @@ html:not([data-soe-chrome=ready]) [data-soe=top-util-left]{visibility:hidden !im
    "Equipment Attachments & Implements" header wrapped to 3 lines and pushed its column down. */
 [data-soe=nav-dropdown][data-soe-menu=mega] [data-soe=nav-mega-col-h]{min-height:68px !important;display:flex !important;align-items:flex-end !important;}
 
-/* Coming-soon page: light hero so the white page-load curtain reveals it smoothly (the dark hero made
-   the white curtain swipe-up read as a stark white flash; every other page reveals light content). */
-.cs-wrap{background:#fff !important;}
-.cs-h1{color:#0E1110 !important;}
-.cs-lede{color:#6B746A !important;}
+
+/* Coming-soon page: keep the DARK hero so the white page-load curtain is visible both ways — it swipes
+   up to reveal on entry AND descends (close-the-door) over the dark hero when you click off. To keep the
+   entry from reading as a bare white-flash, the hero content eases in (pure-CSS stagger, fill:both so it
+   can never get stuck hidden) as the curtain lifts — same feel as every other page's above-the-fold reveal. */
+@keyframes csReveal{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+.cs-inner > *{animation:csReveal .7s cubic-bezier(.22,.61,.36,1) both;}
+.cs-mark{animation-delay:.40s;}
+.cs-eyebrow{animation-delay:.50s;}
+.cs-h1{animation-delay:.58s;}
+.cs-lede{animation-delay:.66s;}
+.cs-btn{animation-delay:.74s;}
+@media (prefers-reduced-motion:reduce){.cs-inner > *{animation:none;}}
