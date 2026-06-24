@@ -80,7 +80,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
 [data-soe=nav]{height:72px;padding:0 0 0 64px;align-items:stretch;top:40px;}
 [data-soe=nav-mark]{width:36px;height:36px;}
 [data-soe=nav-word]{font-size:17px;}
-[data-soe=nav-word-sub]{display:block;font-weight:500;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#6B746A;margin-top:5px;}
+[data-soe=nav-word-sub]{display:block;font-weight:500;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#A5ADA4;margin-top:5px;}
 [data-soe=nav-links]{display:flex;align-items:stretch;}
 [data-soe=nav-link]{padding:0 14px;font-size:14px;color:#fff;text-decoration:none;display:inline-flex;align-items:center;height:100%;white-space:nowrap;}
 [data-soe=nav-cta]{padding:0 26px;font-size:14px;letter-spacing:0;}
@@ -1250,3 +1250,7 @@ html:not([data-soe-chrome=ready]) [data-soe=top-util-left]{visibility:hidden !im
 @media (prefers-reduced-motion:reduce){.cs-inner > *{animation:none;}}
 /* Mega-menu non-link status label (e.g. Brine Makers "Coming Soon") — italic, not clickable */
 [data-soe=nav-dropdown-item][data-soe-soon]{font-style:italic !important;cursor:default !important;pointer-events:none !important;}
+
+
+/* a11y (WCAG 2.4.7): visible keyboard focus ring across the JS-built chrome + buttons */
+[data-soe=nav-link]:focus-visible,[data-soe=nav-cta]:focus-visible,[data-soe=nav-dropdown-item]:focus-visible,[data-soe=nav-mega-col-h]:focus-visible,[data-soe=btn]:focus-visible,[data-soe=top-util-link]:focus-visible,[data-soe=footer-col] a:focus-visible,[data-soe=footer-legal] a:focus-visible,[data-soe=footer-social] a:focus-visible,[data-soe=crumbs] a:focus-visible,[data-soe=nav-brand]:focus-visible,[data-soe=nav-hamburger]:focus-visible,[data-soe=drawer-close]:focus-visible,[data-soe=nav-drawer] a:focus-visible{outline:3px solid #FFAA33 !important;outline-offset:2px !important;}

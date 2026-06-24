@@ -5,7 +5,7 @@
   var amp = String.fromCharCode(38);
   var l = document.createElement(`link`);
   l.rel = `stylesheet`;
-  l.href = `https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800` + amp + `family=Inter:wght@300;400;500;600;700;800` + amp + `display=swap`;
+  l.href = `https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800` + amp + `family=Inter:wght@400;500;600;700;800` + amp + `display=swap`;
   document.head.appendChild(l);
 
   
@@ -476,7 +476,7 @@
   try{
     if(document.querySelector(`[data-soe=nav]`))return;            /* page already has chrome */
     var b=document.body; if(!b)return;
-    b.insertAdjacentHTML(`afterbegin`, `<header data-soe="top-util"><div data-soe="top-util-left"><a href="tel:+18123057545" data-soe="top-util-link" class="w-inline-block"><svg data-soe="top-util-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>(855) 419-9190</a><a href="mailto:info@smartoutdoorequipment.com" data-soe="top-util-link" data-soe-kind="email" class="w-inline-block"><svg data-soe="top-util-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>info@smartoutdoorequipment.com</a></div></header><nav data-soe="nav"><a aria-label="Open menu" data-soe="nav-hamburger" href="#" class="w-button"><span></span><span></span><span></span></a><div data-soe="nav-brand" class="soe-logo-nav-bg"></div><ul data-soe="nav-links" role="list"><li><a href="#" data-soe="nav-link">Products<span data-soe="nav-caret"></span></a></li><li><a href="/brands" data-soe="nav-link" data-soe-state="active" aria-current="page" class="w--current">Brands<span data-soe="nav-caret"></span></a></li><li><a href="#" data-soe="nav-link">Dealer Portal<span data-soe="nav-caret"></span></a></li><li><a href="#" data-soe="nav-link">Build &amp; Quote<span data-soe="nav-caret"></span></a></li><li><a href="#" data-soe="nav-link">Buy Parts</a></li><li><a href="#" data-soe="nav-link">Become a Dealer<span data-soe="nav-caret"></span></a></li><li><a href="#" data-soe="nav-link">About Us</a></li></ul><div data-soe="nav-spacer"></div><a href="#" data-soe="nav-cta">Request Info<span data-soe="arr"></span></a></nav><div aria-hidden="true" data-soe="nav-drawer"><a aria-label="Close menu" data-soe="drawer-close" href="#" class="w-button">×</a><ul role="list"><li><a href="/">Home</a></li><li><a href="#">Products</a></li><li><a href="/brands" aria-current="page" class="w--current">Brands</a></li><li><a href="#">Dealer Portal</a></li><li><a href="#">Build &amp; Quote</a></li><li><a href="#">Buy Parts</a></li><li><a href="#">Become a Dealer</a></li><li><a href="#">About Us</a></li></ul><div data-soe="drawer-contact"><a href="tel:+18123057545">📞 (855) 419-9190</a><a href="mailto:info@smartoutdoorequipment.com">✉ info@smartoutdoorequipment.com</a></div></div>`);
+    b.insertAdjacentHTML(`afterbegin`, `<header data-soe="top-util"><div data-soe="top-util-left"><a href="tel:+18554199190" data-soe="top-util-link" class="w-inline-block"><svg data-soe="top-util-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>(855) 419-9190</a><a href="mailto:info@smartoutdoorequipment.com" data-soe="top-util-link" data-soe-kind="email" class="w-inline-block"><svg data-soe="top-util-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>info@smartoutdoorequipment.com</a></div></header><nav data-soe="nav"><a aria-label="Open menu" data-soe="nav-hamburger" href="#" class="w-button"><span></span><span></span><span></span></a><div data-soe="nav-brand" class="soe-logo-nav-bg"></div><ul data-soe="nav-links" role="list"><li><a href="#" data-soe="nav-link">Products<span data-soe="nav-caret"></span></a></li><li><a href="/brands" data-soe="nav-link" data-soe-state="active" aria-current="page" class="w--current">Brands<span data-soe="nav-caret"></span></a></li><li><a href="#" data-soe="nav-link">Dealer Portal<span data-soe="nav-caret"></span></a></li><li><a href="#" data-soe="nav-link">Build &amp; Quote<span data-soe="nav-caret"></span></a></li><li><a href="#" data-soe="nav-link">Buy Parts</a></li><li><a href="#" data-soe="nav-link">Become a Dealer<span data-soe="nav-caret"></span></a></li><li><a href="#" data-soe="nav-link">About Us</a></li></ul><div data-soe="nav-spacer"></div><a href="#" data-soe="nav-cta">Request Info<span data-soe="arr"></span></a></nav><div aria-hidden="true" data-soe="nav-drawer"><a aria-label="Close menu" data-soe="drawer-close" href="#" class="w-button">×</a><ul role="list"><li><a href="/">Home</a></li><li><a href="#">Products</a></li><li><a href="/brands" aria-current="page" class="w--current">Brands</a></li><li><a href="#">Dealer Portal</a></li><li><a href="#">Build &amp; Quote</a></li><li><a href="#">Buy Parts</a></li><li><a href="#">Become a Dealer</a></li><li><a href="#">About Us</a></li></ul><div data-soe="drawer-contact"><a href="tel:+18554199190">📞 (855) 419-9190</a><a href="mailto:info@smartoutdoorequipment.com">✉ info@smartoutdoorequipment.com</a></div></div>`);
     if(!document.getElementById(`soe-nav-backdrop`)) b.insertAdjacentHTML(`beforeend`, `<div id="soe-nav-backdrop" class="soe-nav-backdrop"></div>`);
   }catch(e){}
 })();
@@ -615,7 +615,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
 [data-soe=nav]{height:72px;padding:0 0 0 64px;align-items:stretch;top:40px;}
 [data-soe=nav-mark]{width:36px;height:36px;}
 [data-soe=nav-word]{font-size:17px;}
-[data-soe=nav-word-sub]{display:block;font-weight:500;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#6B746A;margin-top:5px;}
+[data-soe=nav-word-sub]{display:block;font-weight:500;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#A5ADA4;margin-top:5px;}
 [data-soe=nav-links]{display:flex;align-items:stretch;}
 [data-soe=nav-link]{padding:0 14px;font-size:14px;color:#fff;text-decoration:none;display:inline-flex;align-items:center;height:100%;white-space:nowrap;}
 [data-soe=nav-cta]{padding:0 26px;font-size:14px;letter-spacing:0;}
@@ -1186,8 +1186,8 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   ];
   simpleMenus[`Build & Quote`] = [
     [`Equipment Attachments & Implements`,`/coming-soon`],
-    [`HydroSpade Trucks`,`/coming-soon`],
-    [`HydroSpade Trailers`,`/coming-soon`]
+    [`HydroSpade Trucks`,`/hydrospade-trucks`],
+    [`HydroSpade Trailers`,`/hydrospade-trailers`]
   ];
   simpleMenus[`Become a Dealer`] = [
     [`Mulch Mule`,`/coming-soon`],
@@ -1332,8 +1332,8 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       ]},
       {head:`Build & Quote`, items:[
         [`Equipment Attachments & Implements`,`/coming-soon`],
-        [`HydroSpade Trucks`,`/coming-soon`],
-        [`HydroSpade Trailers`,`/coming-soon`]
+        [`HydroSpade Trucks`,`/hydrospade-trucks`],
+        [`HydroSpade Trailers`,`/hydrospade-trailers`]
       ]},
       {head:`Become a Dealer`, items:[
         [`Mulch Mule`,`/coming-soon`],
@@ -1495,6 +1495,8 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   /* ---------- Request-quote: add HydroSpade to the Equipment Brand select (options aren't editable via the Designer API) ---------- */
   function addQuoteOption(){
     Array.prototype.forEach.call(document.querySelectorAll(`select`),function(sel){
+      /* drop the retired Brinemasters option (brand removed) */
+      Array.prototype.slice.call(sel.options).forEach(function(o){ if(o.value===`brinemasters`){ o.parentNode.removeChild(o); } });
       if(!Array.prototype.some.call(sel.options,function(o){return o.value===`mulch-mule`;})) return;
       if(Array.prototype.some.call(sel.options,function(o){return o.value===`hydrospade`;})) return;
       var opt=document.createElement(`option`); opt.value=`hydrospade`; opt.textContent=`Hydro-Spade`;
@@ -2336,7 +2338,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     setText(`#hs-truck-hero [data-soe=ru-hero-sub]`,`Non CDL Hydro Vac Truck`);
     setText(`#hs-truck-hero [data-soe=ru-hero-lede]`,`When it comes to specifying a hydro excavator, buyers tend to overlook the one question that matters most: chassis class. A unit mounted on a Class 5/6 non-CDL chassis opens the operator pool to anyone with a standard license, which changes scheduling math more than any spec on the data sheet. The tradeoff is payload ceiling, so the right move is matching tank size to the actual job mix instead of buying the biggest truck the yard can fit.`);
     fixSpecCta(TRUCK_PDF);
-    setDesc(`The Hydro-Spade truck pairs a 600 to 1200 gallon debris tank with a 5.5 to 10.5 GPM at 3,500 to 2,900 PSI water system, sized for residential potholing, utility daylighting, and tight-radius work where a full-size vac truck cannot maneuver. Position the nozzle anywhere with a 6-way articulating boom and simple hydraulic controls keep training short and diagnostics straightforward, with no computer modules between the operator and the work.`);
+    setDesc(`The Hydro-Spade truck pairs a 600 to 1200 gallon debris tank with a 5.5 to 10.5 GPM at 2,900 to 3,500 PSI water system, sized for residential potholing, utility daylighting, and tight-radius work where a full-size vac truck cannot maneuver. Position the nozzle anywhere with a 6-way articulating boom and simple hydraulic controls keep training short and diagnostics straightforward, with no computer modules between the operator and the work.`);
     setText(`[data-soe=ru-specs-head] [data-soe=eyebrow]`,`Technical Data`);
   }
 
