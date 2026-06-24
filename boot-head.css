@@ -1229,3 +1229,8 @@ html [data-soe-anim=reveal][data-soe-curtain-flow]{
 html:not([data-soe-chrome=ready]) [data-soe=nav-links],
 html:not([data-soe-chrome=ready]) [data-soe=nav-cta],
 html:not([data-soe-chrome=ready]) [data-soe=top-util-left]{visibility:hidden !important;}
+
+
+/* Equipment mega-menu: equal-height column headers so each column's list lines up. The long
+   "Equipment Attachments & Implements" header wrapped to 3 lines and pushed its column down. */
+[data-soe=nav-dropdown][data-soe-menu=mega] [data-soe=nav-mega-col-h]{min-height:68px !important;display:flex !important;align-items:flex-end !important;}

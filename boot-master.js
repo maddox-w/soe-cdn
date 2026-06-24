@@ -1162,17 +1162,18 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       [`RoboEVO`,`/roboevo`],
       [`RoboMIDI`,`/robomidi`]
     ]},
-    {brand:`Equipment Attachments & Implements`, href:`/brands`, items:[
-      [`Snow Blowers`,`/brands`],
-      [`Angle Plows`,`/brands`],
-      [`V-Plows`,`/brands`],
-      [`Sweepers`,`/brands`],
-      [`Spreaders`,`/brands`]
+    {brand:`Equipment Attachments & Implements`, href:`/coming-soon`, items:[
+      [`Snow Blowers`,`/coming-soon`],
+      [`Angle Plows`,`/coming-soon`],
+      [`V-Plows`,`/coming-soon`],
+      [`Sweepers`,`/coming-soon`],
+      [`Spreaders`,`/coming-soon`]
     ]},
     {brand:`Hydroexcavation`, href:`/hydrospade`, items:[
       [`Non CDL Hydro Vac Truck`,`/hydrospade-trucks`],
       [`Hydro-Vac Trailer`,`/hydrospade-trailers`]
     ]},
+    {brand:`Brine Makers`, href:`/coming-soon`, items:[]}
   ];
 
   var simpleMenus = {};
@@ -2234,8 +2235,8 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   function ready(fn){ if(document.readyState!==`loading`)fn(); else document.addEventListener(`DOMContentLoaded`,fn); }
   var path=(location.pathname.replace(/\/+$/,``)||`/`).toLowerCase();
 
-  var TRUCK_PDF=`https://cdn.prod.website-files.com/63973ef8821dc83f55bb5a2f/63d2bf4bbc9686ddd8c051ef_Hydro-Spade-600%3A800%3A1200-Single-Axle-Truck-Product-Specs.pdf`;
-  var TRAILER_PDF=`https://cdn.prod.website-files.com/63973ef8821dc83f55bb5a2f/63d2bf4b7fe3f55ad55e1ed8_Hydro-Spade-400%3A600%3A800-Trailer-Product-Specs.pdf`;
+  var TRUCK_PDF=`https://cdn.jsdelivr.net/gh/maddox-w/soe-cdn@main/hydrospade-truck-specs.pdf`;
+  var TRAILER_PDF=`https://cdn.jsdelivr.net/gh/maddox-w/soe-cdn@main/hydrospade-trailer-specs.pdf`;
 
   function setText(sel,txt){ var el=document.querySelector(sel); if(el)el.textContent=txt; return el; }
 
@@ -2721,6 +2722,10 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     if(dsh)dsh.textContent=`Let's build better outdoors by working smarter, not harder. Together.`;
     Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=dealer-strip-ctas] a`),function(a){
       a.setAttribute(`href`,`/coming-soon`);
+    });
+    /* (5) Homepage banner: Hydro-Spade slide lede -> full brand-page line (match /hydrospade). */
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=hero-slide] [data-soe=hero-lede]`),function(l){
+      if((l.textContent||``).trim()===`Designed with your work in mind.`) l.textContent=`Designed with your work in mind — Super versatile. Easy to operate. Easy to maintain.`;
     });
   }
   ready(run); setTimeout(run,600); setTimeout(run,1500);
