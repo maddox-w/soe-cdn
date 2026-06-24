@@ -2701,3 +2701,27 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   else setTimeout(run,0);
   setTimeout(run,450); setTimeout(run,1300);
 })();
+
+/* === boot-fixes-v2zz2 === HydroSpade truck/trailer lead forms were copied from the RoboECO page as a
+   shared form symbol (same data-wf-element-id on both), so every submission came in mislabeled
+   "RoboECO Inquiry" with hidden Product=RoboECO. Correct the form name + Product value per page at
+   runtime, and clear the stray hidden-field placeholder. The permanent fix is to unlink/override the
+   form symbol in the Webflow Designer; this guarantees correctly-labeled leads in the meantime. */
+(function(){
+  var map={
+    "/hydrospade-trucks":   {product:`Hydro-Spade Trucks`,   form:`Hydro-Spade Trucks Inquiry`},
+    "/hydrospade-trailers": {product:`Hydro-Spade Trailers`, form:`Hydro-Spade Trailers Inquiry`}
+  };
+  var cfg=map[(location.pathname||``).replace(/\/+$/,``)];
+  if(!cfg)return;
+  function fix(){
+    var form=document.querySelector(`form[data-soe=ru-form-el]`);
+    if(!form)return;
+    if(form.getAttribute(`data-name`)!==cfg.form) form.setAttribute(`data-name`,cfg.form);
+    var hidden=form.querySelector(`input[name=Product]`);
+    if(hidden){ hidden.value=cfg.product; hidden.setAttribute(`value`,cfg.product); hidden.removeAttribute(`placeholder`); }
+  }
+  if(document.readyState===`loading`) document.addEventListener(`DOMContentLoaded`,fix);
+  else fix();
+  setTimeout(fix,400);
+})();
