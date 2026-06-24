@@ -1194,9 +1194,9 @@ html [data-soe-anim=reveal][data-soe-curtain-flow]{
 [data-soe=p-hero] [data-soe=p-hero-bg]{background-image:url("mulchmule-jobsite.jpg") !important;background-position:center !important;}
 
 /* HydroSpade — job-site trailer photo: banner slide 5, explore grid 5, brands grid 5 */
-[data-soe=hero-slide]:nth-child(5) [data-soe=hero-bg]{background-image:url("hydrospade-trailer-jobsite.png") !important;background-position:center !important;background-size:cover !important;}
-[data-soe=brand-grid] a:nth-child(5) [data-soe=brand-card-visual]{background-image:url("hydrospade-trailer-jobsite.png") !important;background-position:center !important;background-size:cover !important;}
-[data-soe=brands-list-grid] article:nth-child(5) [data-soe=brand-card-visual-l]{background-image:url("hydrospade-trailer-jobsite.png") !important;background-position:center !important;background-size:cover !important;}
+[data-soe=hero-slide]:nth-child(5) [data-soe=hero-bg]{background-image:url("hydrospade-trailer-jobsite.jpg") !important;background-position:center !important;background-size:cover !important;}
+[data-soe=brand-grid] a:nth-child(5) [data-soe=brand-card-visual]{background-image:url("hydrospade-trailer-jobsite.jpg") !important;background-position:center !important;background-size:cover !important;}
+[data-soe=brands-list-grid] article:nth-child(5) [data-soe=brand-card-visual-l]{background-image:url("hydrospade-trailer-jobsite.jpg") !important;background-position:center !important;background-size:cover !important;}
 
 /* Brinemasters retired — hide its banner slide + explore card + brands card. DOM order preserved so the
    nth-child background-image mapping for the OTHER brands stays correct. */
