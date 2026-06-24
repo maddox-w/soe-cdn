@@ -1188,10 +1188,10 @@ html [data-soe-anim=reveal][data-soe-curtain-flow]{
    ============================================================ */
 
 /* Mulch Mule — real-looking job-site photo: banner slide 1, explore grid 1, brands grid 1, MM page hero */
-[data-soe=hero-slide]:nth-child(1) [data-soe=hero-bg]{background-image:url("mulchmule-jobsite.png") !important;background-position:center !important;}
-[data-soe=brand-grid] a:nth-child(1) [data-soe=brand-card-visual]{background-image:url("mulchmule-jobsite.png") !important;background-position:center !important;}
-[data-soe=brands-list-grid] article:nth-child(1) [data-soe=brand-card-visual-l]{background-image:url("mulchmule-jobsite.png") !important;background-position:center !important;}
-[data-soe=p-hero] [data-soe=p-hero-bg]{background-image:url("mulchmule-jobsite.png") !important;background-position:center !important;}
+[data-soe=hero-slide]:nth-child(1) [data-soe=hero-bg]{background-image:url("mulchmule-jobsite.jpg") !important;background-position:center !important;}
+[data-soe=brand-grid] a:nth-child(1) [data-soe=brand-card-visual]{background-image:url("mulchmule-jobsite.jpg") !important;background-position:center !important;}
+[data-soe=brands-list-grid] article:nth-child(1) [data-soe=brand-card-visual-l]{background-image:url("mulchmule-jobsite.jpg") !important;background-position:center !important;}
+[data-soe=p-hero] [data-soe=p-hero-bg]{background-image:url("mulchmule-jobsite.jpg") !important;background-position:center !important;}
 
 /* HydroSpade — job-site trailer photo: banner slide 5, explore grid 5, brands grid 5 */
 [data-soe=hero-slide]:nth-child(5) [data-soe=hero-bg]{background-image:url("hydrospade-trailer-jobsite.png") !important;background-position:center !important;background-size:cover !important;}
