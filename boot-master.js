@@ -16,12 +16,51 @@
     var drawer = document.querySelector(`[data-soe=nav-drawer]`);
     var closeBtn = document.querySelector(`[data-soe=drawer-close]`);
     if(!ham || !drawer)return;
-    function open(){drawer.setAttribute(`data-soe-state`,`open`);document.body.style.overflow=`hidden`;}
-    function close(){drawer.removeAttribute(`data-soe-state`);document.body.style.overflow=``;}
-    ham.addEventListener(`click`,open);
-    if(closeBtn)closeBtn.addEventListener(`click`,close);
+    if(!drawer.id) drawer.id = `soe-nav-drawer`;
+    ham.setAttribute(`aria-controls`, drawer.id);
+    ham.setAttribute(`aria-haspopup`, `true`);
+    ham.setAttribute(`aria-expanded`, `false`);
+    if(!ham.getAttribute(`aria-label`)) ham.setAttribute(`aria-label`, `Open menu`);
+    drawer.setAttribute(`role`, `dialog`);
+    drawer.setAttribute(`aria-modal`, `true`);
+    drawer.setAttribute(`aria-label`, `Site menu`);
+    drawer.setAttribute(`aria-hidden`, `true`);
+    try{ drawer.inert = true; }catch(e){}
+    var lastFocus = null;
+    function trapKeys(e){
+      if(e.key === `Escape`){ close(); return; }
+      if(e.key !== `Tab`)return;
+      var f = Array.prototype.slice.call(drawer.querySelectorAll(`a[href],button,[tabindex]`))
+                .filter(function(el){ return el.offsetWidth || el.offsetHeight || el === closeBtn; });
+      if(!f.length)return;
+      var first = f[0], last = f[f.length-1];
+      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+    function open(){
+      lastFocus = document.activeElement;
+      drawer.setAttribute(`data-soe-state`,`open`);
+      drawer.setAttribute(`aria-hidden`,`false`);
+      try{ drawer.inert = false; }catch(e){}
+      ham.setAttribute(`aria-expanded`,`true`);
+      ham.setAttribute(`aria-label`,`Close menu`);
+      document.body.style.overflow=`hidden`;
+      document.addEventListener(`keydown`,trapKeys,true);
+      if(closeBtn && closeBtn.focus) try{ closeBtn.focus(); }catch(e){}
+    }
+    function close(){
+      drawer.removeAttribute(`data-soe-state`);
+      drawer.setAttribute(`aria-hidden`,`true`);
+      try{ drawer.inert = true; }catch(e){}
+      ham.setAttribute(`aria-expanded`,`false`);
+      ham.setAttribute(`aria-label`,`Open menu`);
+      document.body.style.overflow=``;
+      document.removeEventListener(`keydown`,trapKeys,true);
+      if(lastFocus && lastFocus.focus) try{ lastFocus.focus(); }catch(e){}
+    }
+    ham.addEventListener(`click`,function(e){e.preventDefault();open();});
+    if(closeBtn)closeBtn.addEventListener(`click`,function(e){e.preventDefault();close();});
     drawer.querySelectorAll(`a`).forEach(function(a){a.addEventListener(`click`,function(){setTimeout(close,50);});});
-    document.addEventListener(`keydown`,function(e){if(e.key === `Escape`)close();});
   }
 
   function initRotator(){
@@ -149,50 +188,9 @@
     }
   }
 
-  function initSwipeRotator(){
-    var stage=document.querySelector(`[data-soe=hero-stage]`);
-    if(!stage)return;
-    var oldSlides=stage.querySelectorAll(`[data-soe=hero-slide]`);
-    if(oldSlides.length === 0)return;
-    var newSlides=[];
-    oldSlides.forEach(function(sl){
-      var clone=sl.cloneNode(true);
-      sl.parentNode.replaceChild(clone,sl);
-      newSlides.push(clone);
-    });
-    newSlides.forEach(function(sl,idx){
-      if(idx === 0)sl.setAttribute(`data-soe-state`,`active`);
-      else sl.removeAttribute(`data-soe-state`);
-    });
-    var i=0;
-    function go(n){
-      if(n === i)return;
-      var prevIdx=i;
-      newSlides.forEach(function(sl,idx){
-        sl.removeAttribute(`data-soe-state`);
-        if(idx === prevIdx)sl.setAttribute(`data-soe-state`,`prev`);
-        if(idx === n)sl.setAttribute(`data-soe-state`,`active`);
-      });
-      setTimeout(function(){
-        newSlides.forEach(function(sl){
-          if(sl.getAttribute(`data-soe-state`) === `prev`)sl.removeAttribute(`data-soe-state`);
-        });
-      },950);
-      i=n;
-    }
-    function next(){go((i+1)%newSlides.length);}
-    var hero=document.querySelector(`[data-soe=hero]`);
-    var t=setInterval(next,6000);
-    if(hero){
-      hero.addEventListener(`mouseenter`,function(){clearInterval(t);});
-      hero.addEventListener(`mouseleave`,function(){t=setInterval(next,6000);});
-    }
-  }
-
   function init(){
     fixDrawerIcons();
     removeFooterLocation();
-    initSwipeRotator();
   }
   if(document.readyState === `loading`){
     document.addEventListener(`DOMContentLoaded`,init);
@@ -205,54 +203,7 @@
 (function(){
   
 
-  function initSwipeRotator2(){
-    var stage=document.querySelector(`[data-soe=hero-stage]`);
-    if(!stage)return;
-    var oldSlides=stage.querySelectorAll(`[data-soe=hero-slide]`);
-    if(oldSlides.length === 0)return;
-    var newSlides=[];
-    oldSlides.forEach(function(sl){
-      var clone=sl.cloneNode(true);
-      sl.parentNode.replaceChild(clone,sl);
-      newSlides.push(clone);
-    });
-    newSlides.forEach(function(sl,idx){
-      if(idx === 0)sl.setAttribute(`data-soe-state`,`active`);
-      else sl.removeAttribute(`data-soe-state`);
-    });
-    var i=0;
-    var transitioning=false;
-    function go(n){
-      if(n === i || transitioning)return;
-      transitioning=true;
-      var prevIdx=i;
-      newSlides.forEach(function(sl,idx){
-        sl.removeAttribute(`data-soe-state`);
-        if(idx === prevIdx)sl.setAttribute(`data-soe-state`,`prev`);
-        if(idx === n)sl.setAttribute(`data-soe-state`,`active`);
-      });
-      setTimeout(function(){
-        newSlides.forEach(function(sl){
-          if(sl.getAttribute(`data-soe-state`) === `prev`)sl.removeAttribute(`data-soe-state`);
-        });
-        transitioning=false;
-      },1500);
-      i=n;
-    }
-    function next(){go((i+1)%newSlides.length);}
-    var hero=document.querySelector(`[data-soe=hero]`);
-    var t=null;
-    function start(){if(t)clearInterval(t);t=setInterval(next,7000);}
-    function stop(){if(t){clearInterval(t);t=null;}}
-    if(hero){
-      hero.addEventListener(`mouseenter`,stop);
-      hero.addEventListener(`mouseleave`,start);
-    }
-    start();
-  }
-
   function init(){
-    initSwipeRotator2();
   }
   if(document.readyState === `loading`){
     document.addEventListener(`DOMContentLoaded`,init);
@@ -415,52 +366,8 @@
     nodes.forEach(function(n){io.observe(n);});
   }
 
-  function initSwipeRotator3(){
-    var stage=document.querySelector(`[data-soe=hero-stage]`);
-    if(!stage)return;
-    var oldSlides=stage.querySelectorAll(`[data-soe=hero-slide]`);
-    if(oldSlides.length === 0)return;
-    var newSlides=[];
-    oldSlides.forEach(function(sl){
-      var clone=sl.cloneNode(true);
-      sl.parentNode.replaceChild(clone,sl);
-      newSlides.push(clone);
-    });
-    newSlides.forEach(function(sl,idx){
-      if(idx === 0){sl.setAttribute(`data-soe-state`,`active`);}
-      else{sl.removeAttribute(`data-soe-state`);}
-    });
-    var i=0;
-    function go(n){
-      if(n === i)return;
-      var prevIdx=i;
-      newSlides.forEach(function(sl,idx){
-        if(idx === n){sl.setAttribute(`data-soe-state`,`active`);}
-        else if(idx === prevIdx){sl.setAttribute(`data-soe-state`,`prev`);}
-        else{sl.removeAttribute(`data-soe-state`);}
-      });
-      setTimeout(function(){
-        newSlides.forEach(function(sl){
-          if(sl.getAttribute(`data-soe-state`) === `prev`)sl.removeAttribute(`data-soe-state`);
-        });
-      },2100);
-      i=n;
-    }
-    function next(){go((i+1)%newSlides.length);}
-    var hero=document.querySelector(`[data-soe=hero]`);
-    var t=null;
-    function start(){if(t)clearInterval(t);t=setInterval(next,8000);}
-    function stop(){if(t){clearInterval(t);t=null;}}
-    if(hero){
-      hero.addEventListener(`mouseenter`,stop);
-      hero.addEventListener(`mouseleave`,start);
-    }
-    start();
-  }
-
   function init(){
     observeEyebrows();
-    initSwipeRotator3();
   }
   if(document.readyState === `loading`){
     document.addEventListener(`DOMContentLoaded`,init);
@@ -640,21 +547,16 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   };
   function url(file,w,q){return cdn+file+`?w=`+w+amp+`q=`+q+amp+`fm=webp`;}
 
-  var pm=document.createElement(`link`);
-  pm.rel=`preload`;
-  pm.as=`image`;
-  pm.href=url(imgs.mm,900,78);
-  pm.setAttribute(`media`,`(max-width:720px)`);
-  pm.fetchPriority=`high`;
-  document.head.appendChild(pm);
-
-  var pd=document.createElement(`link`);
-  pd.rel=`preload`;
-  pd.as=`image`;
-  pd.href=url(imgs.mm,1800,85);
-  pd.setAttribute(`media`,`(min-width:721px)`);
-  pd.fetchPriority=`high`;
-  document.head.appendChild(pd);
+  /* Preload the ACTUAL homepage LCP image: banner slide 1 background is soe-cdn/mulchmule-jobsite.jpg
+     (boot-head.css). Derive the CDN base from the stylesheet href so the preload URL matches the
+     painted background exactly (same commit, no query) and the browser reuses it. Homepage only. */
+  if(location.pathname===`/`){
+    var _css=document.querySelector(`link[rel=stylesheet][href*="soe-cdn"][href*="boot-head.css"]`);
+    var _base=_css ? _css.href.replace(/boot-head\.css.*$/,``) : `https://cdn.jsdelivr.net/gh/maddox-w/soe-cdn@main/`;
+    var pm=document.createElement(`link`);
+    pm.rel=`preload`; pm.as=`image`; pm.href=_base+`mulchmule-jobsite.webp`; pm.fetchPriority=`high`;
+    document.head.appendChild(pm);
+  }
 
   function r(sel,file,w,q){return sel+`{background-image:url(`+url(file,w,q)+`) !important;}`;}
 
@@ -1601,7 +1503,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     var map={"Energreen":"eg-hero-logo-bg-sm","Brinemasters":"bm-hero-logo-bg-sm","Metec":"mt-hero-logo-bg-sm","HydroSpade":"hs-hero-logo-bg-sm"};
     Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=hero-stage] [data-soe=hero-brand-tag]`),function(tag){
       var _t=(tag.textContent||``).trim(); var cls=map[_t]||map[_t.replace(/-/g,``)];
-      if(cls && !tag.classList.contains(cls)){ tag.classList.add(cls); tag.textContent=``; }
+      if(cls && !tag.classList.contains(cls)){ tag.classList.add(cls); tag.setAttribute(`role`,`img`); tag.setAttribute(`aria-label`,_t); tag.textContent=``; }
     });
   }
 
@@ -2743,4 +2645,59 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   function reveal(){ try{ document.documentElement.setAttribute(`data-soe-chrome`,`ready`); }catch(e){} }
   function go(){ if(window.requestAnimationFrame) requestAnimationFrame(reveal); else reveal(); }
   if(document.readyState===`loading`) document.addEventListener(`DOMContentLoaded`,go); else go();
+})();
+
+
+/* === boot-fixes-v2zz === Accessibility pass: keyboard-operable desktop nav dropdowns
+   (aria-haspopup/expanded/controls + :focus-within reveal in CSS), keyboard-activatable
+   logo, and removal of the injected chrome's hard-coded aria-current on non-matching pages.
+   Self-schedules after the JS-built chrome (rebuildNav) and re-runs for its idempotent rebuilds. */
+(function(){
+  var seq=0;
+  function enhanceDropdowns(){
+    var wraps=document.querySelectorAll(`[data-soe=nav-link-wrap]`);
+    Array.prototype.forEach.call(wraps,function(wrap){
+      var trigger=wrap.querySelector(`[data-soe=nav-link]`);
+      var dd=wrap.querySelector(`[data-soe=nav-dropdown]`);
+      if(!trigger||!dd)return;
+      if(trigger.getAttribute(`data-soe-a11y`)===`1`)return;
+      trigger.setAttribute(`data-soe-a11y`,`1`);
+      if(!dd.id){ seq++; dd.id=`soe-nav-dd-`+seq; }
+      trigger.setAttribute(`aria-haspopup`,`true`);
+      trigger.setAttribute(`aria-expanded`,`false`);
+      trigger.setAttribute(`aria-controls`,dd.id);
+      function setExp(v){ trigger.setAttribute(`aria-expanded`, v?`true`:`false`); }
+      wrap.addEventListener(`mouseenter`,function(){setExp(true);});
+      wrap.addEventListener(`mouseleave`,function(){setExp(false);});
+      wrap.addEventListener(`focusin`,function(){setExp(true);});
+      wrap.addEventListener(`focusout`,function(){ setTimeout(function(){ if(!wrap.contains(document.activeElement))setExp(false); },0); });
+      var href=(trigger.getAttribute(`href`)||``);
+      if(href===`#`||href===``){ trigger.addEventListener(`click`,function(e){ e.preventDefault(); }); }
+      trigger.addEventListener(`keydown`,function(e){ if(e.key===`Escape`){ setExp(false); if(trigger.blur)trigger.blur(); } });
+    });
+  }
+  function fixLogo(){
+    var brand=document.querySelector(`[data-soe=nav-brand]`);
+    if(!brand||brand.getAttribute(`data-soe-a11y`)===`1`)return;
+    brand.setAttribute(`data-soe-a11y`,`1`);
+    if(brand.tagName!==`A`){
+      brand.setAttribute(`role`,`link`);
+      if(!brand.hasAttribute(`tabindex`)) brand.setAttribute(`tabindex`,`0`);
+      brand.setAttribute(`aria-label`,`Smart Outdoor Equipment — home`);
+      brand.addEventListener(`keydown`,function(e){
+        if(e.key===`Enter`||e.key===`Spacebar`||e.key===` `){ e.preventDefault(); (window.__soeCloseAndGo||function(u){location.href=u;})(`/`); }
+      });
+    }
+  }
+  function fixAriaCurrent(){
+    var path=(location.pathname||`/`).replace(/\/+$/,``)||`/`;
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=nav] a[aria-current],[data-soe=nav-drawer] a[aria-current]`),function(a){
+      var h=(a.getAttribute(`href`)||``).replace(/\/+$/,``)||`/`;
+      if(h!==path){ a.removeAttribute(`aria-current`); if(a.classList)a.classList.remove(`w--current`); }
+    });
+  }
+  function run(){ try{enhanceDropdowns();}catch(e){} try{fixLogo();}catch(e){} try{fixAriaCurrent();}catch(e){} }
+  if(document.readyState===`loading`) document.addEventListener(`DOMContentLoaded`,function(){ setTimeout(run,0); });
+  else setTimeout(run,0);
+  setTimeout(run,450); setTimeout(run,1300);
 })();

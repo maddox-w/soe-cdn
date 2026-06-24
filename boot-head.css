@@ -705,13 +705,13 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 
 /* AA1: Energreen unit cards — real photos. ECO/EVO/FIFTI/MIDI/MAX = action shots (ECO style);
    COMPACT + PLUS = current official Energreen renders (no action photo exists publicly for those two). */
-[data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(1) [data-soe=rc-unit-visual]{background-image:url(robocompact-card.jpg) !important;background-size:cover !important;background-color:#fff !important;}
-[data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(2) [data-soe=rc-unit-visual]{background-image:url(roboeco-card.jpg) !important;background-size:cover !important;background-color:#fff !important;}
-[data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(3) [data-soe=rc-unit-visual]{background-image:url(roboevo-card.jpg) !important;background-size:cover !important;background-color:#fff !important;}
+[data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(1) [data-soe=rc-unit-visual]{background-image:url(robocompact-card.webp) !important;background-size:cover !important;background-color:#fff !important;}
+[data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(2) [data-soe=rc-unit-visual]{background-image:url(roboeco-card.webp) !important;background-size:cover !important;background-color:#fff !important;}
+[data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(3) [data-soe=rc-unit-visual]{background-image:url(roboevo-card.webp) !important;background-size:cover !important;background-color:#fff !important;}
 [data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(4) [data-soe=rc-unit-visual]{background-image:url(robofifti-card.jpg) !important;background-size:cover !important;background-color:#fff !important;}
-[data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(5) [data-soe=rc-unit-visual]{background-image:url(robomidi-card.jpg) !important;background-size:cover !important;background-color:#fff !important;}
+[data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(5) [data-soe=rc-unit-visual]{background-image:url(robomidi-card.webp) !important;background-size:cover !important;background-color:#fff !important;}
 [data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(6) [data-soe=rc-unit-visual]{background-image:url(robomax-card.jpg) !important;background-size:cover !important;background-color:#fff !important;}
-[data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(7) [data-soe=rc-unit-visual]{background-image:url(roboplus-card.jpg) !important;background-size:cover !important;background-color:#fff !important;}
+[data-soe=rc-units-grid] [data-soe=rc-unit-card]:nth-child(7) [data-soe=rc-unit-visual]{background-image:url(roboplus-card.webp) !important;background-size:cover !important;background-color:#fff !important;}
 
 /* AA2: Energreen difference head — drop the "Why it works" eyebrow, add space before the paragraph. */
 [data-soe=rc-units-head] [data-soe=eyebrow]{display:none !important;}
@@ -1188,15 +1188,15 @@ html [data-soe-anim=reveal][data-soe-curtain-flow]{
    ============================================================ */
 
 /* Mulch Mule — real-looking job-site photo: banner slide 1, explore grid 1, brands grid 1, MM page hero */
-[data-soe=hero-slide]:nth-child(1) [data-soe=hero-bg]{background-image:url("mulchmule-jobsite.jpg") !important;background-position:center !important;}
-[data-soe=brand-grid] a:nth-child(1) [data-soe=brand-card-visual]{background-image:url("mulchmule-jobsite.jpg") !important;background-position:center !important;}
-[data-soe=brands-list-grid] article:nth-child(1) [data-soe=brand-card-visual-l]{background-image:url("mulchmule-jobsite.jpg") !important;background-position:center !important;}
-[data-soe=p-hero] [data-soe=p-hero-bg]{background-image:url("mulchmule-jobsite.jpg") !important;background-position:center !important;}
+[data-soe=hero-slide]:nth-child(1) [data-soe=hero-bg]{background-image:url("mulchmule-jobsite.webp") !important;background-position:center !important;}
+[data-soe=brand-grid] a:nth-child(1) [data-soe=brand-card-visual]{background-image:url("mulchmule-jobsite.webp") !important;background-position:center !important;}
+[data-soe=brands-list-grid] article:nth-child(1) [data-soe=brand-card-visual-l]{background-image:url("mulchmule-jobsite.webp") !important;background-position:center !important;}
+[data-soe=p-hero] [data-soe=p-hero-bg]{background-image:url("mulchmule-jobsite.webp") !important;background-position:center !important;}
 
 /* HydroSpade — job-site trailer photo: banner slide 5, explore grid 5, brands grid 5 */
-[data-soe=hero-slide]:nth-child(5) [data-soe=hero-bg]{background-image:url("hydrospade-trailer-jobsite.jpg") !important;background-position:center !important;background-size:cover !important;}
-[data-soe=brand-grid] a:nth-child(5) [data-soe=brand-card-visual]{background-image:url("hydrospade-trailer-jobsite.jpg") !important;background-position:center !important;background-size:cover !important;}
-[data-soe=brands-list-grid] article:nth-child(5) [data-soe=brand-card-visual-l]{background-image:url("hydrospade-trailer-jobsite.jpg") !important;background-position:center !important;background-size:cover !important;}
+[data-soe=hero-slide]:nth-child(5) [data-soe=hero-bg]{background-image:url("hydrospade-trailer-jobsite.webp") !important;background-position:center !important;background-size:cover !important;}
+[data-soe=brand-grid] a:nth-child(5) [data-soe=brand-card-visual]{background-image:url("hydrospade-trailer-jobsite.webp") !important;background-position:center !important;background-size:cover !important;}
+[data-soe=brands-list-grid] article:nth-child(5) [data-soe=brand-card-visual-l]{background-image:url("hydrospade-trailer-jobsite.webp") !important;background-position:center !important;background-size:cover !important;}
 
 /* Brinemasters retired — hide its banner slide + explore card + brands card. DOM order preserved so the
    nth-child background-image mapping for the OTHER brands stays correct. */
@@ -1254,3 +1254,7 @@ html:not([data-soe-chrome=ready]) [data-soe=top-util-left]{visibility:hidden !im
 
 /* a11y (WCAG 2.4.7): visible keyboard focus ring across the JS-built chrome + buttons */
 [data-soe=nav-link]:focus-visible,[data-soe=nav-cta]:focus-visible,[data-soe=nav-dropdown-item]:focus-visible,[data-soe=nav-mega-col-h]:focus-visible,[data-soe=btn]:focus-visible,[data-soe=top-util-link]:focus-visible,[data-soe=footer-col] a:focus-visible,[data-soe=footer-legal] a:focus-visible,[data-soe=footer-social] a:focus-visible,[data-soe=crumbs] a:focus-visible,[data-soe=nav-brand]:focus-visible,[data-soe=nav-hamburger]:focus-visible,[data-soe=drawer-close]:focus-visible,[data-soe=nav-drawer] a:focus-visible{outline:3px solid #FFAA33 !important;outline-offset:2px !important;}
+
+/* === a11y: keyboard-operable nav dropdowns — reveal on focus-within, mirroring the :hover rule
+   (desktop only; the mobile media query keeps [data-soe=nav-dropdown] display:none so this no-ops there) === */
+[data-soe=nav-link-wrap]:focus-within [data-soe=nav-dropdown]{opacity:1 !important;visibility:visible !important;transform:translateY(0) !important;}
