@@ -2449,13 +2449,15 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     el.setAttribute(`data-soe-counted`,`1`);
     var target=parseInt((el.textContent||``).replace(/[^0-9]/g,``),10);
     if(!target)return;
+    var start=(new Date()).getFullYear();
+    if(start<=target)start=target+58;   /* clock-skew safety: always count DOWN a sensible span into the founding year */
     if(reduce){ el.textContent=String(target); return; }
     var dur=1900, t0=null;
     function ease(p){ return p>=1?1:1-Math.pow(2,-10*p); }   /* easeOutExpo — fast ramp, pronounced slow-down into 1968 */
     function frame(ts){
       if(t0===null)t0=ts;
       var p=(ts-t0)/dur; if(p>1)p=1;
-      el.textContent=String(Math.round(target*ease(p)));
+      el.textContent=String(Math.round(start+(target-start)*ease(p)));
       if(p<1)requestAnimationFrame(frame); else el.textContent=String(target);
     }
     requestAnimationFrame(frame);
@@ -2467,9 +2469,9 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     if(year && !year.getAttribute(`data-soe-cwired`)){
       year.setAttribute(`data-soe-cwired`,`1`);
       if(!reduce && typeof IntersectionObserver!==`undefined`){
-        /* Leave "1968" showing (fail-safe: worst case shows the real year, never a stuck "0").
-           countUp's first frame resets to 0 and ramps — and on a hidden tab rAF is paused, so it
-           simply stays "1968" until the tab is visible, then animates. */
+        /* Leave "1968" showing (fail-safe: worst case shows the founding year, never a stuck number).
+           countUp's first frame jumps to the current year and counts DOWN — and on a hidden tab rAF is
+           paused, so it simply stays "1968" until the tab is visible, then animates. */
         var cio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){countUp(e.target);cio.unobserve(e.target);}});},{threshold:0.45});
         cio.observe(year);
       }
