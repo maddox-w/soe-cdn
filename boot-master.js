@@ -2616,7 +2616,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     var url; try{ url=new URL(a.href, location.href); }catch(_e){ return null; }
     if(url.origin!==location.origin) return null;                    /* external site */
     if(url.protocol!=='http:' && url.protocol!=='https:') return null; /* mailto:, tel:, etc. */
-    if(url.pathname===location.pathname && url.search===location.search) return null; /* same doc / hash only */
+    if(url.pathname===location.pathname && url.search===location.search && url.hash) return null; /* in-page #anchor — skip; a same-URL link with no hash IS a reload, so let it transition (e.g. coming-soon -> coming-soon) */
     return url.href;
   }
 
@@ -2629,7 +2629,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   var going=false;
   function closeAndGo(href){
     if(going) return; going=true; window.__soeNavigating=true;
-    var nav=function(){ if(nav.done) return; nav.done=true; location.href=href; };
+    var nav=function(){ if(nav.done) return; nav.done=true; var same=false; try{ same=(new URL(href,location.href)).href===location.href; }catch(_e){} if(same){ location.reload(); } else { location.href=href; } };
     try{
       var d=document.querySelector('[data-soe=nav-drawer][data-soe-state=open]');   /* drop an open drawer first */
       if(d){ d.removeAttribute('data-soe-state'); try{ document.body.style.overflow=''; }catch(_e){} }
