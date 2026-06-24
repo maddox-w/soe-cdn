@@ -2725,3 +2725,13 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   }
   ready(run); setTimeout(run,600); setTimeout(run,1500);
 })();
+
+
+/* === boot-fixes-v2xx === Reveal the header only AFTER the nav labels, CTA and phone are rebuilt —
+   kills the "native header flashes, then corrects" glitch on load + navigation. Registered last, so
+   its DOMContentLoaded callback runs after every other enhancer (v2hh runAll, v2ll runAll/siteWide). */
+(function(){
+  function reveal(){ try{ document.documentElement.setAttribute(`data-soe-chrome`,`ready`); }catch(e){} }
+  function go(){ if(window.requestAnimationFrame) requestAnimationFrame(reveal); else reveal(); }
+  if(document.readyState===`loading`) document.addEventListener(`DOMContentLoaded`,go); else go();
+})();

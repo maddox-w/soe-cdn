@@ -182,3 +182,7 @@
   }
   bind();
 })();
+
+;(function(){ /* header reveal safety net: if boot-master never loads, don't leave the header hidden */
+  setTimeout(function(){ try{ var h=document.documentElement; if(h.getAttribute(`data-soe-chrome`)!==`ready`) h.setAttribute(`data-soe-chrome`,`ready`); }catch(e){} }, 3000);
+})();

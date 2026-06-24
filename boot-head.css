@@ -1219,3 +1219,13 @@ html [data-soe-anim=reveal][data-soe-curtain-flow]{
    renders so they pop (fixes the "washed out" look on the old light-gray card). */
 #hs-lineup [data-soe=rc-unit-visual]{background-color:#0e2647 !important;}
 #hs-lineup [data-soe=rc-unit-card]{border-color:#0e2647 !important;}
+
+
+/* Kill the header enhancement flash on load/navigation: hold the volatile header content
+   (nav links, CTA, phone) invisible until boot-master has rebuilt the labels/CTA/phone. Space is
+   reserved (visibility, not display) so the sticky header keeps its height — no layout shift.
+   Revealed by html[data-soe-chrome=ready] (set by boot-master v2xx after every enhancer runs;
+   boot-head.js carries a safety fallback in case boot-master never loads). */
+html:not([data-soe-chrome=ready]) [data-soe=nav-links],
+html:not([data-soe-chrome=ready]) [data-soe=nav-cta],
+html:not([data-soe-chrome=ready]) [data-soe=top-util-left]{visibility:hidden !important;}
