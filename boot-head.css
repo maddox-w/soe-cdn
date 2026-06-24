@@ -1234,3 +1234,9 @@ html:not([data-soe-chrome=ready]) [data-soe=top-util-left]{visibility:hidden !im
 /* Equipment mega-menu: equal-height column headers so each column's list lines up. The long
    "Equipment Attachments & Implements" header wrapped to 3 lines and pushed its column down. */
 [data-soe=nav-dropdown][data-soe-menu=mega] [data-soe=nav-mega-col-h]{min-height:68px !important;display:flex !important;align-items:flex-end !important;}
+
+/* Coming-soon page: light hero so the white page-load curtain reveals it smoothly (the dark hero made
+   the white curtain swipe-up read as a stark white flash; every other page reveals light content). */
+.cs-wrap{background:#fff !important;}
+.cs-h1{color:#0E1110 !important;}
+.cs-lede{color:#6B746A !important;}
