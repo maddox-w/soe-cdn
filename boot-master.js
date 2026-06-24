@@ -1173,7 +1173,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       [`Non CDL Hydro Vac Truck`,`/hydrospade-trucks`],
       [`Hydro-Vac Trailer`,`/hydrospade-trailers`]
     ]},
-    {brand:`Brine Makers`, href:`/coming-soon`, items:[]}
+    {brand:`Brine Makers`, href:`/coming-soon`, items:[[`Coming Soon`,`/coming-soon`]]}
   ];
 
   var simpleMenus = {};
