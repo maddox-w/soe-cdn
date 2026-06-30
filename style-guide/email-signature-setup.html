@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Email Signature Setup — Smart Outdoor Equipment</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
+  :root{
+    --forest:#367C2B;--green-dark:#2A5F22;--lime:#7DB13C;--lime-bright:#8FC63D;
+    --ink:#0E1110;--graphite:#1A1F1C;--steel-700:#3A413A;--steel-500:#6B746A;
+    --steel-300:#A5ADA4;--steel-200:#D4D8D2;--steel-100:#EAEDE8;--steel-50:#F6F7F5;--paper:#fff;
+    --f-display:'Inter Tight',Arial,sans-serif;--f-sans:'Inter',Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:var(--f-sans);color:var(--ink);background:var(--steel-50);line-height:1.55;}
+  a{color:var(--forest);}
+
+  .top{background:linear-gradient(105deg,var(--green-dark) 0%,var(--ink) 70%,#000 100%);color:#fff;padding:34px 7vw 30px;position:relative;}
+  .top::after{content:'';position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,var(--lime),var(--forest) 60%,var(--green-dark));}
+  .top .eyebrow{font-family:var(--f-sans);font-weight:700;font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--lime-bright);display:flex;align-items:center;gap:10px;}
+  .top .eyebrow::before{content:'';width:28px;height:2px;background:var(--lime-bright);}
+  .top h1{font-family:var(--f-display);font-weight:900;font-size:clamp(28px,4vw,42px);letter-spacing:-0.015em;margin:12px 0 8px;text-transform:uppercase;}
+  .top p{color:var(--steel-300);font-size:15px;max-width:680px;}
+
+  .wrap{max-width:1100px;margin:0 auto;padding:36px 7vw 80px;}
+
+  .step-h{font-family:var(--f-display);font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--forest);display:flex;align-items:center;gap:12px;margin:0 0 18px;}
+  .step-h .n{width:30px;height:30px;flex:0 0 auto;background:var(--forest);color:#fff;border-radius:50%;display:grid;place-items:center;font-size:14px;font-weight:800;}
+
+  .grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:28px;align-items:start;}
+  @media(max-width:820px){.grid{grid-template-columns:1fr;}}
+
+  .card{background:var(--paper);border:1px solid var(--steel-200);border-radius:10px;padding:24px;}
+  .field{margin-bottom:16px;}
+  .field:last-child{margin-bottom:0;}
+  .field label{display:block;font-family:var(--f-display);font-weight:700;font-size:12px;letter-spacing:.02em;text-transform:uppercase;color:var(--steel-700);margin-bottom:6px;}
+  .field input{width:100%;font-family:var(--f-sans);font-size:15px;color:var(--ink);padding:11px 13px;border:1.5px solid var(--steel-200);border-radius:7px;background:var(--steel-50);transition:border-color .15s,background .15s;}
+  .field input:focus{outline:none;border-color:var(--forest);background:#fff;}
+  .field .hint{font-size:11.5px;color:var(--steel-500);margin-top:5px;}
+
+  .preview-wrap{position:sticky;top:24px;}
+  .preview-label{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+  .preview-label span{font-family:var(--f-display);font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel-500);}
+  .preview-stage{background:var(--paper);border:1px solid var(--steel-200);border-radius:10px;padding:26px;overflow-x:auto;box-shadow:0 10px 30px rgba(14,17,16,.07);}
+  /* the signature itself is fully inline-styled; this just frames it */
+
+  .copybtn{font-family:var(--f-display);font-weight:800;font-size:14px;letter-spacing:.02em;color:#fff;background:var(--forest);border:none;border-radius:8px;padding:13px 22px;cursor:pointer;display:inline-flex;align-items:center;gap:10px;transition:background .15s,transform .12s;}
+  .copybtn:hover{background:var(--green-dark);}
+  .copybtn:active{transform:translateY(1px);}
+  .copybtn.done{background:var(--lime);color:var(--ink);}
+  .copybtn svg{width:17px;height:17px;}
+  .copyrow{margin-top:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .copyrow .note{font-size:12px;color:var(--steel-500);}
+
+  .steps{counter-reset:s;list-style:none;margin-top:6px;}
+  .steps li{position:relative;padding:0 0 18px 46px;}
+  .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:-2px;width:30px;height:30px;background:var(--steel-100);color:var(--forest);border:1.5px solid var(--steel-200);border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:14px;}
+  .steps li:not(:last-child)::after{content:'';position:absolute;left:14.5px;top:30px;bottom:0;width:1.5px;background:var(--steel-200);}
+  .steps li b{color:var(--ink);}
+  .steps li .kbd{font-family:ui-monospace,Menlo,monospace;font-size:12px;background:var(--steel-100);border:1px solid var(--steel-200);border-radius:4px;padding:1px 6px;color:var(--steel-700);}
+
+  .section{margin-top:48px;}
+  .section-title{font-family:var(--f-display);font-weight:900;font-size:22px;letter-spacing:-0.01em;margin-bottom:4px;}
+  .section-sub{color:var(--steel-500);font-size:14px;margin-bottom:22px;}
+
+  .callout{background:var(--graphite);color:var(--steel-300);border-radius:10px;padding:22px 24px;margin-top:40px;position:relative;overflow:hidden;}
+  .callout::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--lime),var(--forest));}
+  .callout h3{font-family:var(--f-display);font-weight:800;font-size:15px;color:#fff;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;}
+  .callout code{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:var(--lime-bright);background:rgba(125,177,60,.12);padding:1px 6px;border-radius:4px;}
+  .callout ul{margin:10px 0 0 18px;font-size:13.5px;line-height:1.7;}
+  .callout a{color:var(--lime-bright);}
+
+  .tip{display:flex;gap:12px;align-items:flex-start;background:var(--steel-100);border:1px solid var(--steel-200);border-radius:8px;padding:14px 16px;margin-top:18px;font-size:13px;color:var(--steel-700);}
+  .tip .b{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--forest);color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px;}
+
+  #prodSig{position:absolute;left:-9999px;top:0;}
+</style>
+</head>
+<body>
+  <header class="top">
+    <div class="eyebrow">Smart Outdoor Equipment</div>
+    <h1>Email Signature Setup</h1>
+    <p>Create your standardized company email signature in two minutes. Fill in your details, copy, and paste it into Gmail. Everyone's signature stays consistent and on-brand.</p>
+  </header>
+
+  <div class="wrap">
+    <!-- STEP 1 -->
+    <div class="grid">
+      <div>
+        <div class="step-h"><span class="n">1</span> Fill in your details</div>
+        <div class="card">
+          <div class="field">
+            <label for="f-name">Full name</label>
+            <input id="f-name" type="text" value="Jane Doe" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="f-title">Job title</label>
+            <input id="f-title" type="text" value="Sales Manager" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="f-cell">Cell phone</label>
+            <input id="f-cell" type="text" value="(812) 555-0142" autocomplete="off">
+            <div class="hint">Office line — (855) 419-9190 — is added automatically.</div>
+          </div>
+          <div class="field">
+            <label for="f-email">Email address</label>
+            <input id="f-email" type="text" value="jdoe@smartoutdoorequipment.com" autocomplete="off">
+          </div>
+        </div>
+        <div class="tip"><span class="b">i</span><div>Only these four fields change per person. Everything else — address, office line, website, social links, and logo — is locked to the brand standard.</div></div>
+      </div>
+
+      <div>
+        <div class="preview-wrap">
+          <div class="preview-label"><span>Live preview</span></div>
+          <div class="preview-stage"><div id="previewSig"></div></div>
+          <div class="copyrow">
+            <button class="copybtn" id="copyBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy signature
+            </button>
+            <span class="note">Then paste it into Gmail (Step 2).</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="section">
+      <div class="step-h"><span class="n">2</span> Add it to Gmail</div>
+      <p class="section-sub">Signatures must be set from Gmail on a computer (not the mobile app).</p>
+      <ol class="steps">
+        <li>Open <b>Gmail</b> in your browser and sign in to your Smart Outdoor Equipment account.</li>
+        <li>Click the <b>gear icon ⚙</b> in the top-right corner, then click <b>“See all settings.”</b></li>
+        <li>On the <b>General</b> tab, scroll down to the <b>Signature</b> section.</li>
+        <li>Click <b>“+ Create new,”</b> name it <b>“Smart Outdoor,”</b> and click <b>Create.</b></li>
+        <li>Click inside the signature edit box, then <b>paste</b> your copied signature (<span class="kbd">Ctrl + V</span> on Windows, <span class="kbd">⌘ + V</span> on Mac).</li>
+        <li>Under <b>“Signature defaults,”</b> select <b>Smart Outdoor</b> for both <b>“For new emails use”</b> and <b>“On reply/forward use.”</b></li>
+        <li>Scroll to the very bottom and click <b>“Save Changes.”</b></li>
+        <li>Send yourself a test email to confirm it looks right. If images don’t show, click <b>“Display images below”</b> — they load from the web automatically.</li>
+      </ol>
+      <div class="tip"><span class="b">!</span><div><b>Paste, don’t retype.</b> Pasting keeps the exact fonts, spacing, logo, and links. Don’t change colors or fonts inside Gmail — the brand styling is already built in.</div></div>
+    </div>
+
+    <!-- HOSTING NOTE -->
+    <div class="callout">
+      <h3>Good to know</h3>
+      <p>The logo, social icons, and Google-review badge are already hosted on the company CDN, so they load automatically in everyone’s sent mail — there’s nothing to install or upload.</p>
+      <p style="margin-top:10px;">The logo shown is the current gear-and-leaf mark. If a final high-resolution version is provided later, it updates everywhere automatically — you won’t need to redo your signature.</p>
+      <p style="margin-top:10px;"><b style="color:#fff;">One heads-up:</b> the TikTok icon links to <code>tiktok.com/@smartoutdoorequipment</code> — if your account uses a different handle, let us know and we’ll update it.</p>
+    </div>
+  </div>
+
+  <!-- offscreen copy with PRODUCTION urls -->
+  <div id="prodSig" aria-hidden="true"></div>
+
+<script>
+  var PROD = 'https://cdn.jsdelivr.net/gh/maddox-w/soe-cdn@main/email/';
+  var LOCAL = 'https://cdn.jsdelivr.net/gh/maddox-w/soe-cdn@main/email/';
+  var SOCIAL = {
+    linkedin:'https://www.linkedin.com/company/smart-outdoor-equipment',
+    facebook:'https://www.facebook.com/profile.php?id=61591186047309',
+    youtube:'https://www.youtube.com/@SmartOutdoorEquipment',
+    instagram:'https://www.instagram.com/smartoutdoorequipment/',
+    tiktok:'https://www.tiktok.com/@smartoutdoorequipment',
+    review:'https://www.google.com/search?q=Smart+Outdoor+Equipment+Evansville+reviews'
+  };
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function buildSig(base, d){
+    return ''+
+'<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;color:#111418;">'+
+  '<tr><td style="padding:0;font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:bold;color:#111418;line-height:1.3;">'+esc(d.name)+'</td></tr>'+
+  '<tr><td style="padding:2px 0 9px;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#555555;line-height:1.3;">'+esc(d.title)+'</td></tr>'+
+  '<tr><td style="padding:0 0 10px;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#333333;line-height:1.7;">'+
+    '<strong style="color:#111418;">C</strong>&nbsp;'+esc(d.cell)+'&nbsp;&nbsp;|&nbsp;&nbsp;<strong style="color:#111418;">O</strong>&nbsp;(855)&nbsp;419-9190<br>'+
+    '<a href="mailto:'+esc(d.email)+'" style="color:#2A6FDB;text-decoration:underline;">'+esc(d.email)+'</a><br>'+
+    '2501 S Kentucky Avenue, Suite 3&nbsp;&nbsp;|&nbsp;&nbsp;Evansville, Indiana 47714<br>'+
+    '<a href="https://smartoutdoorequipment.com" style="color:#367C2B;text-decoration:underline;font-weight:bold;">SmartOutdoorEquipment.com</a>'+
+  '</td></tr>'+
+  '<tr><td style="padding:11px 0 0;border-top:1px solid #e0e0e0;">'+
+    '<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;"><tr>'+
+      '<td style="vertical-align:middle;padding-right:18px;">'+
+        '<img src="'+base+'logo.png" alt="Smart Outdoor Equipment" width="88" style="display:block;border:0;outline:none;">'+
+      '</td>'+
+      '<td style="vertical-align:middle;padding-left:18px;border-left:1px solid #e0e0e0;">'+
+        '<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;"><tr>'+
+          '<td style="padding-right:9px;"><a href="'+SOCIAL.linkedin+'" target="_blank"><img src="'+base+'linkedin.png" alt="LinkedIn" width="24" height="24" style="display:block;border:0;outline:none;"></a></td>'+
+          '<td style="padding-right:9px;"><a href="'+SOCIAL.facebook+'" target="_blank"><img src="'+base+'facebook.png" alt="Facebook" width="24" height="24" style="display:block;border:0;outline:none;"></a></td>'+
+          '<td style="padding-right:9px;"><a href="'+SOCIAL.youtube+'" target="_blank"><img src="'+base+'youtube.png" alt="YouTube" width="24" height="24" style="display:block;border:0;outline:none;"></a></td>'+
+          '<td style="padding-right:9px;"><a href="'+SOCIAL.instagram+'" target="_blank"><img src="'+base+'instagram.png" alt="Instagram" width="24" height="24" style="display:block;border:0;outline:none;"></a></td>'+'<td><a href="'+SOCIAL.tiktok+'" target="_blank"><img src="'+base+'tiktok.png" alt="TikTok" width="24" height="24" style="display:block;border:0;outline:none;"></a></td>'+
+        '</tr></table>'+
+        '<a href="'+SOCIAL.review+'" target="_blank" style="display:inline-block;margin-top:9px;"><img src="'+base+'google-review.png" alt="Leave us a Google review" height="24" style="display:block;border:0;outline:none;"></a>'+
+      '</td>'+
+    '</tr></table>'+
+  '</td></tr>'+
+'</table>';
+  }
+
+  function plainText(d){
+    return d.name+'\n'+d.title+'\n'+
+      'C '+d.cell+'  |  O (855) 419-9190\n'+
+      d.email+'\n'+
+      '2501 S Kentucky Avenue, Suite 3  |  Evansville, Indiana 47714\n'+
+      'SmartOutdoorEquipment.com';
+  }
+
+  function data(){
+    return {
+      name:(document.getElementById('f-name').value||'Your Name').trim(),
+      title:(document.getElementById('f-title').value||'Your Title').trim(),
+      cell:(document.getElementById('f-cell').value||'(000) 000-0000').trim(),
+      email:(document.getElementById('f-email').value||'name@smartoutdoorequipment.com').trim()
+    };
+  }
+
+  function render(){
+    var d=data();
+    document.getElementById('previewSig').innerHTML = buildSig(LOCAL, d);
+  }
+
+  ['f-name','f-title','f-cell','f-email'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', render);
+  });
+  render();
+
+  // Copy: production-URL signature as rich HTML
+  var btn=document.getElementById('copyBtn');
+  btn.addEventListener('click', async function(){
+    var d=data();
+    var html=buildSig(PROD,d);
+    var text=plainText(d);
+    var ok=false;
+    try{
+      if(window.ClipboardItem && navigator.clipboard && navigator.clipboard.write){
+        await navigator.clipboard.write([new ClipboardItem({
+          'text/html': new Blob([html],{type:'text/html'}),
+          'text/plain': new Blob([text],{type:'text/plain'})
+        })]);
+        ok=true;
+      }
+    }catch(e){ ok=false; }
+    if(!ok){
+      try{
+        var node=document.getElementById('prodSig');
+        node.innerHTML=buildSig(PROD,d);
+        var range=document.createRange(); range.selectNodeContents(node);
+        var sel=window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+        ok=document.execCommand('copy'); sel.removeAllRanges();
+        node.innerHTML='';
+      }catch(e2){ ok=false; }
+    }
+    if(ok){
+      btn.classList.add('done');
+      btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Copied — now paste into Gmail';
+      setTimeout(function(){
+        btn.classList.remove('done');
+        btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy signature';
+      },2600);
+    }
+  });
+</script>
+</body>
+</html>
