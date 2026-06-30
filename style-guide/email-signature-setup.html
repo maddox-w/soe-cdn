@@ -151,6 +151,15 @@
 <script>
   var PROD = 'https://cdn.jsdelivr.net/gh/maddox-w/soe-cdn@2c80a0d/email/';
   var LOCAL = 'https://cdn.jsdelivr.net/gh/maddox-w/soe-cdn@2c80a0d/email/';
+  // Signature images live on Webflow's asset CDN (always warm/reliable) — jsDelivr cold-cache was too flaky for email.
+  var IMG = {
+    logo:'https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a43c76891e5af01548da565_soe-sig-logo.png',
+    linkedin:'https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a43c76a11ddd166c22000d3_soe-sig-linkedin.png',
+    facebook:'https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a43c76b4ef865af76bfc40f_soe-sig-facebook.png',
+    youtube:'https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a43c76d3afe3e4b6df44e71_soe-sig-youtube.png',
+    instagram:'https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a43c76ee42f82c0da52f8b2_soe-sig-instagram.png',
+    tiktok:'https://cdn.prod.website-files.com/69e63e318c2f6e69a08e1082/6a43c76f262c41201a1f9712_soe-sig-tiktok.png'
+  };
   var SOCIAL = {
     linkedin:'https://www.linkedin.com/company/smart-outdoor-equipment',
     facebook:'https://www.facebook.com/profile.php?id=61591186047309',
@@ -176,14 +185,14 @@
   '<tr><td style="padding:11px 0 0;border-top:1px solid #e0e0e0;">'+
     '<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;"><tr>'+
       '<td style="vertical-align:middle;padding-right:18px;">'+
-        '<img src="'+base+'logo.png" alt="Smart Outdoor Equipment" width="88" style="display:block;border:0;outline:none;">'+
+        '<img src="'+IMG.logo+'" alt="Smart Outdoor Equipment" width="88" style="display:block;border:0;outline:none;">'+
       '</td>'+
       '<td style="vertical-align:middle;padding-left:18px;border-left:1px solid #e0e0e0;">'+
         '<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;"><tr>'+
-          '<td style="padding-right:9px;"><a href="'+SOCIAL.linkedin+'" target="_blank"><img src="'+base+'linkedin.png" alt="LinkedIn" width="24" height="24" style="display:block;border:0;outline:none;"></a></td>'+
-          '<td style="padding-right:9px;"><a href="'+SOCIAL.facebook+'" target="_blank"><img src="'+base+'facebook.png" alt="Facebook" width="24" height="24" style="display:block;border:0;outline:none;"></a></td>'+
-          '<td style="padding-right:9px;"><a href="'+SOCIAL.youtube+'" target="_blank"><img src="'+base+'youtube.png" alt="YouTube" width="24" height="24" style="display:block;border:0;outline:none;"></a></td>'+
-          '<td style="padding-right:9px;"><a href="'+SOCIAL.instagram+'" target="_blank"><img src="'+base+'instagram.png" alt="Instagram" width="24" height="24" style="display:block;border:0;outline:none;"></a></td>'+'<td><a href="'+SOCIAL.tiktok+'" target="_blank"><img src="'+base+'tiktok.png" alt="TikTok" width="24" height="24" style="display:block;border:0;outline:none;"></a></td>'+
+          '<td style="padding-right:9px;"><a href="'+SOCIAL.linkedin+'" target="_blank"><img src="'+IMG.linkedin+'" alt="LinkedIn" width="24" height="24" style="display:block;border:0;outline:none;"></a></td>'+
+          '<td style="padding-right:9px;"><a href="'+SOCIAL.facebook+'" target="_blank"><img src="'+IMG.facebook+'" alt="Facebook" width="24" height="24" style="display:block;border:0;outline:none;"></a></td>'+
+          '<td style="padding-right:9px;"><a href="'+SOCIAL.youtube+'" target="_blank"><img src="'+IMG.youtube+'" alt="YouTube" width="24" height="24" style="display:block;border:0;outline:none;"></a></td>'+
+          '<td style="padding-right:9px;"><a href="'+SOCIAL.instagram+'" target="_blank"><img src="'+IMG.instagram+'" alt="Instagram" width="24" height="24" style="display:block;border:0;outline:none;"></a></td>'+'<td><a href="'+SOCIAL.tiktok+'" target="_blank"><img src="'+IMG.tiktok+'" alt="TikTok" width="24" height="24" style="display:block;border:0;outline:none;"></a></td>'+
         '</tr></table>'+
         '<a href="'+SOCIAL.review+'" target="_blank" style="display:inline-block;margin-top:11px;text-decoration:none;font-family:Arial,Helvetica,sans-serif;white-space:nowrap;line-height:1;">'+
           '<span style="color:#F5A623;font-size:13px;letter-spacing:1px;vertical-align:middle;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>'+
