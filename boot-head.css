@@ -765,14 +765,15 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
   [data-soe=hero] [data-soe=hero-brand-tag].hs-hero-logo-bg-sm{width:240px !important;}
 }
 
-/* (AD) /brands tile order — Mulch Mule, Energreen, Metec, HydroSpade, Brinemasters (weak photo last).
+/* (AD) /brands tile order — natural DOM order since Camion took slot 2 (2026-07-15):
+   Mulch Mule, Camion, Energreen, Metec, HydroSpade.
    Done via CSS `order` (the grid is auto-placed) so the DOM order — and thus the nth-child
    background-image mapping — stays correct. DOM is MM(1), Brine(2), Energreen(3), Metec(4), Hydro(5). */
 [data-soe-page=brands] [data-soe=brands-list-grid] [data-soe=brand-card]:nth-child(1){order:1;}
-[data-soe-page=brands] [data-soe=brands-list-grid] [data-soe=brand-card]:nth-child(2){order:5;}
-[data-soe-page=brands] [data-soe=brands-list-grid] [data-soe=brand-card]:nth-child(3){order:2;}
-[data-soe-page=brands] [data-soe=brands-list-grid] [data-soe=brand-card]:nth-child(4){order:3;}
-[data-soe-page=brands] [data-soe=brands-list-grid] [data-soe=brand-card]:nth-child(5){order:4;}
+[data-soe-page=brands] [data-soe=brands-list-grid] [data-soe=brand-card]:nth-child(2){order:2;}
+[data-soe-page=brands] [data-soe=brands-list-grid] [data-soe=brand-card]:nth-child(3){order:3;}
+[data-soe-page=brands] [data-soe=brands-list-grid] [data-soe=brand-card]:nth-child(4){order:4;}
+[data-soe-page=brands] [data-soe=brands-list-grid] [data-soe=brand-card]:nth-child(5){order:5;}
 
 /* (AE) /brands MOBILE imagery — Concept A ("classic banner"): each card shows its photo as a banner
    on top, with the brand name / "Made in X" / "why" stacked below (the normal info layout). Mobile
@@ -787,14 +788,14 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
   [data-soe-page=brands] [data-soe=brand-card-logo]{margin-left:auto !important;margin-right:auto !important;background-position:center center !important;}
 }
 
-/* (AF) Homepage "Explore Smart Outdoor Products" lineup grid — same order as everywhere else:
-   Mulch Mule → Energreen → Metec → HydroSpade → Brinemasters (last). Via CSS `order` so the DOM
+/* (AF) Homepage "Explore Smart Outdoor Products" lineup grid — natural DOM order since Camion took
+   slot 2 (2026-07-15): Mulch Mule → Camion → Energreen → Metec → HydroSpade. Via CSS `order` so the DOM
    order — and the nth-child background-image mapping — stays correct. DOM: MM(1) Brine(2) Energreen(3) Metec(4) Hydro(5). */
 [data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(1){order:1;}
-[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(2){order:5;}
-[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(3){order:2;}
-[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(4){order:3;}
-[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(5){order:4;}
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(2){order:2;}
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(3){order:3;}
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(4){order:4;}
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-h]:nth-child(5){order:5;}
 
 /* AG (2026-06-01, updated): brand-page "See it in action" video cards — 3 PER ROW on desktop (client:
    "rows of 3 looks a tad better"). FIXED 3-col grid, NOT grid auto-fit — auto-fit collapses empty tracks
@@ -1198,11 +1199,12 @@ html [data-soe-anim=reveal][data-soe-curtain-flow]{
 [data-soe=brand-grid] a:nth-child(5) [data-soe=brand-card-visual]{background-image:url("hydrospade-trailer-jobsite.webp") !important;background-position:center !important;background-size:cover !important;}
 [data-soe=brands-list-grid] article:nth-child(5) [data-soe=brand-card-visual-l]{background-image:url("hydrospade-trailer-jobsite.webp") !important;background-position:center !important;background-size:cover !important;}
 
-/* Brinemasters retired — hide its banner slide + explore card + brands card. DOM order preserved so the
-   nth-child background-image mapping for the OTHER brands stays correct. */
-[data-soe=hero-slide]:nth-child(2){display:none !important;}
-[data-soe=brand-grid] a:nth-child(2){display:none !important;}
-[data-soe=brands-list-grid] article:nth-child(2){display:none !important;}
+/* Camion takes the retired Brinemasters slot (2026-07-15): slot 2 is LIVE again on the banner, the
+   homepage lineup grid and /brands (boot-master v2cam renames the DOM in place). These later rules beat
+   the old brinemasters.jpg nth-child(2) image rules near the top of this file. */
+[data-soe=hero-slide]:nth-child(2) [data-soe=hero-bg]{background-image:url("camion-card.jpg") !important;background-position:center 55% !important;background-size:cover !important;}
+[data-soe=brand-grid] a:nth-child(2) [data-soe=brand-card-visual]{background-image:url("camion-card.jpg") !important;background-position:center 55% !important;background-size:cover !important;}
+[data-soe=brands-list-grid] article:nth-child(2) [data-soe=brand-card-visual-l]{background-image:url("camion-card.jpg") !important;background-position:center 55% !important;background-size:cover !important;}
 
 /* Brand-page "Difference" + "See it in Action" heads centered (Mulch Mule / Energreen / Hydro-Spade) */
 [data-soe=difference-head]{text-align:center !important;justify-items:center !important;}
@@ -1258,3 +1260,58 @@ html:not([data-soe-chrome=ready]) [data-soe=top-util-left]{visibility:hidden !im
 /* === a11y: keyboard-operable nav dropdowns — reveal on focus-within, mirroring the :hover rule
    (desktop only; the mobile media query keeps [data-soe=nav-dropdown] display:none so this no-ops there) === */
 [data-soe=nav-link-wrap]:focus-within [data-soe=nav-dropdown]{opacity:1 !important;visibility:visible !important;transform:translateY(0) !important;}
+
+
+/* ============================================================
+   (CAM) Camion brand — 2026-07-15. Homepage banner slide 2 (video), lineup/brands cards, and the
+   /camion landing page. Brand accents from camionsystems.com: orange #ff671f, navy #003c71.
+   Assets in soe-cdn root: camion-logo-white.png (recolored from their only logo — navy wordmark
+   -> white, orange shield kept), brand-logo-camion.png (original colors, light cards),
+   camion-card.jpg (their homepage hero photo), camion-*.jpg lineup cards 680x388.
+   ============================================================ */
+/* Banner slide 2 brand logo (tagged cam-hero-logo-bg-sm by tagHomeBrandLogos) */
+[data-soe=hero-brand-tag].cam-hero-logo-bg-sm{display:block !important;width:280px !important;height:auto !important;aspect-ratio:360 / 134;background:url(camion-logo-white.png) left bottom / contain no-repeat !important;font-size:0 !important;color:transparent !important;opacity:1 !important;transform:none !important;}
+[data-soe=hero-brand-tag].cam-hero-logo-bg-sm::before{content:none !important;display:none !important;}
+@media (min-width:721px){ [data-soe=hero-brand-tag].cam-hero-logo-bg-sm{width:330px !important;} }
+
+/* Camion slide: orange line 2 of the headline (their #ff671f, NOT the default amber) + a light scrim
+   so the white copy stays readable over the moving video. */
+[data-soe=hero-slide][data-soe-cam] [data-soe=hero-subline]{color:#ff671f !important;}
+[data-soe=hero-slide][data-soe-cam] [data-soe=hero-bg]{overflow:hidden;}
+[data-soe=hero-slide][data-soe-cam] [data-soe=hero-bg]::after{content:"";position:absolute;inset:0;background:rgba(2,10,20,.28);z-index:1;pointer-events:none;}
+
+/* The re-embedded YouTube background video (injected by boot-master v2cam). Sized to COVER its host
+   like background-size:cover: aspect-ratio locks 16:9 while the min- constraints force whichever
+   dimension is short to fill, and the host's overflow:hidden crops the rest. Fades in over the photo
+   once loaded; pointer-events:none keeps it purely decorative. */
+[data-soe=cam-video]{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);aspect-ratio:16 / 9;width:auto;height:auto;min-width:100%;min-height:100%;border:0;pointer-events:none;opacity:0;transition:opacity .9s ease;z-index:0;}
+[data-soe=cam-video][data-soe-on]{opacity:1;}
+
+/* Camion logo on the light lineup/brands cards (same mechanism as the other brands) */
+[data-soe-page=brands] [data-soe=brand-card-logo][data-brand=camion]{background-image:url(brand-logo-camion.png);}
+[data-soe-page=home] [data-soe=brand-grid] [data-soe=brand-card-logo][data-brand=camion]{background-image:url(brand-logo-camion.png);}
+
+/* /camion landing page theme (mirrors the HydroSpade navy pattern; setPageAttr + boot-head.js set
+   data-soe-page=camion) */
+[data-soe-page=camion]{--cam-orange:#ff671f;--cam-orange-dark:#e2570f;--cam-navy:#003c71;}
+[data-soe-page=camion] [data-soe=btn][data-soe-variant=primary]{background:var(--cam-orange) !important;border-color:var(--cam-orange) !important;color:#fff !important;}
+[data-soe-page=camion] [data-soe=btn][data-soe-variant=primary]:hover{background:var(--cam-orange-dark) !important;border-color:var(--cam-orange-dark) !important;}
+[data-soe-page=camion] [data-soe=eyebrow]{color:var(--cam-orange) !important;}
+[data-soe-page=camion] [data-soe=eyebrow]::before,[data-soe-page=camion] [data-soe=eyebrow]::after{background:var(--cam-orange) !important;}
+[data-soe-page=camion] [data-soe=rc-unit-hp]{color:var(--cam-navy) !important;}
+[data-soe-page=camion] [data-soe=promo-strip]{background:var(--cam-orange) !important;}
+
+/* #cam-hero: photo fallback under the video; the ::after gradient sits ABOVE the video (z-index 1 vs 0)
+   so the headline keeps contrast whether or not the iframe loads. White Camion logo as the hero mark. */
+#cam-hero [data-soe=hero-bg]{background-image:url("camion-card.jpg") !important;background-size:cover !important;background-position:center 55% !important;overflow:hidden;}
+#cam-hero [data-soe=hero-bg]::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,8,16,.78) 0%,rgba(2,8,16,.42) 45%,rgba(0,20,40,.16) 100%);z-index:1;pointer-events:none;}
+#cam-hero [data-soe=p-hero-mark]{border-left-color:var(--cam-orange) !important;}
+#cam-hero [data-soe=p-hero-mark-logo]{display:inline-block;width:238px;height:89px;background:url("camion-logo-white.png") left center / contain no-repeat !important;font-size:0;color:transparent;}
+#cam-hero [data-soe=p-hero-mark-meta]{color:#fff;font-weight:600;letter-spacing:.04em;}
+#cam-hero [data-soe=p-hero-subline]{color:var(--cam-orange) !important;}
+
+/* /camion lineup cards (4 equipment types) */
+#cam-lineup [data-soe=rc-unit-card]:nth-child(1) [data-soe=rc-unit-visual]{background-image:url("camion-brine-makers.jpg") !important;}
+#cam-lineup [data-soe=rc-unit-card]:nth-child(2) [data-soe=rc-unit-visual]{background-image:url("camion-spray-systems.jpg") !important;}
+#cam-lineup [data-soe=rc-unit-card]:nth-child(3) [data-soe=rc-unit-visual]{background-image:url("camion-tanks.jpg") !important;}
+#cam-lineup [data-soe=rc-unit-card]:nth-child(4) [data-soe=rc-unit-visual]{background-image:url("camion-diesel.jpg") !important;}

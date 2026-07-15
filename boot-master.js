@@ -388,6 +388,115 @@
   }catch(e){}
 })();
 
+/* === boot-fixes-v2cam === Camion brand introduction (2026-07-15). Camion (camionsystems.com — brine
+   equipment by Enduraplas, built in Neche, North Dakota) takes over the retired Brinemasters slot: DOM
+   slot 2 on the homepage banner, the homepage lineup grid, and /brands. The slots are renamed in place so
+   the nth-child background-image mapping for the other brands stays untouched. This block runs BEFORE v2h
+   on purpose: the rename lands before initRotator4 clones the slides, so its /Brinemasters/ retirement
+   check no longer matches and slide 2 rejoins the rotation in natural DOM order
+   (Mulch Mule -> Camion -> Energreen -> Metec -> HydroSpade).
+   The slide background video is the SAME YouTube clip camionsystems.com runs on its homepage hero
+   (id hjw80ZkfVPQ, muted/looping, re-embedded via youtube-nocookie; there is no self-hosted mp4 on their
+   site). camion-card.jpg paints first and stays as the fallback; reduced-motion users never get the
+   iframe. Injection happens on a timeout AFTER the rotator clones so the iframe does not reload. */
+(function(){
+  var YT=`hjw80ZkfVPQ`;
+  function setFirstText(el,txt){
+    for(var i=0;i<el.childNodes.length;i++){
+      var cn=el.childNodes[i];
+      if(cn.nodeType===3 && (cn.nodeValue||``).trim().length){ cn.nodeValue=txt; return; }
+    }
+    el.insertBefore(document.createTextNode(txt), el.firstChild);
+  }
+  function renameSlide(){
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=hero-slide]`),function(sl){
+      var tag=sl.querySelector(`[data-soe=hero-brand-tag]`);
+      if(!tag || (tag.textContent||``).trim()!==`Brinemasters`)return;
+      sl.setAttribute(`data-soe-cam`,`1`);
+      tag.textContent=`Camion`;
+      var h1=sl.querySelector(`[data-soe=hero-h1]`);
+      if(h1){
+        setFirstText(h1,`Ready to`);
+        var sub=h1.querySelector(`[data-soe=hero-subline]`); if(sub)sub.textContent=`Conquer Every Storm`;
+      }
+      var lede=sl.querySelector(`[data-soe=hero-lede]`);
+      if(lede)lede.textContent=`Everything you need to start applying brine \u2014 storage, mixing, and application from one source. No piecing systems together. No guessing. Just the equipment you need to quickly get out ahead of the storm.`;
+      Array.prototype.forEach.call(sl.querySelectorAll(`a[data-soe=btn]`),function(b){
+        if(/^Explore\s/i.test((b.textContent||``).trim())){ setFirstText(b,`Explore Camion`); b.setAttribute(`href`,`/camion`); }
+      });
+    });
+  }
+  function renameCards(){
+    Array.prototype.forEach.call(document.querySelectorAll(`a[data-soe=brand-card-h]`),function(a){
+      var nm=a.querySelector(`[data-soe=brand-card-name]`);
+      if(!nm||(nm.textContent||``).trim()!==`Brinemasters`)return;
+      nm.textContent=`Camion`;
+      a.setAttribute(`href`,`/camion`);
+      var cat=a.querySelector(`[data-soe=brand-card-cat]`); if(cat)cat.textContent=`Brine equipment`;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=brand-card]`),function(card){
+      var h3=card.querySelector(`[data-soe=brand-card-h3]`);
+      if(!h3||(h3.textContent||``).trim()!==`Brinemasters`)return;
+      h3.textContent=`Camion`;
+      var link=card.querySelector(`[data-soe=brand-card-link-large]`);
+      if(link){ link.setAttribute(`href`,`/camion`); setFirstText(link,`View Camion`); }
+    });
+  }
+  function injectVideo(){
+    try{ if(window.matchMedia && matchMedia(`(prefers-reduced-motion: reduce)`).matches)return; }catch(e){}
+    var hosts=Array.prototype.slice.call(document.querySelectorAll(`[data-soe=hero-slide][data-soe-cam] [data-soe=hero-bg]`));
+    var camHero=document.querySelector(`#cam-hero [data-soe=hero-bg]`);
+    if(camHero)hosts.push(camHero);
+    hosts.forEach(function(bg){
+      if(bg.querySelector(`[data-soe=cam-video]`))return;
+      var f=document.createElement(`iframe`);
+      f.setAttribute(`data-soe`,`cam-video`);
+      f.setAttribute(`src`,`https://www.youtube-nocookie.com/embed/`+YT+`?autoplay=1&mute=1&controls=0&loop=1&playlist=`+YT+`&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&playsinline=1&enablejsapi=1`);
+      f.setAttribute(`title`,`Camion brine equipment in action`);
+      f.setAttribute(`allow`,`autoplay; encrypted-media`);
+      f.setAttribute(`aria-hidden`,`true`);
+      f.setAttribute(`tabindex`,`-1`);
+      f.setAttribute(`frameborder`,`0`);
+      /* fade the video in over the photo once the player has had a beat to start. YouTube force-enables
+         captions on muted autoplay embeds — unload the captions module via the iframe postMessage API
+         (enablejsapi=1 above); repeated a few times because the player ignores commands sent too early. */
+      f.addEventListener(`load`,function(){
+        setTimeout(function(){ f.setAttribute(`data-soe-on`,``); },1000);
+        [600,1500,3000,6000].forEach(function(ms){
+          setTimeout(function(){
+            try{
+              f.contentWindow.postMessage(JSON.stringify({event:`command`,func:`unloadModule`,args:[`captions`]}),`*`);
+              f.contentWindow.postMessage(JSON.stringify({event:`command`,func:`unloadModule`,args:[`cc`]}),`*`);
+              f.contentWindow.postMessage(JSON.stringify({event:`command`,func:`setOption`,args:[`captions`,`track`,{}]}),`*`);
+            }catch(e){}
+          },ms);
+        });
+      });
+      bg.appendChild(f);
+    });
+  }
+  /* /camion page content — the Webflow page is intentionally EMPTY (title/SEO set in page settings);
+     the whole page body is built here at runtime, exactly like v2ww builds the chrome on bare pages.
+     (The current MCP surface has no element-tree query, so native DOM insertion is not scriptable —
+     and the site is runtime-built anyway. If a native build is ever wanted, replicate this markup in
+     the Designer and this injector will step aside via the #cam-hero guard.) */
+  function buildCamionPage(){
+    try{
+      var path=(location.pathname.replace(/\/+$/,``)||`/`).toLowerCase();
+      if(path!==`/camion`)return;
+      if(document.getElementById(`cam-hero`))return;
+      var b=document.body; if(!b)return;
+      var host=document.createElement(`div`);
+      host.setAttribute(`data-soe`,`cam-page`);
+      host.innerHTML=`<div data-soe="crumbs"><a href="/">Home</a><span data-soe="crumbs-sep">/</span><a href="/brands">Our Brands</a><span data-soe="crumbs-sep">/</span><span data-soe="crumbs-current">Camion</span></div><section id="cam-hero" data-soe="p-hero"><div data-soe="hero-stage"><div data-soe-state="active" data-soe="hero-slide"><div data-soe="hero-bg"></div></div></div><div data-soe="p-hero-content"><div data-soe="p-hero-mark"><span data-soe="p-hero-mark-logo">Camion</span><span data-soe="p-hero-mark-meta">Conquer Every Storm</span></div><h1 data-soe="p-hero-h1">Ready to<span data-soe="p-hero-subline">Conquer Every Storm</span></h1><p data-soe="p-hero-lede">Everything you need to start applying brine \u2014 storage, mixing, and application from one source. No piecing systems together. No guessing. Just the equipment you need to quickly get out ahead of the storm.</p><div data-soe="p-hero-ctas"><a data-soe-size="lg" href="/request-quote" data-soe="btn" data-soe-variant="primary">Request Info<span data-soe="arr"></span></a><a data-soe-size="lg" href="#cam-lineup" data-soe="btn" data-soe-variant="inverse-outline">View the Lineup</a></div></div></section><section data-soe="promo-strip"><span data-soe="promo-strip-ico">i</span><span>For more information on Camion, visit <a href="https://camionsystems.com">CamionSystems.com \u2192</a></span></section><section id="cam-lineup" data-soe="rc-units"><div data-soe="rc-units-head"><span data-soe="eyebrow">The Lineup</span><h2 data-soe="rc-units-h2">Choose your equipment.</h2><p data-soe="rc-units-lede">From storage and mixing to application \u2014 build a complete brine program from one source, built in Neche, North Dakota. Individual equipment pages are on the way.</p></div><div data-soe="rc-units-grid"><div data-soe="rc-unit-card"><div data-soe="rc-unit-visual"></div><div data-soe="rc-unit-body"><span data-soe="rc-unit-hp">Brine Master\u00AE BM1600 / BM3000</span><h3 data-soe="rc-unit-name">Brine Makers</h3><a data-soe="btn" href="/coming-soon">Find out more<span data-soe="arr"></span></a></div></div><div data-soe="rc-unit-card"><div data-soe="rc-unit-visual"></div><div data-soe="rc-unit-body"><span data-soe="rc-unit-hp">Ice Master\u00AE Truck / Hitch / UTV</span><h3 data-soe="rc-unit-name">Brine Spray Systems</h3><a data-soe="btn" href="/coming-soon">Find out more<span data-soe="arr"></span></a></div></div><div data-soe="rc-unit-card"><div data-soe="rc-unit-visual"></div><div data-soe="rc-unit-body"><span data-soe="rc-unit-hp">Storage / Transport / Relocatable</span><h3 data-soe="rc-unit-name">Brine Storage &amp; Transport Tanks</h3><a data-soe="btn" href="/coming-soon">Find out more<span data-soe="arr"></span></a></div></div><div data-soe="rc-unit-card"><div data-soe="rc-unit-visual"></div><div data-soe="rc-unit-body"><span data-soe="rc-unit-hp">Diesel Fuel Boss\u00AE</span><h3 data-soe="rc-unit-name">Portable Diesel Refueling Units</h3><a data-soe="btn" href="/coming-soon">Find out more<span data-soe="arr"></span></a></div></div></div></section><footer data-soe="footer"><div data-soe="footer-top"><div data-soe="footer-brand-col"><div data-soe="footer-brand" class="soe-logo-footer-bg"></div><p data-soe="footer-tag">Professional outdoor equipment for professionals and contractors who measure performance in decades \u2014 not seasons.</p><div data-soe="footer-contact"><div><b>(855) 419-9190</b></div><div>info@smartoutdoorequipment.com</div><div>Bedford, IN \u00B7 USA</div></div></div><div data-soe="footer-col" data-soe-pos="2"><h4 data-soe="footer-col-h">Equipment</h4><ul role="list"><li><a href="/mulch-mule">Mulch Mule</a></li><li><a href="/camion">Camion</a></li><li><a href="/remote-controlled-mowers">Energreen</a></li><li><a href="#">Metec</a></li></ul></div><div data-soe="footer-col" data-soe-pos="3"><h4 data-soe="footer-col-h">Support</h4><ul role="list"><li><a href="#">Buy Parts</a></li><li><a href="#">Service Network</a></li><li><a href="#">Warranty</a></li><li><a href="#">Operator Manuals</a></li><li><a href="#">Training</a></li></ul></div><div data-soe="footer-col" data-soe-pos="4"><h4 data-soe="footer-col-h">Company</h4><ul role="list"><li><a href="#">About Us</a></li><li><a href="#">Become a Dealer</a></li><li><a href="#">Dealer Portal</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li></ul></div><div data-soe="footer-col" data-soe-pos="5"><h4 data-soe="footer-col-h">Legal</h4><ul role="list"><li><a href="/privacy">Privacy</a></li><li><a href="/terms">Terms</a></li><li><a href="#">Accessibility</a></li><li><a href="#">Contact</a></li></ul></div></div><div data-soe="footer-bot"><span>\u00A9 2026 Smart Outdoor Equipment, a Brown Equipment Company. All rights reserved.</span><div data-soe="footer-legal"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/sitemap">Sitemap</a></div><div data-soe="footer-social"><a href="#">f</a><a href="#">in</a><a href="#">yt</a><a href="#">ig</a></div></div></footer>`;
+      b.appendChild(host);
+    }catch(e){}
+  }
+  buildCamionPage(); renameSlide(); renameCards();
+  function ready(fn){if(document.readyState!==`loading`)fn();else document.addEventListener(`DOMContentLoaded`,fn);}
+  ready(function(){ buildCamionPage(); renameSlide(); renameCards(); setTimeout(injectVideo,350); setTimeout(injectVideo,1400); });
+})();
+
 /* === boot-fixes-v2h === */
 (function(){
   
@@ -624,14 +733,14 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
         else origin.textContent=`Made in `+place;
       });
     }
-    setOrigin(`Brinemasters`,`Indiana, USA`);
+    setOrigin(`Camion`,`Neche, North Dakota`);
     setOrigin(`Metec`,`Vankleek Hill, Ontario, Canada`);
     setOrigin(`Mulch Mule`,`Ohio, USA`);
 
     var APOS=String.fromCharCode(39);
     var bannerCopy={};
     bannerCopy[`Mulch Mule`]=`Mulch Smarter. Move Faster.`;
-    bannerCopy[`Brinemasters`]=`The Smarter Way To Brine.`;
+    bannerCopy[`Camion`]=`Ready To Conquer Every Storm.`;
     bannerCopy[`Energreen`]=`The Safest Seat Is The One You`+APOS+`re Not In.`;
     bannerCopy[`Metec`]=`The Attachment Your Tractor Deserves.`;
     bannerCopy[`HydroSpade`]=`Designed With Your Work In Mind.`;
@@ -670,6 +779,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
           dd.setAttribute(`data-soe`,`nav-dropdown`);
           var items=[
             [`Mulch Mule`,`/mulch-mule`],
+            [`Camion`,`/camion`],
             [`Energreen`,`/remote-controlled-mowers`],
             [`Metec`,`/coming-soon`]
           ];
@@ -1075,12 +1185,18 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       [`Non CDL Hydro Vac Truck`,`/hydrospade-trucks`],
       [`Hydro-Vac Trailer`,`/hydrospade-trailers`]
     ]},
-    {brand:`Brine Makers`, href:`/coming-soon`, items:[[`Coming Soon`,``]]}
+    {brand:`Brine Equipment`, href:`/camion`, items:[
+      [`Brine Makers`,`/coming-soon`],
+      [`Brine Spray Systems`,`/coming-soon`],
+      [`Brine Storage & Transport Tanks`,`/coming-soon`],
+      [`Portable Diesel Refueling Units`,`/coming-soon`]
+    ]}
   ];
 
   var simpleMenus = {};
   simpleMenus[`Brands`] = [
     [`Mulch Mule`,`/mulch-mule`],
+    [`Camion`,`/camion`],
     [`Energreen`,`/remote-controlled-mowers`],
     [`Metec`,`/coming-soon`],
     [`HydroSpade`,`/hydrospade`],
@@ -1227,6 +1343,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     var newCols = [
       {head:`Equipment`, items:[
         [`Mulch Mule`,`/mulch-mule`],
+        [`Camion`,`/camion`],
         [`Energreen`,`/remote-controlled-mowers`],
         [`Metec`,`/coming-soon`],
         [`HydroSpade`,`/hydrospade`],
@@ -1400,10 +1517,12 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       /* drop the retired Brinemasters option (brand removed) */
       Array.prototype.slice.call(sel.options).forEach(function(o){ if(o.value===`brinemasters`){ o.parentNode.removeChild(o); } });
       if(!Array.prototype.some.call(sel.options,function(o){return o.value===`mulch-mule`;})) return;
-      if(Array.prototype.some.call(sel.options,function(o){return o.value===`hydrospade`;})) return;
-      var opt=document.createElement(`option`); opt.value=`hydrospade`; opt.textContent=`Hydro-Spade`;
       var other=Array.prototype.filter.call(sel.options,function(o){return o.value===`other`;})[0];
-      if(other) sel.insertBefore(opt,other); else sel.appendChild(opt);
+      [[`hydrospade`,`Hydro-Spade`],[`camion`,`Camion`]].forEach(function(pair){
+        if(Array.prototype.some.call(sel.options,function(o){return o.value===pair[0];})) return;
+        var opt=document.createElement(`option`); opt.value=pair[0]; opt.textContent=pair[1];
+        if(other) sel.insertBefore(opt,other); else sel.appendChild(opt);
+      });
     });
   }
 
@@ -1418,6 +1537,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     else if(p===`/remote-controlled-mowers`)trail=[[`Home`,`/`],[`Our Brands`,`/brands`],[`Energreen`,null]];
     else if(units[p])trail=[[`Home`,`/`],[`Our Brands`,`/brands`],[`Energreen`,`/remote-controlled-mowers`],[units[p],null]];
     else if(p===`/hydrospade`)trail=[[`Home`,`/`],[`Our Brands`,`/brands`],[`HydroSpade`,null]];
+    else if(p===`/camion`)trail=[[`Home`,`/`],[`Our Brands`,`/brands`],[`Camion`,null]];
     else if(p===`/hydrospade-trucks`)trail=[[`Home`,`/`],[`Our Brands`,`/brands`],[`HydroSpade`,`/hydrospade`],[`Trucks`,null]];
     else if(p===`/hydrospade-trailers`)trail=[[`Home`,`/`],[`Our Brands`,`/brands`],[`HydroSpade`,`/hydrospade`],[`Trailers`,null]];
     else if(p===`/brands`)trail=[[`Home`,`/`],[`Our Brands`,null]];
@@ -1478,6 +1598,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     else if(path===`/mulch-mule`)p=`mulch-mule`;
     else if(path===`/remote-controlled-mowers`)p=`energreen`;
     else if(path===`/hydrospade`||path===`/hydrospade-trucks`||path===`/hydrospade-trailers`)p=`hydrospade`;
+    else if(path===`/camion`)p=`camion`;
     else if(path===`/new-customer-setup`)p=`newcustomer`;
     document.documentElement.setAttribute(`data-soe-page`,p);
   }
@@ -1500,7 +1621,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
      for its white logo, like Mulch Mule's baked-in logo. (Re-run after the rotator clones the slides.) */
   function tagHomeBrandLogos(){
     if(path!==`/`)return;
-    var map={"Energreen":"eg-hero-logo-bg-sm","Brinemasters":"bm-hero-logo-bg-sm","Metec":"mt-hero-logo-bg-sm","HydroSpade":"hs-hero-logo-bg-sm"};
+    var map={"Energreen":"eg-hero-logo-bg-sm","Camion":"cam-hero-logo-bg-sm","Metec":"mt-hero-logo-bg-sm","HydroSpade":"hs-hero-logo-bg-sm"};
     Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=hero-stage] [data-soe=hero-brand-tag]`),function(tag){
       var _t=(tag.textContent||``).trim(); var cls=map[_t]||map[_t.replace(/-/g,``)];
       if(cls && !tag.classList.contains(cls)){ tag.classList.add(cls); tag.setAttribute(`role`,`img`); tag.setAttribute(`aria-label`,_t); tag.textContent=``; }
@@ -1538,10 +1659,10 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
         `15-cubic-yard aluminum hopper with a 5-ton payload capacity — superior durability without sacrificing hauling capacity.`,
         `Rear discharge with game-changing reversible floor to both onload and offload materials in a controlled fashion.`,
         `Curbside chute fills a wheelbarrow in 3–6 seconds — the heart of why this equipment pays back so fast, typically in 1–3 years depending on your material volume.`]},
-      "Brinemasters":{head:`The Smarter Way to Brine.`,intro:`Here's why Brinemasters is the most precise, user-friendly, and cost-effective brine maker on the market.`,items:[
-        `Most reliable, most accurate density-measurement sensor (patent protected), with fully automated self-calibration that eliminates manual work and errors — backed by an industry-leading 5-year warranty.`,
-        `External spray dissolution system for maximum salt conversion.`,
-        `Simple control system that's very easy to operate.`]},
+      "Camion":{head:`Ready to Conquer Every Storm.`,intro:`Everything you need to start applying brine — storage, mixing, and application from one source. No piecing systems together. No guessing. Just the equipment you need to quickly get out ahead of the storm.`,items:[
+        `The complete lineup from one source: Brine Master® all-in-one brine makers, Ice Master® truck, hitch, and UTV sprayers, heavy-duty poly storage and transport tanks, and portable diesel refueling units.`,
+        `Over-built poly and stainless construction — plug-n-play brine makers arrive pre-wired, and the storage and transport tanks carry an industry-leading 10-year warranty.`,
+        `Built in Neche, North Dakota, and tested in some of the most extreme winter conditions in the country.`]},
       "Energreen":{head:`The Safest Seat Is the One You're Not In.`,intro:`Here's why Robos are designed to prioritize well-being, simplify operation, and deliver versatile solutions for demanding applications.`,items:[
         `Radio-controlled mowers and skid steers keep your operator on flat ground while the machine works slopes up to 61° — zero rollover exposure, and clear of poison ivy, snakes, and other hazards.`,
         `Quick-change attachments turn a Robo into a mulcher, mower, stump grinder, ditch cleaner, blower, or forestry head — so your carrier keeps you earning all year long.`]},
@@ -1565,8 +1686,8 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
        Hydro-Spade navy + Metec/Brinemasters sampled from their logos; ENERGREEN = #F5A524 (the gold
        "Request Info"/"Contact Us" button color on its brand page /remote-controlled-mowers = --safety-amber;
        owner: match those buttons — NOT the /brands green). Mulch Mule unspecified -> var(--jd-green) fallback. */
-    var brandKey={ "Hydro-Spade":`hydrospade`, "HydroSpade":`hydrospade`, "Energreen":`energreen`, "Metec":`metec`, "Brinemasters":`brinemasters`, "Mulch Mule":`mulchmule` };
-    var brandColor={ hydrospade:`#003473`, energreen:`#F5A524`, metec:`#0A5737`, brinemasters:`#3B7DAC` };
+    var brandKey={ "Hydro-Spade":`hydrospade`, "HydroSpade":`hydrospade`, "Energreen":`energreen`, "Metec":`metec`, "Camion":`camion`, "Mulch Mule":`mulchmule` };
+    var brandColor={ hydrospade:`#003473`, energreen:`#F5A524`, metec:`#0A5737`, camion:`#ff671f` };
 
     Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=brand-card]`),function(card){
       var h3=card.querySelector(`[data-soe=brand-card-h3]`);
@@ -1642,8 +1763,8 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   function fixHomeBrandBoxes(){
     if(path!==`/`)return;
     var brandVideo={ "Mulch Mule":`X8TkDU5Vllo`, "Energreen":`yHaA7LCPtWY` };
-    var brandKey={ "Hydro-Spade":`hydrospade`,"HydroSpade":`hydrospade`,"Energreen":`energreen`,"Metec":`metec`,"Brinemasters":`brinemasters`,"Mulch Mule":`mulchmule` };
-    var brandColor={ hydrospade:`#003473`, energreen:`#F5A524`, metec:`#0A5737`, brinemasters:`#3B7DAC` };
+    var brandKey={ "Hydro-Spade":`hydrospade`,"HydroSpade":`hydrospade`,"Energreen":`energreen`,"Metec":`metec`,"Camion":`camion`,"Mulch Mule":`mulchmule` };
+    var brandColor={ hydrospade:`#003473`, energreen:`#F5A524`, metec:`#0A5737`, camion:`#ff671f` };
     Array.prototype.forEach.call(document.querySelectorAll(`[data-soe=brand-card-h]`),function(card){
       var nm=card.querySelector(`[data-soe=brand-card-name]`);
       var name=nm?nm.textContent.trim():``;
@@ -2008,7 +2129,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
     if(path!==`/`)return;
     var MAP={ "mulch mule":`X8TkDU5Vllo`, "energreen":`yHaA7LCPtWY` };
     /* Brands with a live brand page — point their "Explore <Brand>" CTA at it (others stay '#'). */
-    var EXPLORE={ "mulch mule":`/mulch-mule`, "energreen":`/remote-controlled-mowers`, "hydrospade":`/hydrospade`, "hydro-spade":`/hydrospade` };
+    var EXPLORE={ "mulch mule":`/mulch-mule`, "energreen":`/remote-controlled-mowers`, "hydrospade":`/hydrospade`, "hydro-spade":`/hydrospade`, "camion":`/camion` };
     /* Each slide's hero-ctas = an "Explore <Brand>" button + ONE secondary CTA (a "Watch Demo" or a
        "View Specs" that an earlier block relabels to "Watch Video"). For Mulch Mule + Energreen the
        secondary becomes the real Watch Video; for every other brand it's a placeholder and is removed
