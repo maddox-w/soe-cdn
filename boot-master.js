@@ -536,6 +536,60 @@
           });
         });
       });
+      wireBrineForm(host);
+    }catch(e){}
+  }
+  /* The /brine-maker Webflow page is EMPTY, so its published page JS bundle does NOT include
+     Webflow's `forms` module (only pages with Designer-built forms get one — verified against the
+     live bundles: /camion-style shells load webflow.751e0867.* which never registers `forms`, so
+     Webflow.require("forms") is falsy and NO submit handler ever binds). Without this, submitting
+     the injected form would just GET-navigate to /brine-maker?Name=… and record nothing. This
+     reproduces the forms module's exact AJAX submission (payload verified against module 524 of
+     webflow.a0aa6ca1.*: POST https://webflow.com/api/v1/form/<site-id> with
+     name/pageId/elementId/domain/source/test/fields[...]; success = res.code 200; that module sends
+     NO turnstile token — turnstile only gates the submit button client-side, and boot-head.js strips
+     the attrs anyway). If the form is ever rebuilt natively in the Designer, the page bundle gains
+     the real module and this stands down via the Webflow.require check. */
+  function wireBrineForm(host){
+    try{
+      var wrap=host.querySelector(`[data-soe=ru-form] .w-form`); if(!wrap)return;
+      var form=wrap.querySelector(`form`); if(!form||form.getAttribute(`data-soe-wired`))return;
+      try{ if(window.Webflow&&window.Webflow.require&&window.Webflow.require(`forms`))return; }catch(e){}
+      form.setAttribute(`data-soe-wired`,`1`);
+      form.addEventListener(`submit`,function(ev){
+        ev.preventDefault();
+        var fields={};
+        Array.prototype.forEach.call(form.querySelectorAll(`input,textarea,select`),function(inp){
+          if(inp.type===`submit`)return;
+          var key=inp.getAttribute(`data-name`)||inp.name; if(!key)return;
+          fields[key]=(inp.value||``).trim();
+        });
+        var btn=form.querySelector(`input[type=submit]`);
+        var oldVal=btn?btn.value:``;
+        if(btn){ btn.value=btn.getAttribute(`data-wait`)||oldVal; btn.disabled=true; }
+        function finish(ok){
+          if(btn){ btn.disabled=false; btn.value=oldVal; }
+          var d=wrap.querySelector(`.w-form-done`), f=wrap.querySelector(`.w-form-fail`);
+          if(ok){ form.style.display=`none`; if(d)d.style.display=`block`; if(f)f.style.display=`none`; }
+          else if(f){ f.style.display=`block`; }
+        }
+        var payload={
+          name: form.getAttribute(`data-name`)||`Brine Master Inquiry`,
+          pageId: form.getAttribute(`data-wf-page-id`)||``,
+          elementId: form.getAttribute(`data-wf-element-id`)||``,
+          domain: document.documentElement.getAttribute(`data-wf-domain`)||null,
+          source: location.href,
+          test: false,
+          fields: fields,
+          dolphin: false
+        };
+        var $=window.jQuery;
+        if($&&$.ajax){
+          $.ajax({url:`https://webflow.com/api/v1/form/`+(document.documentElement.getAttribute(`data-wf-site`)||``),type:`POST`,data:payload,dataType:`json`,crossDomain:true})
+            .done(function(r){ finish(!!(r&&r.code===200)); })
+            .fail(function(){ finish(false); });
+        }else{ finish(false); }
+      });
     }catch(e){}
   }
   buildBrineMakerPage();
@@ -959,7 +1013,7 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
        fixed only when their href is dead ("#", empty) or aims at an off-site quote form, so purpose-built
        hrefs (e.g. /camion's) pass through untouched. Buttons flagged data-soe-disabled (e.g. "Video
        Coming Soon") are never touched. */
-    document.querySelectorAll(`[data-soe=hero-ctas] a[data-soe=btn],[data-soe=p-hero-ctas] a[data-soe=btn],[data-soe=ru-hero-ctas] a[data-soe=btn],[data-soe=quote-band-ctas] a[data-soe=btn]`).forEach(function(btn){
+    document.querySelectorAll(`[data-soe=hero-ctas] a[data-soe=btn],[data-soe=p-hero-ctas] a[data-soe=btn],[data-soe=ru-hero-ctas] a[data-soe=btn],[data-soe=quote-band-ctas] a[data-soe=btn],[data-soe=cta-band-ctas] a[data-soe=btn]`).forEach(function(btn){
       if(btn.hasAttribute(`data-soe-disabled`))return;
       var t=btn.textContent.trim();
       var href=btn.getAttribute(`href`)||``;
