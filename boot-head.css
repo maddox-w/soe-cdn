@@ -1270,7 +1270,7 @@ html:not([data-soe-chrome=ready]) [data-soe=top-util-left]{visibility:hidden !im
    camion-card.jpg (their homepage hero photo), camion-*.jpg lineup cards 680x388.
    ============================================================ */
 /* Banner slide 2 brand logo (tagged cam-hero-logo-bg-sm by tagHomeBrandLogos) */
-[data-soe=hero-brand-tag].cam-hero-logo-bg-sm{display:block !important;width:280px !important;height:auto !important;aspect-ratio:360 / 134;background:url(camion-logo-white.png) left bottom / contain no-repeat !important;font-size:0 !important;color:transparent !important;opacity:1 !important;transform:none !important;}
+[data-soe=hero-brand-tag].cam-hero-logo-bg-sm{display:block !important;width:280px !important;height:auto !important;aspect-ratio:1080 / 371;background:url(camion-logo-white.png) left bottom / contain no-repeat !important;font-size:0 !important;color:transparent !important;opacity:1 !important;transform:none !important;}
 [data-soe=hero-brand-tag].cam-hero-logo-bg-sm::before{content:none !important;display:none !important;}
 @media (min-width:721px){ [data-soe=hero-brand-tag].cam-hero-logo-bg-sm{width:330px !important;} }
 
@@ -1305,9 +1305,11 @@ html:not([data-soe-chrome=ready]) [data-soe=top-util-left]{visibility:hidden !im
    so the headline keeps contrast whether or not the iframe loads. White Camion logo as the hero mark. */
 #cam-hero [data-soe=hero-bg]{background-image:url("camion-card.jpg") !important;background-size:cover !important;background-position:center 55% !important;overflow:hidden;}
 #cam-hero [data-soe=hero-bg]::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,8,16,.78) 0%,rgba(2,8,16,.42) 45%,rgba(0,20,40,.16) 100%);z-index:1;pointer-events:none;}
-#cam-hero [data-soe=p-hero-mark]{border-left-color:var(--cam-orange) !important;}
-#cam-hero [data-soe=p-hero-mark-logo]{display:inline-block;width:238px;height:89px;background:url("camion-logo-white.png") left center / contain no-repeat !important;font-size:0;color:transparent;}
-#cam-hero [data-soe=p-hero-mark-meta]{color:#fff;font-weight:600;letter-spacing:.04em;}
+/* Hero mark = the owner-supplied transparent Camion logo, bare: no box, no border, no tagline
+   (2026-07-19 owner request). Shared by /camion (#cam-hero) and /brine-maker (#bm-hero). */
+#cam-hero [data-soe=p-hero-mark],#bm-hero [data-soe=p-hero-mark]{background:transparent !important;border:0 !important;padding:0 !important;gap:0 !important;}
+#cam-hero [data-soe=p-hero-mark-logo],#bm-hero [data-soe=p-hero-mark-logo]{display:inline-block;width:296px;height:102px;background:url("camion-logo-orange.png") left center / contain no-repeat !important;font-size:0;color:transparent;}
+@media (max-width:720px){#cam-hero [data-soe=p-hero-mark-logo],#bm-hero [data-soe=p-hero-mark-logo]{width:224px;height:77px;}}
 #cam-hero [data-soe=p-hero-subline]{color:var(--cam-orange) !important;}
 
 /* /camion lineup cards (4 equipment types) */
@@ -1315,3 +1317,44 @@ html:not([data-soe-chrome=ready]) [data-soe=top-util-left]{visibility:hidden !im
 #cam-lineup [data-soe=rc-unit-card]:nth-child(2) [data-soe=rc-unit-visual]{background-image:url("camion-spray-systems.jpg") !important;}
 #cam-lineup [data-soe=rc-unit-card]:nth-child(3) [data-soe=rc-unit-visual]{background-image:url("camion-tanks.jpg") !important;}
 #cam-lineup [data-soe=rc-unit-card]:nth-child(4) [data-soe=rc-unit-visual]{background-image:url("camion-diesel.jpg") !important;}
+
+/* ============ /brine-maker product page (runtime-built by v2bm; camion page key = orange theme) ============ */
+/* "Video Coming Soon"-style inert buttons, any page */
+[data-soe=btn][data-soe-disabled]{opacity:.55;pointer-events:none;cursor:default;}
+/* Hero: static Brine Master photo under the standard p-hero scrim; MM-scale type, orange subline */
+#bm-hero [data-soe=p-hero-bg]{background-image:url("brinemaster-hero.webp") !important;background-position:center 38% !important;}
+#bm-hero [data-soe=p-hero-content]{max-width:960px;}
+#bm-hero [data-soe=p-hero-h1]{font-size:clamp(34px,4.2vw,52px) !important;max-width:900px;}
+#bm-hero [data-soe=p-hero-subline]{color:var(--cam-orange) !important;font-size:clamp(30px,3.8vw,46px) !important;}
+/* The Brine Master Difference — 6 feature cards + starred-feature note + sell-sheet badges */
+[data-soe=bm-diff]{background:var(--paper);padding:88px var(--gutter);}
+[data-soe=bm-diff-inner],[data-soe=bm-lit-inner]{max-width:1100px;margin:0 auto;}
+[data-soe=bm-diff-head]{max-width:820px;margin-bottom:44px;}
+[data-soe=bm-h2]{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,3vw,40px);line-height:1.05;letter-spacing:-.02em;color:var(--ink);margin:30px 0 0;}
+[data-soe=bm-diff-lede]{font-family:var(--font-sans);font-size:17px;line-height:1.6;color:var(--steel-700);margin:16px 0 0;}
+[data-soe=bm-diff-grid]{display:grid;grid-template-columns:repeat(3,1fr);gap:28px 24px;}
+[data-soe=bm-feat]{background:var(--paper);border:1px solid var(--steel-200);}
+[data-soe=bm-feat-img]{aspect-ratio:3/2;background-size:cover;background-position:center;background-color:var(--steel-100);}
+[data-soe=bm-feat-img][data-soe-img=allinone]{background-image:url("bm-feat-allinone.webp");background-size:contain;background-repeat:no-repeat;background-color:#fff;border-bottom:1px solid var(--steel-100);}
+[data-soe=bm-feat-img][data-soe-img=salinity]{background-image:url("bm-feat-salinity.webp");}
+[data-soe=bm-feat-img][data-soe-img=polyframe]{background-image:url("bm-feat-polyframe.webp");}
+[data-soe=bm-feat-img][data-soe-img=control]{background-image:url("bm-feat-control.webp");}
+[data-soe=bm-feat-img][data-soe-img=forkpoints]{background-image:url("bm-feat-forkpoints.webp");}
+[data-soe=bm-feat-img][data-soe-img=drainable]{background-image:url("bm-feat-drainable.webp");}
+[data-soe=bm-feat-h]{font-family:var(--font-display);font-weight:800;font-size:17px;letter-spacing:-.01em;color:var(--ink);margin:18px 20px 8px;}
+[data-soe=bm-feat-p]{font-family:var(--font-sans);font-size:14.5px;line-height:1.6;color:var(--steel-700);margin:0 20px 20px;}
+[data-soe=bm-foot]{font-family:var(--font-sans);font-size:13px;font-style:italic;color:var(--steel-500);margin:26px 0 0;}
+[data-soe=bm-badges]{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:36px;margin-top:44px;padding-top:40px;border-top:1px solid var(--steel-100);}
+[data-soe=bm-badges] img{height:92px;width:auto;display:block;}
+/* Specifications size selector (1600 / 3000 pills) */
+[data-soe=bm-sizes]{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
+[data-soe=bm-size-btn]{font-family:var(--font-nav);font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--steel-700);background:var(--paper);border:1px solid var(--steel-200);padding:11px 20px;cursor:pointer;transition:background .15s,color .15s,border-color .15s;}
+[data-soe=bm-size-btn]:hover{border-color:var(--steel-300);}
+[data-soe=bm-size-btn][data-soe-state=active]{background:var(--cam-orange);border-color:var(--cam-orange);color:#fff;}
+[data-soe=ru-specs] [data-soe-spec-panel][hidden]{display:none !important;}
+/* Literature */
+[data-soe=bm-lit]{background:var(--paper);padding:80px var(--gutter);}
+[data-soe=bm-lit-inner] [data-soe=bm-diff-head]{margin-bottom:30px;}
+[data-soe=bm-lit-row]{display:flex;flex-wrap:wrap;gap:14px;}
+@media (max-width:991px){[data-soe=bm-diff-grid]{grid-template-columns:1fr 1fr;}}
+@media (max-width:720px){[data-soe=bm-diff-grid]{grid-template-columns:1fr;}[data-soe=bm-diff],[data-soe=bm-lit]{padding-top:56px;padding-bottom:56px;}[data-soe=bm-badges]{gap:22px;}[data-soe=bm-badges] img{height:72px;}[data-soe=bm-lit-row] [data-soe=btn]{width:100%;justify-content:center;}}
