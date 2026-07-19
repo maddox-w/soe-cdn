@@ -1331,7 +1331,9 @@ html:not([data-soe-chrome=ready]) [data-soe=top-util-left]{visibility:hidden !im
 [data-soe=bm-diff]{background:var(--paper);padding:88px var(--gutter);}
 [data-soe=bm-diff-inner],[data-soe=bm-lit-inner]{max-width:1100px;margin:0 auto;}
 [data-soe=bm-diff-head]{max-width:820px;margin-bottom:44px;}
-[data-soe=bm-h2]{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,3vw,40px);line-height:1.05;letter-spacing:-.02em;color:var(--ink);margin:30px 0 0;}
+/* h2-qualified so the 30px eyebrow gap OUTLASTS the global `[data-soe] h2{margin:0}` reset — same
+   collision as the bm-feat-h card titles (owner 07-19: "Downloads" and "Literature" sat touching). */
+h2[data-soe=bm-h2]{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,3vw,40px);line-height:1.05;letter-spacing:-.02em;color:var(--ink);margin:30px 0 0;}
 [data-soe=bm-diff-lede]{font-family:var(--font-sans);font-size:17px;line-height:1.6;color:var(--steel-700);margin:16px 0 0;}
 [data-soe=bm-diff-grid]{display:grid;grid-template-columns:repeat(3,1fr);gap:28px 24px;}
 [data-soe=bm-feat]{background:var(--paper);border:1px solid var(--steel-200);}
