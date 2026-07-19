@@ -1299,6 +1299,7 @@ html:not([data-soe-chrome=ready]) [data-soe=top-util-left]{visibility:hidden !im
 [data-soe-page=camion] [data-soe=eyebrow]{color:var(--cam-orange) !important;}
 [data-soe-page=camion] [data-soe=eyebrow]::before,[data-soe-page=camion] [data-soe=eyebrow]::after{background:var(--cam-orange) !important;}
 [data-soe-page=camion] [data-soe=rc-unit-hp]{color:var(--cam-navy) !important;}
+[data-soe-page=camion] [data-soe=ru-spec-cat]{color:var(--cam-orange) !important;}
 [data-soe-page=camion] [data-soe=promo-strip]{background:var(--cam-orange) !important;}
 
 /* #cam-hero: photo fallback under the video; the ::after gradient sits ABOVE the video (z-index 1 vs 0)
