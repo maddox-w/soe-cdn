@@ -1342,9 +1342,12 @@ html:not([data-soe-chrome=ready]) [data-soe=top-util-left]{visibility:hidden !im
 [data-soe=bm-feat-img][data-soe-img=control]{background-image:url("bm-feat-control.webp");}
 [data-soe=bm-feat-img][data-soe-img=forkpoints]{background-image:url("bm-feat-forkpoints.webp");}
 [data-soe=bm-feat-img][data-soe-img=drainable]{background-image:url("bm-feat-drainable.webp");}
-[data-soe=bm-feat-h]{font-family:var(--font-display);font-weight:800;font-size:17px;letter-spacing:-.01em;color:var(--ink);margin:18px 20px 8px;}
-[data-soe=bm-feat-p]{font-family:var(--font-sans);font-size:14.5px;line-height:1.6;color:var(--steel-700);margin:0 20px 20px;}
-[data-soe=bm-foot]{font-family:var(--font-sans);font-size:13px;font-style:italic;color:var(--steel-500);margin:26px 0 0;}
+/* h3-qualified so this OUTLASTS the global `[data-soe] h3{margin:0}` reset (0,1,1 vs 0,1,0 — the
+   owner's 07-19 screenshot showed the titles jammed flush against the card edge because the reset
+   was winning); card copy centered per owner request. */
+h3[data-soe=bm-feat-h]{font-family:var(--font-display);font-weight:800;font-size:17px;letter-spacing:-.01em;color:var(--ink);margin:18px 20px 8px;text-align:center;}
+[data-soe=bm-feat-p]{font-family:var(--font-sans);font-size:14.5px;line-height:1.6;color:var(--steel-700);margin:0 20px 20px;text-align:center;}
+[data-soe=bm-foot]{font-family:var(--font-sans);font-size:13px;font-style:italic;color:var(--steel-500);margin:26px 0 0;text-align:center;}
 [data-soe=bm-badges]{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:36px;margin-top:44px;padding-top:40px;border-top:1px solid var(--steel-100);}
 [data-soe=bm-badges] img{height:92px;width:auto;display:block;}
 /* Specifications size selector (1600 / 3000 pills) */
