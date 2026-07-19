@@ -12,7 +12,7 @@
     else if(path==='/mulch-mule')p='mulch-mule';
     else if(path==='/remote-controlled-mowers')p='energreen';
     else if(path==='/hydrospade'||path==='/hydrospade-trucks'||path==='/hydrospade-trailers')p='hydrospade';
-    else if(path==='/camion'||path==='/brine-maker')p='camion';
+    else if(['/camion','/brine-maker','/brine-master','/brine-maker/brine-master','/ice-master-t-series','/brine-sprayers/ice-master-t-series'].indexOf(path)!==-1)p='camion';
     else if(path==='/new-customer-setup')p='newcustomer';
     document.documentElement.setAttribute('data-soe-page',p);
   })();

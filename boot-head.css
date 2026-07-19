@@ -1308,9 +1308,9 @@ html:not([data-soe-chrome=ready]) [data-soe=top-util-left]{visibility:hidden !im
 #cam-hero [data-soe=hero-bg]::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,8,16,.78) 0%,rgba(2,8,16,.42) 45%,rgba(0,20,40,.16) 100%);z-index:1;pointer-events:none;}
 /* Hero mark = the owner-supplied transparent Camion logo, bare: no box, no border, no tagline
    (2026-07-19 owner request). Shared by /camion (#cam-hero) and /brine-maker (#bm-hero). */
-#cam-hero [data-soe=p-hero-mark],#bm-hero [data-soe=p-hero-mark]{background:transparent !important;border:0 !important;padding:0 !important;gap:0 !important;}
-#cam-hero [data-soe=p-hero-mark-logo],#bm-hero [data-soe=p-hero-mark-logo]{display:inline-block;width:296px;height:102px;background:url("camion-logo-orange.png") left center / contain no-repeat !important;font-size:0;color:transparent;}
-@media (max-width:720px){#cam-hero [data-soe=p-hero-mark-logo],#bm-hero [data-soe=p-hero-mark-logo]{width:224px;height:77px;}}
+#cam-hero [data-soe=p-hero-mark],#bm-hero [data-soe=p-hero-mark],#im-hero [data-soe=p-hero-mark]{background:transparent !important;border:0 !important;padding:0 !important;gap:0 !important;}
+#cam-hero [data-soe=p-hero-mark-logo],#bm-hero [data-soe=p-hero-mark-logo],#im-hero [data-soe=p-hero-mark-logo]{display:inline-block;width:296px;height:102px;background:url("camion-logo-orange.png") left center / contain no-repeat !important;font-size:0;color:transparent;}
+@media (max-width:720px){#cam-hero [data-soe=p-hero-mark-logo],#bm-hero [data-soe=p-hero-mark-logo],#im-hero [data-soe=p-hero-mark-logo]{width:224px;height:77px;}}
 #cam-hero [data-soe=p-hero-subline]{color:var(--cam-orange) !important;}
 
 /* /camion lineup cards (4 equipment types) */
@@ -1324,9 +1324,9 @@ html:not([data-soe-chrome=ready]) [data-soe=top-util-left]{visibility:hidden !im
 [data-soe=btn][data-soe-disabled]{opacity:.55;pointer-events:none;cursor:default;}
 /* Hero: static Brine Master photo under the standard p-hero scrim; MM-scale type, orange subline */
 #bm-hero [data-soe=p-hero-bg]{background-image:url("brinemaster-hero.webp") !important;background-position:center 38% !important;}
-#bm-hero [data-soe=p-hero-content]{max-width:960px;}
-#bm-hero [data-soe=p-hero-h1]{font-size:clamp(34px,4.2vw,52px) !important;max-width:900px;}
-#bm-hero [data-soe=p-hero-subline]{color:var(--cam-orange) !important;font-size:clamp(30px,3.8vw,46px) !important;}
+#bm-hero [data-soe=p-hero-content],#im-hero [data-soe=p-hero-content]{max-width:960px;}
+#bm-hero [data-soe=p-hero-h1],#im-hero [data-soe=p-hero-h1]{font-size:clamp(34px,4.2vw,52px) !important;max-width:900px;}
+#bm-hero [data-soe=p-hero-subline],#im-hero [data-soe=p-hero-subline]{color:var(--cam-orange) !important;font-size:clamp(30px,3.8vw,46px) !important;}
 /* The Brine Master Difference — 6 feature cards + starred-feature note + sell-sheet badges */
 [data-soe=bm-diff]{background:var(--paper);padding:88px var(--gutter);}
 [data-soe=bm-diff-inner],[data-soe=bm-lit-inner]{max-width:1100px;margin:0 auto;}
@@ -1347,7 +1347,8 @@ h2[data-soe=bm-h2]{font-family:var(--font-display);font-weight:800;font-size:cla
 /* h3-qualified so this OUTLASTS the global `[data-soe] h3{margin:0}` reset (0,1,1 vs 0,1,0 — the
    owner's 07-19 screenshot showed the titles jammed flush against the card edge because the reset
    was winning); card copy centered per owner request. */
-h3[data-soe=bm-feat-h]{font-family:var(--font-display);font-weight:800;font-size:17px;letter-spacing:-.01em;color:var(--ink);margin:18px 20px 8px;text-align:center;}
+div[data-soe=bm-feat-benefit]{font-family:var(--font-display);font-weight:800;font-size:14px;letter-spacing:.02em;color:var(--cam-orange);margin:18px 20px 2px;text-align:center;}
+h3[data-soe=bm-feat-name]{font-family:var(--font-display);font-weight:800;font-size:17px;letter-spacing:-.01em;color:var(--ink);margin:2px 20px 8px;text-align:center;}
 [data-soe=bm-feat-p]{font-family:var(--font-sans);font-size:14.5px;line-height:1.6;color:var(--steel-700);margin:0 20px 20px;text-align:center;}
 [data-soe=bm-foot]{font-family:var(--font-sans);font-size:13px;font-style:italic;color:var(--steel-500);margin:26px 0 0;text-align:center;}
 [data-soe=bm-badges]{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:36px;margin-top:44px;padding-top:40px;border-top:1px solid var(--steel-100);}
@@ -1364,3 +1365,60 @@ h3[data-soe=bm-feat-h]{font-family:var(--font-display);font-weight:800;font-size
 [data-soe=bm-lit-row]{display:flex;flex-wrap:wrap;gap:14px;}
 @media (max-width:991px){[data-soe=bm-diff-grid]{grid-template-columns:1fr 1fr;}}
 @media (max-width:720px){[data-soe=bm-diff-grid]{grid-template-columns:1fr;}[data-soe=bm-diff],[data-soe=bm-lit]{padding-top:56px;padding-bottom:56px;}[data-soe=bm-badges]{gap:22px;}[data-soe=bm-badges] img{height:72px;}[data-soe=bm-lit-row] [data-soe=btn]{width:100%;justify-content:center;}}
+
+/* ============================================================
+   2026-07-19 round 2 — small ® + why/FAQ/PowerPak components (Brine Master
+   adjustments + the Ice Master® T-Series page /brine-sprayers/ice-master-t-series)
+   ============================================================ */
+/* Registered-trademark ball at ~50% inside display headings (owner request) */
+[data-soe=rtm]{font-size:.5em;line-height:0;position:relative;top:-.55em;letter-spacing:0;}
+
+/* "Why … Is Smart?" section — steel band, 6 orange-check problem statements */
+[data-soe=why]{background:var(--steel-50);padding:88px var(--gutter);border-top:1px solid var(--steel-200);border-bottom:1px solid var(--steel-200);}
+[data-soe=why-inner]{max-width:1100px;margin:0 auto;}
+[data-soe=why-head]{max-width:860px;margin-bottom:40px;}
+[data-soe=why-lede]{font-family:var(--font-sans);font-size:17px;line-height:1.6;color:var(--steel-700);margin:16px 0 0;}
+[data-soe=why-grid]{display:grid;grid-template-columns:1fr 1fr;gap:18px 32px;}
+[data-soe=why-item]{position:relative;background:var(--paper);border:1px solid var(--steel-200);padding:18px 22px 18px 52px;font-family:var(--font-sans);font-size:15px;line-height:1.6;color:var(--steel-700);}
+[data-soe=why-item] strong{color:var(--ink);}
+[data-soe=why-item]::before{content:"\2713";position:absolute;left:20px;top:16px;color:var(--cam-orange);font-weight:800;font-size:19px;line-height:1.4;}
+@media (max-width:860px){ [data-soe=why-grid]{grid-template-columns:1fr;} [data-soe=why]{padding:56px var(--gutter);} }
+
+/* FAQ accordion (native details/summary; + / − marker in Camion orange) */
+[data-soe=faq]{background:var(--paper);padding:88px var(--gutter);}
+[data-soe=faq-inner]{max-width:900px;margin:0 auto;}
+[data-soe=faq-head]{margin-bottom:26px;}
+[data-soe=faq-item]{border-bottom:1px solid var(--steel-200);}
+[data-soe=faq-item]:first-of-type{border-top:1px solid var(--steel-200);}
+[data-soe=faq-q]{position:relative;cursor:pointer;list-style:none;padding:20px 18px 20px 44px;font-family:var(--font-display);font-weight:700;font-size:17px;color:var(--ink);transition:color .15s;}
+[data-soe=faq-q]::-webkit-details-marker{display:none;}
+[data-soe=faq-q]::before{content:"+";position:absolute;left:8px;top:50%;transform:translateY(-52%);color:var(--cam-orange);font-weight:800;font-size:26px;line-height:1;}
+details[open] [data-soe=faq-q]::before{content:"\2212";}
+[data-soe=faq-q]:hover{color:var(--cam-orange);}
+[data-soe=faq-a]{padding:0 18px 22px 44px;}
+[data-soe=faq-a] p{margin:0;font-family:var(--font-sans);font-size:15.5px;line-height:1.65;color:var(--steel-700);}
+@media (max-width:720px){ [data-soe=faq]{padding:56px var(--gutter);} }
+
+/* Ice Master® T-Series (#im-*) */
+#im-hero [data-soe=p-hero-bg]{background-image:url("brine-sprayer-hero.jpg") !important;background-position:center 42% !important;}
+#im-hero [data-soe=p-hero-ctas]{flex-wrap:wrap;gap:12px;}
+#im-hero [data-soe=p-hero-ctas] [data-soe=btn]{margin:0;}
+[data-soe=bm-size-toggle][data-soe-compact]{gap:8px;max-width:1100px;}
+[data-soe=bm-size-toggle][data-soe-compact] [data-soe=bm-size-btn]{padding:9px 14px;font-size:12.5px;letter-spacing:.05em;}
+[data-soe=bm-spec-visual][data-soe-bm-img=tseries]{background-image:url("t-series-spec.jpg");}
+
+/* PowerPak® add-on section */
+[data-soe=pp]{background:var(--steel-50);padding:88px var(--gutter);border-top:1px solid var(--steel-200);}
+[data-soe=pp-inner]{max-width:1100px;margin:0 auto;}
+[data-soe=pp-ctas]{margin:26px 0 6px;}
+h3[data-soe=pp-sub]{font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--ink);margin:40px 0 4px;}
+[data-soe=pp-sublede]{font-family:var(--font-sans);font-size:15.5px;color:var(--steel-700);margin:0 0 22px;}
+[data-soe=pp-grid]{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+[data-soe=pp-card]{background:var(--paper);border:1px solid var(--steel-200);}
+[data-soe=pp-img]{aspect-ratio:4 / 3;background-color:#fff;background-position:center;background-repeat:no-repeat;background-size:contain;border-bottom:1px solid var(--steel-100);}
+[data-soe=pp-img][data-soe-pp=electric]{background-image:url("powerpak-electric.jpg");}
+[data-soe=pp-img][data-soe-pp=gas]{background-image:url("powerpak-gas.jpg");}
+[data-soe=pp-img][data-soe-pp=hydraulic]{background-image:url("powerpak-hydraulic.jpg");}
+[data-soe=pp-name]{font-family:var(--font-display);font-weight:800;font-size:16px;color:var(--ink);text-align:center;padding:14px 12px 16px;}
+[data-soe=pp] [data-soe=bm-badges]{border-top:0;padding-top:0;margin-top:44px;}
+@media (max-width:860px){ [data-soe=pp-grid]{grid-template-columns:1fr;} [data-soe=pp]{padding:56px var(--gutter);} }
