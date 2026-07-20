@@ -1491,3 +1491,13 @@ h3[data-soe=pp-sub]{text-align:center;}
 [data-soe=pp-inner] [data-soe=eyebrow]{display:none !important;}
 /* headers sat 30px below the now-removed eyebrows */
 [data-soe=ru-specs-head] [data-soe=ru-specs-h2]{margin-top:0;}
+
+/* Ice Master® T-Series feature photos (owner attachments 2026-07-20; im- keys keep them distinct
+   from the storage-tank rustarmour/forks pics) */
+[data-soe=bm-feat-img][data-soe-img=im-trizone]{background-image:url("im-feat-trizone.jpg");}
+[data-soe=bm-feat-img][data-soe-img=im-baffleball]{background-image:url("im-feat-baffleball.jpg");}
+[data-soe=bm-feat-img][data-soe-img=im-doublespray]{background-image:url("im-feat-doublespray.jpg");}
+[data-soe=bm-feat-img][data-soe-img=im-autodrain]{background-image:url("im-feat-autodrain.jpg");}
+[data-soe=bm-feat-img][data-soe-img=im-rustarmour]{background-image:url("im-feat-rustarmour.jpg");}
+[data-soe=bm-feat-img][data-soe-img=im-fastfill]{background-image:url("im-feat-fastfill.jpg");}
+[data-soe=bm-feat-img][data-soe-img=im-forks]{background-image:url("im-feat-forks.jpg");}
