@@ -716,7 +716,7 @@ button[data-soe=quote-tab][data-soe-state=active]{color:#367C2B;border-bottom-co
 /* AA2: Energreen difference head — drop the "Why it works" eyebrow, add space before the paragraph. */
 [data-soe=rc-units-head] [data-soe=eyebrow]{display:none !important;}
 [data-soe=rc-units-h2]{margin:0 !important;}
-[data-soe=rc-units-lede]{margin-top:40px !important;}
+[data-soe=rc-units-lede]{margin-top:12px !important;}
 
 /* AA3: Mulch Mule difference head — same treatment: stack a paragraph under the h2 (lede was hidden). */
 [data-soe=difference-head]{grid-template-columns:1fr !important;gap:0 !important;align-items:start !important;}
@@ -1425,7 +1425,7 @@ h3[data-soe=pp-sub]{font-family:var(--font-display);font-weight:800;font-size:22
 
 /* Mulch Mule -> Mulch Trailer pass (2026-07-19): hero category line, Camion-format feature cards
    (hook green / feature black / benefit), green spec-cat, green USA badge sits via bm-badges */
-[data-soe=mm-cat]{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,3.4vw,44px);line-height:1.05;letter-spacing:-.02em;color:#fff;margin:14px 0 2px;}
+[data-soe=mm-cat]{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,3.4vw,44px);line-height:1.05;letter-spacing:-.02em;color:#fff;margin:0;}
 [data-soe=mm-hook]{font-family:var(--font-display);font-weight:800;font-size:17px;letter-spacing:-.01em;color:var(--jd-green);margin:0 0 6px;}
 h3[data-soe=mm-feat-name]{font-family:var(--font-display);font-weight:800;font-size:17px;letter-spacing:-.01em;color:var(--ink);margin:0 0 8px;}
 [data-soe=mm-feat-p]{font-family:var(--font-sans);font-size:14.5px;line-height:1.62;color:var(--steel-700);margin:0;}
@@ -1501,3 +1501,13 @@ h3[data-soe=pp-sub]{text-align:center;}
 [data-soe=bm-feat-img][data-soe-img=im-rustarmour]{background-image:url("im-feat-rustarmour.jpg");}
 [data-soe=bm-feat-img][data-soe-img=im-fastfill]{background-image:url("im-feat-fastfill.jpg");}
 [data-soe=bm-feat-img][data-soe-img=im-forks]{background-image:url("im-feat-forks.jpg");}
+
+/* 2026-07-20 evening polish (owner):
+   - Mulch Mule banner: logo + "Mulch Trailer" side by side, pair pulled close to the headline
+   - homepage banner slides: the logo-to-buttons block is vertically centered on the photo,
+     and every slide keeps its second button (Watch Video, or an inert Video Coming Soon)
+   - section intro copy hugs its header consistently */
+[data-soe=mm-cat-row]{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin:0 0 10px;}
+[data-soe=mm-cat-row] [data-soe=hero-brand-tag]{margin:0 !important;width:230px !important;}  /* trim the logo box's dead right-side space so the category text sits beside the mark */
+@media (max-width:720px){ [data-soe=mm-cat-row]{gap:14px;} }
+[data-soe=hero-slide] [data-soe=hero-content]{display:flex;flex-direction:column;justify-content:center;}
