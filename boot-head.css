@@ -1443,3 +1443,20 @@ h3[data-soe=mm-feat-name]{font-family:var(--font-display);font-weight:800;font-s
 [data-soe=bm-feat-img][data-soe-img=anchorpoint]{background-image:url("bst-feat-anchorpoint.jpg");}
 [data-soe=bm-spec-visual][data-soe-bm-img=bst]{background-image:url("brine-storage-spec.jpg");}
 [data-soe=bm-spec-visual][data-soe-bm-img=dfb]{background-image:url("diesel-fuel-boss-spec.jpg");}
+
+/* Spec-section chrome for the size-selector product pages (T-Series / Brine Storage Tank /
+   Diesel Fuel Boss®) — owner 07-20 screenshots: the pills rendered as bare inline links that
+   wrapped MID-LABEL on mobile ("995 / GAL"), and the product-render panel had no base sizing
+   (the visual collapsed to 0 and the table sat lopsided-left on desktop). These base rules were
+   lost in the 07-19 two-session convergence; the keyed background-image rules already exist. */
+[data-soe=bm-size-toggle]{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 0;}
+[data-soe=bm-size-btn]{white-space:nowrap;display:inline-block;}
+[data-soe=bm-specs-note]{font-family:var(--font-sans);font-size:15.5px;line-height:1.6;color:var(--steel-500);margin:14px 0 0;max-width:860px;}
+[data-soe=bm-spec-panel]{gap:40px;align-items:flex-start;max-width:1100px;margin:26px auto 0;}
+[data-soe=bm-spec-visual]{flex:0 0 42%;max-width:480px;aspect-ratio:1000 / 700;background-color:#fff;background-position:center;background-repeat:no-repeat;background-size:contain;border:1px solid var(--steel-200);}
+[data-soe=bm-spec-table]{flex:1 1 auto;min-width:0;background:var(--paper);border:1px solid var(--steel-200);padding:26px 30px 14px;}
+@media (max-width:900px){
+  [data-soe=bm-spec-panel]{flex-direction:column;gap:22px;}
+  [data-soe=bm-spec-visual]{width:100%;max-width:520px;flex:0 0 auto;}
+  [data-soe=bm-spec-table]{padding:20px 20px 8px;width:100%;}
+}
