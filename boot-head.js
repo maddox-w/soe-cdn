@@ -9,7 +9,7 @@
     var p='other', path=(location.pathname.replace(/\/+$/,'')||'/');
     if(path==='/')p='home';
     else if(path==='/brands')p='brands';
-    else if(path==='/mulch-mule')p='mulch-mule';
+    else if(path==='/mulch-mule'||path==='/mulch-trailers/mulch-mule')p='mulch-mule';
     else if(path==='/remote-controlled-mowers')p='energreen';
     else if(path==='/hydrospade'||path==='/hydrospade-trucks'||path==='/hydrospade-trailers')p='hydrospade';
     else if(['/camion','/brine-maker','/brine-master','/brine-maker/brine-master','/ice-master-t-series','/brine-sprayers/ice-master-t-series'].indexOf(path)!==-1)p='camion';

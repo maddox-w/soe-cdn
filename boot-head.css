@@ -1381,7 +1381,7 @@ h3[data-soe=bm-feat-name]{font-family:var(--font-display);font-weight:800;font-s
 [data-soe=why-grid]{display:grid;grid-template-columns:1fr 1fr;gap:18px 32px;}
 [data-soe=why-item]{position:relative;background:var(--paper);border:1px solid var(--steel-200);padding:18px 22px 18px 52px;font-family:var(--font-sans);font-size:15px;line-height:1.6;color:var(--steel-700);}
 [data-soe=why-item] strong{color:var(--ink);}
-[data-soe=why-item]::before{content:"\2713";position:absolute;left:20px;top:16px;color:var(--cam-orange);font-weight:800;font-size:19px;line-height:1.4;}
+[data-soe=why-item]::before{content:"\2713";position:absolute;left:20px;top:16px;color:var(--cam-orange,var(--jd-green));font-weight:800;font-size:19px;line-height:1.4;}
 @media (max-width:860px){ [data-soe=why-grid]{grid-template-columns:1fr;} [data-soe=why]{padding:56px var(--gutter);} }
 
 /* FAQ accordion (native details/summary; + / − marker in Camion orange) */
@@ -1392,9 +1392,9 @@ h3[data-soe=bm-feat-name]{font-family:var(--font-display);font-weight:800;font-s
 [data-soe=faq-item]:first-of-type{border-top:1px solid var(--steel-200);}
 [data-soe=faq-q]{position:relative;cursor:pointer;list-style:none;padding:20px 18px 20px 44px;font-family:var(--font-display);font-weight:700;font-size:17px;color:var(--ink);transition:color .15s;}
 [data-soe=faq-q]::-webkit-details-marker{display:none;}
-[data-soe=faq-q]::before{content:"+";position:absolute;left:8px;top:50%;transform:translateY(-52%);color:var(--cam-orange);font-weight:800;font-size:26px;line-height:1;}
+[data-soe=faq-q]::before{content:"+";position:absolute;left:8px;top:50%;transform:translateY(-52%);color:var(--cam-orange,var(--jd-green));font-weight:800;font-size:26px;line-height:1;}
 details[open] [data-soe=faq-q]::before{content:"\2212";}
-[data-soe=faq-q]:hover{color:var(--cam-orange);}
+[data-soe=faq-q]:hover{color:var(--cam-orange,var(--jd-green));}
 [data-soe=faq-a]{padding:0 18px 22px 44px;}
 [data-soe=faq-a] p{margin:0;font-family:var(--font-sans);font-size:15.5px;line-height:1.65;color:var(--steel-700);}
 @media (max-width:720px){ [data-soe=faq]{padding:56px var(--gutter);} }
@@ -1422,3 +1422,12 @@ h3[data-soe=pp-sub]{font-family:var(--font-display);font-weight:800;font-size:22
 [data-soe=pp-name]{font-family:var(--font-display);font-weight:800;font-size:16px;color:var(--ink);text-align:center;padding:14px 12px 16px;}
 [data-soe=pp] [data-soe=bm-badges]{border-top:0;padding-top:0;margin-top:44px;}
 @media (max-width:860px){ [data-soe=pp-grid]{grid-template-columns:1fr;} [data-soe=pp]{padding:56px var(--gutter);} }
+
+/* Mulch Mule -> Mulch Trailer pass (2026-07-19): hero category line, Camion-format feature cards
+   (hook green / feature black / benefit), green spec-cat, green USA badge sits via bm-badges */
+[data-soe=mm-cat]{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,3.4vw,44px);line-height:1.05;letter-spacing:-.02em;color:#fff;margin:14px 0 2px;}
+[data-soe=mm-hook]{font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:.01em;color:var(--jd-green);margin:0 0 6px;}
+h3[data-soe=mm-feat-name]{font-family:var(--font-display);font-weight:800;font-size:17px;letter-spacing:-.01em;color:var(--ink);margin:0 0 8px;}
+[data-soe=mm-feat-p]{font-family:var(--font-sans);font-size:14.5px;line-height:1.62;color:var(--steel-700);margin:0;}
+[data-soe-page=mulch-mule] [data-soe=ru-spec-cat]{color:var(--jd-green) !important;}
+[data-soe-page=mulch-mule] [data-soe=bm-badges]{border-top:0;margin-top:40px;padding-top:0;}
