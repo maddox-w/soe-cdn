@@ -1308,9 +1308,9 @@ html:not([data-soe-chrome=ready]) [data-soe=top-util-left]{visibility:hidden !im
 #cam-hero [data-soe=hero-bg]::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,8,16,.78) 0%,rgba(2,8,16,.42) 45%,rgba(0,20,40,.16) 100%);z-index:1;pointer-events:none;}
 /* Hero mark = the owner-supplied transparent Camion logo, bare: no box, no border, no tagline
    (2026-07-19 owner request). Shared by /camion (#cam-hero) and /brine-maker (#bm-hero). */
-#cam-hero [data-soe=p-hero-mark],#bm-hero [data-soe=p-hero-mark],#im-hero [data-soe=p-hero-mark]{background:transparent !important;border:0 !important;padding:0 !important;gap:0 !important;}
-#cam-hero [data-soe=p-hero-mark-logo],#bm-hero [data-soe=p-hero-mark-logo],#im-hero [data-soe=p-hero-mark-logo]{display:inline-block;width:296px;height:102px;background:url("camion-logo-orange.png") left center / contain no-repeat !important;font-size:0;color:transparent;}
-@media (max-width:720px){#cam-hero [data-soe=p-hero-mark-logo],#bm-hero [data-soe=p-hero-mark-logo],#im-hero [data-soe=p-hero-mark-logo]{width:224px;height:77px;}}
+#cam-hero [data-soe=p-hero-mark],#bm-hero [data-soe=p-hero-mark],#im-hero [data-soe=p-hero-mark],#bst-hero [data-soe=p-hero-mark],#dfb-hero [data-soe=p-hero-mark]{background:transparent !important;border:0 !important;padding:0 !important;gap:0 !important;}
+#cam-hero [data-soe=p-hero-mark-logo],#bm-hero [data-soe=p-hero-mark-logo],#im-hero [data-soe=p-hero-mark-logo],#bst-hero [data-soe=p-hero-mark-logo],#dfb-hero [data-soe=p-hero-mark-logo]{display:inline-block;width:296px;height:102px;background:url("camion-logo-orange.png") left center / contain no-repeat !important;font-size:0;color:transparent;}
+@media (max-width:720px){#cam-hero [data-soe=p-hero-mark-logo],#bm-hero [data-soe=p-hero-mark-logo],#im-hero [data-soe=p-hero-mark-logo],#bst-hero [data-soe=p-hero-mark-logo],#dfb-hero [data-soe=p-hero-mark-logo]{width:224px;height:77px;}}
 #cam-hero [data-soe=p-hero-subline]{color:var(--cam-orange) !important;}
 
 /* /camion lineup cards (4 equipment types) */
@@ -1324,9 +1324,9 @@ html:not([data-soe-chrome=ready]) [data-soe=top-util-left]{visibility:hidden !im
 [data-soe=btn][data-soe-disabled]{opacity:.55;pointer-events:none;cursor:default;}
 /* Hero: static Brine Master photo under the standard p-hero scrim; MM-scale type, orange subline */
 #bm-hero [data-soe=p-hero-bg]{background-image:url("brinemaster-hero.webp") !important;background-position:center 38% !important;}
-#bm-hero [data-soe=p-hero-content],#im-hero [data-soe=p-hero-content]{max-width:960px;}
-#bm-hero [data-soe=p-hero-h1],#im-hero [data-soe=p-hero-h1]{font-size:clamp(34px,4.2vw,52px) !important;max-width:900px;}
-#bm-hero [data-soe=p-hero-subline],#im-hero [data-soe=p-hero-subline]{color:var(--cam-orange) !important;font-size:clamp(30px,3.8vw,46px) !important;}
+#bm-hero [data-soe=p-hero-content],#im-hero [data-soe=p-hero-content],#bst-hero [data-soe=p-hero-content],#dfb-hero [data-soe=p-hero-content]{max-width:960px;}
+#bm-hero [data-soe=p-hero-h1],#im-hero [data-soe=p-hero-h1],#bst-hero [data-soe=p-hero-h1],#dfb-hero [data-soe=p-hero-h1]{font-size:clamp(34px,4.2vw,52px) !important;max-width:900px;}
+#bm-hero [data-soe=p-hero-subline],#im-hero [data-soe=p-hero-subline],#bst-hero [data-soe=p-hero-subline],#dfb-hero [data-soe=p-hero-subline]{color:var(--cam-orange) !important;font-size:clamp(30px,3.8vw,46px) !important;}
 /* The Brine Master Difference — 6 feature cards + starred-feature note + sell-sheet badges */
 [data-soe=bm-diff]{background:var(--paper);padding:88px var(--gutter);}
 [data-soe=bm-diff-inner],[data-soe=bm-lit-inner]{max-width:1100px;margin:0 auto;}
@@ -1401,7 +1401,7 @@ details[open] [data-soe=faq-q]::before{content:"\2212";}
 
 /* Ice Master® T-Series (#im-*) */
 #im-hero [data-soe=p-hero-bg]{background-image:url("brine-sprayer-hero.jpg") !important;background-position:center 42% !important;}
-#im-hero [data-soe=p-hero-ctas]{flex-wrap:wrap;gap:12px;}
+#im-hero [data-soe=p-hero-ctas],#bst-hero [data-soe=p-hero-ctas],#dfb-hero [data-soe=p-hero-ctas]{flex-wrap:wrap;gap:12px;}
 #im-hero [data-soe=p-hero-ctas] [data-soe=btn]{margin:0;}
 [data-soe=bm-size-toggle][data-soe-compact]{gap:8px;max-width:1100px;}
 [data-soe=bm-size-toggle][data-soe-compact] [data-soe=bm-size-btn]{padding:9px 14px;font-size:12.5px;letter-spacing:.05em;}
@@ -1431,3 +1431,15 @@ h3[data-soe=mm-feat-name]{font-family:var(--font-display);font-weight:800;font-s
 [data-soe=mm-feat-p]{font-family:var(--font-sans);font-size:14.5px;line-height:1.62;color:var(--steel-700);margin:0;}
 [data-soe-page=mulch-mule] [data-soe=ru-spec-cat]{color:var(--jd-green) !important;}
 [data-soe-page=mulch-mule] [data-soe=bm-badges]{border-top:0;margin-top:40px;padding-top:0;}
+
+/* Brine Storage Tank + Diesel Fuel Boss® pages (2026-07-20) */
+#bst-hero [data-soe=p-hero-bg]{background-image:url("brine-storage-hero.jpg") !important;background-position:center 45% !important;}
+#dfb-hero [data-soe=p-hero-bg]{background-image:url("diesel-fuel-boss-hero.jpg") !important;background-position:center 40% !important;}
+[data-soe=bm-feat-img][data-soe-img=corrodeproof]{background-image:url("bst-feat-corrodeproof.jpg");}
+[data-soe=bm-feat-img][data-soe-img=ribbedwall]{background-image:url("bst-feat-ribbedwall.jpg");}
+[data-soe=bm-feat-img][data-soe-img=thickwall]{background-image:url("bst-feat-thickwall.jpg");}
+[data-soe=bm-feat-img][data-soe-img=strongx]{background-image:url("bst-feat-strongx.jpg");}
+[data-soe=bm-feat-img][data-soe-img=rustarmour]{background-image:url("bst-feat-rustarmour.jpg");}
+[data-soe=bm-feat-img][data-soe-img=anchorpoint]{background-image:url("bst-feat-anchorpoint.jpg");}
+[data-soe=bm-spec-visual][data-soe-bm-img=bst]{background-image:url("brine-storage-spec.jpg");}
+[data-soe=bm-spec-visual][data-soe-bm-img=dfb]{background-image:url("diesel-fuel-boss-spec.jpg");}
