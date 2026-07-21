@@ -1516,3 +1516,9 @@ h3[data-soe=pp-sub]{text-align:center;}
    [data-soe=hero-text] was ABSOLUTE with fixed top offsets (180/120/80px) — the earlier flex-center
    attempt on hero-content silently did nothing to an absolutely-positioned child. Left offset kept. */
 [data-soe=hero-text]{top:50% !important;bottom:auto !important;transform:translateY(-50%) !important;}
+
+/* 2026-07-20 late-2: Metec + Energreen slide logos are wide, short wordmarks pinned to the BOTTOM
+   of their 74px tag boxes (left-bottom contain) — up to 50px of invisible dead space sat ABOVE the
+   visible logo, so those slides read "low" even though the hero-text block is mathematically
+   centered. Centering the logo inside its box balances the dead space on every brand slide. */
+[data-soe=hero] [data-soe=hero-slide] [data-soe=hero-brand-tag][class*="-hero-logo-bg-sm"]{background-position:left center !important;}
