@@ -1511,3 +1511,8 @@ h3[data-soe=pp-sub]{text-align:center;}
 [data-soe=mm-cat-row] [data-soe=hero-brand-tag]{margin:0 !important;width:230px !important;}  /* trim the logo box's dead right-side space so the category text sits beside the mark */
 @media (max-width:720px){ [data-soe=mm-cat-row]{gap:14px;} }
 [data-soe=hero-slide] [data-soe=hero-content]{display:flex;flex-direction:column;justify-content:center;}
+
+/* 2026-07-20 late: homepage banner blocks (logo -> buttons) truly centered vertically per brand.
+   [data-soe=hero-text] was ABSOLUTE with fixed top offsets (180/120/80px) — the earlier flex-center
+   attempt on hero-content silently did nothing to an absolutely-positioned child. Left offset kept. */
+[data-soe=hero-text]{top:50% !important;bottom:auto !important;transform:translateY(-50%) !important;}
