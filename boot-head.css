@@ -1534,7 +1534,8 @@ h3[data-soe=pp-sub]{text-align:center;}
    navy / energreen amber, all !important at (0,3,0)); the #rc-hero-scoped selector out-ranks the
    (1,2,0) #rc-hero amber override. Single-button banners are untouched (:not(:first-child)). */
 @media (max-width:720px){
-  [data-soe=hero-ctas] a[data-soe=btn]:not(:first-child){
+  [data-soe=hero-ctas] a[data-soe=btn]:not(:first-child),
+  [data-soe=hero-ctas] a[data-soe=btn]:not(:first-child):hover{
     background:transparent !important;
     color:var(--paper) !important;
     border:2px solid var(--paper) !important;
@@ -1542,10 +1543,18 @@ h3[data-soe=pp-sub]{text-align:center;}
 }
 @media screen and (max-width:767px){
   [data-soe=p-hero-ctas] a[data-soe=btn]:not(:first-child),
+  [data-soe=p-hero-ctas] a[data-soe=btn]:not(:first-child):hover,
   [data-soe=ru-hero-ctas] a[data-soe=btn]:not(:first-child),
-  #rc-hero [data-soe=p-hero-ctas] a[data-soe=btn]:not(:first-child){
+  [data-soe=ru-hero-ctas] a[data-soe=btn]:not(:first-child):hover,
+  #rc-hero [data-soe=p-hero-ctas] a[data-soe=btn]:not(:first-child),
+  #rc-hero [data-soe=p-hero-ctas] a[data-soe=btn]:not(:first-child):hover{
     background:transparent !important;
     color:var(--paper) !important;
     border:2px solid var(--paper) !important;
   }
 }
+/* The :hover twins are REQUIRED, not decorative: the per-theme fills also ship :hover rules at
+   (0,4,0) !important ([data-soe-page=camion|hydrospade] [data-soe=btn][data-soe-variant=primary]:hover,
+   and the ru amber equivalent) which beat the (0,3,1) base selectors above — on touch devices
+   :hover is sticky, so a tapped outlined button would snap back to a SOLID dark fill and stay
+   there. The twins sit at (0,4,1)/(1,4,1), later in file, and pin the treatment through taps. */
