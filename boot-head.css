@@ -1522,3 +1522,30 @@ h3[data-soe=pp-sub]{text-align:center;}
    visible logo, so those slides read "low" even though the hero-text block is mathematically
    centered. Centering the logo inside its box balances the dead space on every brand slide. */
 [data-soe=hero] [data-soe=hero-slide] [data-soe=hero-brand-tag][class*="-hero-logo-bg-sm"]{background-position:left center !important;}
+
+
+/* v2mcta (2026-07-25): Mobile banner-CTA treatment — when a banner/hero CTA group stacks on
+   mobile and holds MORE THAN ONE button, only the TOP button keeps its solid fill; every button
+   underneath goes transparent with a white outline (the inverse-outline look) so stacked solid
+   slabs stop covering the banner photo. Owner request w/ Brown Equipment reference screenshot.
+   Desktop unchanged. Breakpoints mirror each group's own stacking point (hero-ctas stacks at
+   720px, p-hero-ctas at 767px; ru-hero-ctas wraps, treated at 767px for consistency).
+   !important + end-of-file placement beats the per-page theme fills (camion orange / hydrospade
+   navy / energreen amber, all !important at (0,3,0)); the #rc-hero-scoped selector out-ranks the
+   (1,2,0) #rc-hero amber override. Single-button banners are untouched (:not(:first-child)). */
+@media (max-width:720px){
+  [data-soe=hero-ctas] a[data-soe=btn]:not(:first-child){
+    background:transparent !important;
+    color:var(--paper) !important;
+    border:2px solid var(--paper) !important;
+  }
+}
+@media screen and (max-width:767px){
+  [data-soe=p-hero-ctas] a[data-soe=btn]:not(:first-child),
+  [data-soe=ru-hero-ctas] a[data-soe=btn]:not(:first-child),
+  #rc-hero [data-soe=p-hero-ctas] a[data-soe=btn]:not(:first-child){
+    background:transparent !important;
+    color:var(--paper) !important;
+    border:2px solid var(--paper) !important;
+  }
+}
