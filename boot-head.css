@@ -1284,7 +1284,7 @@ html:not([data-soe-chrome=ready]) [data-soe=top-util-left]{visibility:hidden !im
    like background-size:cover: aspect-ratio locks 16:9 while the min- constraints force whichever
    dimension is short to fill, and the host's overflow:hidden crops the rest. Fades in over the photo
    once loaded; pointer-events:none keeps it purely decorative. */
-[data-soe=cam-video]{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);aspect-ratio:16 / 9;width:auto;height:auto;min-width:120%;min-height:120%;border:0;pointer-events:none;opacity:0;transition:opacity .9s ease;z-index:0;}
+[data-soe=cam-video]{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);aspect-ratio:16 / 9;width:auto;height:auto;min-width:125%;min-height:125%;border:0;pointer-events:none;opacity:0;transition:opacity .9s ease;z-index:0;}
 [data-soe=cam-video][data-soe-on]{opacity:1;}
 
 /* Camion logo on the light lineup/brands cards (same mechanism as the other brands) */

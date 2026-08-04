@@ -466,14 +466,17 @@
       f.setAttribute(`tabindex`,`-1`);
       f.setAttribute(`frameborder`,`0`);
       /* Fade the video in only after the player REPORTS playback (widget-API playerState 1) plus a
-         beat for YouTube's title overlay to fade (~3s of playback) — the old fixed 1s timer revealed
-         the iframe while the title bar / play button chrome was still on screen, so the hero visibly
-         read as a YouTube embed. The `listening` handshake makes the player stream infoDelivery
-         states (and resend the current one, so a playback that starts before the listener attaches
-         is still caught). If playback never starts (autoplay blocked, protocol change), we simply
-         never reveal — the photo stays, which always looks right. YouTube also force-enables
-         captions on muted autoplay embeds — unload the captions module via the same postMessage API
-         (enablejsapi=1 above); repeated a few times because the player ignores commands sent too early. */
+         short settle for the first frames — the old fixed 1s timer revealed the iframe while the
+         thumbnail / play-button state could still be on screen, so the hero visibly read as a
+         YouTube embed. The title/watermark/control chrome all hug the player's edges, and the CSS
+         125% cover crops those out of the hero entirely — that's what lets the settle stay short
+         instead of waiting out YouTube's ~3s title-overlay fade. The `listening` handshake makes
+         the player stream infoDelivery states (and resend the current one, so a playback that
+         starts before the listener attaches is still caught). If playback never starts (autoplay
+         blocked, protocol change), we simply never reveal — the photo stays, which always looks
+         right. YouTube also force-enables captions on muted autoplay embeds — unload the captions
+         module via the same postMessage API (enablejsapi=1 above); repeated a few times because
+         the player ignores commands sent too early. */
       f.addEventListener(`load`,function(){
         var revealed=false;
         function onMsg(e){
@@ -487,7 +490,7 @@
           if(st===1&&!revealed){
             revealed=true;
             window.removeEventListener(`message`,onMsg);
-            setTimeout(function(){ f.setAttribute(`data-soe-on`,``); },3300);
+            setTimeout(function(){ f.setAttribute(`data-soe-on`,``); },450);
           }
         }
         window.addEventListener(`message`,onMsg);
