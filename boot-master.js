@@ -465,11 +465,37 @@
       f.setAttribute(`aria-hidden`,`true`);
       f.setAttribute(`tabindex`,`-1`);
       f.setAttribute(`frameborder`,`0`);
-      /* fade the video in over the photo once the player has had a beat to start. YouTube force-enables
-         captions on muted autoplay embeds — unload the captions module via the iframe postMessage API
+      /* Fade the video in only after the player REPORTS playback (widget-API playerState 1) plus a
+         beat for YouTube's title overlay to fade (~3s of playback) — the old fixed 1s timer revealed
+         the iframe while the title bar / play button chrome was still on screen, so the hero visibly
+         read as a YouTube embed. The `listening` handshake makes the player stream infoDelivery
+         states (and resend the current one, so a playback that starts before the listener attaches
+         is still caught). If playback never starts (autoplay blocked, protocol change), we simply
+         never reveal — the photo stays, which always looks right. YouTube also force-enables
+         captions on muted autoplay embeds — unload the captions module via the same postMessage API
          (enablejsapi=1 above); repeated a few times because the player ignores commands sent too early. */
       f.addEventListener(`load`,function(){
-        setTimeout(function(){ f.setAttribute(`data-soe-on`,``); },1000);
+        var revealed=false;
+        function onMsg(e){
+          if(e.source!==f.contentWindow)return;
+          var d=e.data;
+          if(typeof d===`string`){ try{ d=JSON.parse(d); }catch(err){ return; } }
+          if(!d||typeof d!==`object`)return;
+          var st=null;
+          if(d.info&&typeof d.info.playerState===`number`)st=d.info.playerState;
+          else if(d.event===`onStateChange`&&typeof d.info===`number`)st=d.info;
+          if(st===1&&!revealed){
+            revealed=true;
+            window.removeEventListener(`message`,onMsg);
+            setTimeout(function(){ f.setAttribute(`data-soe-on`,``); },3300);
+          }
+        }
+        window.addEventListener(`message`,onMsg);
+        [0,400,1200,2500].forEach(function(ms){
+          setTimeout(function(){
+            try{ f.contentWindow.postMessage(JSON.stringify({event:`listening`,id:YT,channel:`widget`}),`*`); }catch(e){}
+          },ms);
+        });
         [600,1500,3000,6000].forEach(function(ms){
           setTimeout(function(){
             try{
