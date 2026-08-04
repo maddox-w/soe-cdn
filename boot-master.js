@@ -1738,6 +1738,19 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
       if (legalMap[t]) a.href = legalMap[t];
     });
 
+    /* Internal staff quick links (brand style guide + email signature tool) ride in the same
+       small legal row so they read as ordinary footer fine print. Both pages are Webflow
+       password-gated, so listing them here exposes nothing to visitors. */
+    var legalRow = footer.querySelector(`[data-soe=footer-legal]`);
+    if (legalRow && !legalRow.querySelector(`a[href="/style-guide"]`)){
+      [[`Style Guide`,`/style-guide`],[`Email Signature`,`/email-signature`]].forEach(function(it){
+        var a = document.createElement(`a`);
+        a.href = it[1];
+        a.textContent = it[0];
+        legalRow.appendChild(a);
+      });
+    }
+
     /* Wire footer social icons (f / in / yt / ig). LinkedIn is now live. */
     var socialMap = {
       "f":"https://www.facebook.com/profile.php?id=61591186047309",
