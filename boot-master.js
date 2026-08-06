@@ -1,12 +1,20 @@
 /* SOE master slim — JS-only (CSS lives in boot-head.css) */
+/* Double-load guard (2026-08-05): Site Settings paste mishaps have evaluated this file twice
+   (documented flaky drawer / double rotator). Second evaluation is a no-op. Also the flag the
+   boot-head.js watchdog checks before un-hiding pre-paint content. */
+if(window.__soeBootMaster){ console.warn(`SOE: boot-master.js evaluated twice — second copy skipped`); }
+else { window.__soeBootMaster = 1;
+
 
 /* === boot-design-v2 === */
 (function(){
   var amp = String.fromCharCode(38);
-  var l = document.createElement(`link`);
-  l.rel = `stylesheet`;
-  l.href = `https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800` + amp + `family=Inter:wght@400;500;600;700;800` + amp + `display=swap`;
-  document.head.appendChild(l);
+  if(!document.querySelector(`link[href*="fonts.googleapis.com/css2"]`)){
+    var l = document.createElement(`link`);
+    l.rel = `stylesheet`;
+    l.href = `https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800` + amp + `family=Inter:wght@400;500;600;700;800` + amp + `display=swap`;
+    document.head.appendChild(l);
+  }
 
   
 
@@ -532,7 +540,9 @@
   }
   buildCamionPage(); renameSlide(); renameCards();
   function ready(fn){if(document.readyState!==`loading`)fn();else document.addEventListener(`DOMContentLoaded`,fn);}
-  ready(function(){ buildCamionPage(); renameSlide(); renameCards(); setTimeout(injectVideo,350); setTimeout(injectVideo,1400); });
+  ready(function(){ buildCamionPage(); renameSlide(); renameCards();
+    var vd = ((location.pathname.replace(/\/+$/,``)||`/`) === `/`) ? 5500 : 350;
+    setTimeout(injectVideo, vd); setTimeout(injectVideo, vd + 1050); });
 })();
 
 /* === boot-fixes-v2bm === /brine-maker product page (2026-07-19). Camion's Brine Master® salt brine
@@ -1757,6 +1767,13 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
 
     /* 5-col grid: brand info + 4 link columns */
     top.style.gridTemplateColumns = `1.4fr 1fr .9fr 1fr 1.1fr`;
+
+    /* Static-footer paste-dup fix: "…in decades — not seasons.— not seasons." (privacy/terms/sitemap) */
+    Array.prototype.forEach.call(footer.querySelectorAll(`p,div,span`), function(el){
+      if(el.children.length) return;
+      var t = el.textContent || ``;
+      if(t.indexOf(`— not seasons.— not seasons.`) !== -1) el.textContent = t.replace(`— not seasons.— not seasons.`, `— not seasons.`);
+    });
 
     /* Wire up footer-bot Privacy / Terms / Sitemap to their dedicated pages */
     var legalMap = {"Sitemap":"/sitemap"};
@@ -3224,3 +3241,5 @@ body{margin:0;padding:0;background:#fff;font-family:Inter,system-ui,sans-serif;f
   else fix();
   setTimeout(fix,400);
 })();
+
+} /* end double-load guard */

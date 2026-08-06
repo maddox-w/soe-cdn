@@ -187,3 +187,25 @@
 ;(function(){ /* header reveal safety net: if boot-master never loads, don't leave the header hidden */
   setTimeout(function(){ try{ var h=document.documentElement; if(h.getAttribute(`data-soe-chrome`)!==`ready`) h.setAttribute(`data-soe-chrome`,`ready`); }catch(e){} }, 3000);
 })();
+
+/* === v2img-head (2026-08-05): early font start + preconnects + boot-master watchdog === */
+(function(){
+  try{
+    var amp = String.fromCharCode(38);
+    function pre(href, cors){ var l = document.createElement(`link`); l.rel = `preconnect`; l.href = href; if(cors) l.crossOrigin = `anonymous`; document.head.appendChild(l); }
+    pre(`https://fonts.googleapis.com`); pre(`https://fonts.gstatic.com`, 1);
+    var p = (location.pathname.replace(/\/+$/, ``) || `/`).toLowerCase();
+    if(p === `/` || p === `/camion`) pre(`https://www.youtube-nocookie.com`);
+    /* Fonts used to start from the DEFERRED boot-master (4-hop chain, guaranteed late swap). Start them
+       here in the head instead; boot-master's injector now skips when this link already exists. */
+    var f = document.createElement(`link`);
+    f.rel = `stylesheet`;
+    f.href = `https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800` + amp + `family=Inter:wght@400;500;600;700;800` + amp + `display=swap`;
+    document.head.appendChild(f);
+  }catch(e){}
+  /* Watchdog: if boot-master.js never evaluates, un-hide the pre-paint-hidden content (CSS hook in boot-head.css). */
+  setTimeout(function(){
+    if(window.__soeBootMaster) return;
+    try{ document.documentElement.setAttribute(`data-soe-noboot`, ``); }catch(e){}
+  }, 4000);
+})();
